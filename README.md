@@ -53,5 +53,5 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
 - `october_change` does not say *why* (new event vs backfill vs correction); the UI says so.
 - Source `published_at` precision is heterogeneous; shown raw. Source URLs were not re-fetched/validated.
 - Full-network project labels include editorial amount callouts taken from the view manifest (historical principal/facility).
-- Not implemented (Phase 2+): release history/comparison, refresh polling, deal/project pages, two-hop expansion,
-  mechanism story cards, band section headers, image/SVG export, reference-style curved routing (Cytoscape auto bezier is used, not the manifest control points).
+- Edges follow each view manifest's quadratic Bézier (start, control, end) at a constant width. Band headers mark capital providers, chips, model developers, cloud & capacity, operators, and project sites. Three mechanism cards under the map read amounts and status qualifiers from cited records (R003/R004, R054/R055, R191–R193); a null amount stays “not disclosed”.
+- Not implemented (later phases): release history/comparison, refresh polling, deal/project pages, two-hop expansion, image/SVG export.
