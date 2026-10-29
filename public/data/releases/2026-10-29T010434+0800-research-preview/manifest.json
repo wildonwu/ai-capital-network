@@ -1,0 +1,43 @@
+{
+  "release_id": "2026-10-29T010434+0800-research-preview",
+  "schema_version": "handoff-seed-1",
+  "app_schema": "acn-release-1",
+  "release_type": "intra_month_research_preview",
+  "as_of": "2026-10-28T17:04:34Z",
+  "as_of_label": "Intra-month October preview · cutoff 2026-10-28 17:04:34 UTC (2026-10-29 01:04:34 Asia/Taipei) · not a month-end release",
+  "published_at": "2026-10-29T07:39:33.405Z",
+  "previous_release_id": null,
+  "default_view": "companies-network",
+  "views": [
+    "companies-network",
+    "full-network"
+  ],
+  "files": {
+    "graph.json": {
+      "sha256": "43fa82c9f7dbb44e37308b69a23a921dba3b45ba9edff733a173eecad56b4114",
+      "bytes": 80016
+    },
+    "sources.json": {
+      "sha256": "c74aedc8337c7b235057008744fe50be80fcf0379e7c8aac5ebe0fb4e435a0c7",
+      "bytes": 37412
+    },
+    "baseline.json": {
+      "sha256": "e9439005e59199a422fb402df4872bb0d7e8d7e76a06402920ca9452f986a400",
+      "bytes": 57256
+    },
+    "views/companies-network.json": {
+      "sha256": "e643adaa1089057647c442e39a636cc0a81603f2af74d9345aa8f03ea7090841",
+      "bytes": 28510
+    },
+    "views/full-network.json": {
+      "sha256": "d2b1f952860c404084f66450ad1b3969632ad12ccf3cb7f69f01bd6769eecb91",
+      "bytes": 59085
+    }
+  },
+  "counts": {
+    "nodes": 91,
+    "relationships": 213,
+    "sources": 102
+  },
+  "coverage_note": "Defined research sample; not a complete market census. Inherited research assertions; not independently reverified for this handoff. Not a complete market census or a month-end release. Original date precision and economic qualifications are retained."
+}

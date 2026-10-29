@@ -1,0 +1,4976 @@
+{
+  "view_id": "full-network",
+  "node_ids": [
+    "SoftBank",
+    "MGX",
+    "Apollo管理基金及关联方",
+    "Blackstone管理基金及相关资金方",
+    "Blue Owl管理基金",
+    "BofA",
+    "Citi",
+    "Morgan Stanley",
+    "建设贷款资金方（汇总）",
+    "项目债券持有人（汇总）",
+    "设备融资资金方（汇总）",
+    "机构贷款投资者（汇总）",
+    "发行投资者（汇总）",
+    "公司债权/融资来源（汇总）",
+    "NVIDIA",
+    "AMD",
+    "Broadcom",
+    "OpenAI",
+    "Anthropic",
+    "Microsoft",
+    "Amazon",
+    "Google",
+    "Oracle",
+    "Meta",
+    "CoreWeave",
+    "Nebius",
+    "B02 Vantage Frontier / Texas",
+    "B04 Blue Owl / Project Jupiter New Mexico",
+    "B03 Vantage Wisconsin",
+    "A06 Related/Blackstone RD Michigan",
+    "B01 Crusoe/Blue Owl Abilene phase2",
+    "C01 CoreWeave DDTL3.0",
+    "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资",
+    "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+    "A04 Hut8 River Bend",
+    "B05 TeraWulf Justified桥贷",
+    "A15 Meridian Arc HoldCo / Indiana",
+    "A07 TeraWulf Lake Mariner",
+    "A09 Cipher Barber Lake 原发行",
+    "A10 Cipher Barber Lake 增发",
+    "A08 TeraWulf/Fluidstack Abernathy",
+    "A01 Beignet / Meta Hyperion",
+    "A02 Sopaipilla / Meta El Paso",
+    "A05 QTS Fayetteville DC1-2",
+    "C05 IREN Microsoft GPU financing",
+    "C10 Nscale Narvik园区",
+    "A11 Cipher Black Pearl",
+    "A12 Applied Digital Polaris Forge1 B2/B3",
+    "A14 Applied Digital Polaris Forge1 B4",
+    "C16 Mistral Paris GPU debt",
+    "C02 CoreWeave DDTL4.0",
+    "C03 CoreWeave DDTL5.0",
+    "C04 CoreWeave DDTL5.5",
+    "C11 Firmus Project Southgate",
+    "A03 Hut8 Beacon Point",
+    "A13 Applied Digital Polaris Forge2",
+    "C07 Nscale欧洲GPU DDTL",
+    "C08 Nscale Ward County",
+    "C09 Nscale Madison",
+    "C06 IREN其他GPU部署",
+    "C12 Lambda投资级客户GPU SPV",
+    "C13 Nebius已运营合同资产融资",
+    "C14 Crusoe Upper90 GPU credit",
+    "SpaceX.AI",
+    "Lambda",
+    "Nscale",
+    "Firmus",
+    "IREN",
+    "Stargate",
+    "TeraWulf",
+    "Cipher",
+    "Vantage",
+    "Blue Owl管理平台",
+    "Related / Blackstone平台",
+    "Crusoe / Blue Owl平台",
+    "AI XPV",
+    "Nexus",
+    "Hut 8",
+    "Fluidstack",
+    "Meridian Arc",
+    "Anthropic（最终归因待证）",
+    "Abernathy项目",
+    "Hyperion JV",
+    "El Paso结构",
+    "QTS / Blackstone平台",
+    "Applied Digital",
+    "Mistral",
+    "未具名/多客户（汇总）",
+    "Crusoe",
+    "新Broadcom-Anthropic SPV",
+    "SpaceX / Valor"
+  ],
+  "edge_ids": [
+    "R059",
+    "R062",
+    "R065",
+    "R068",
+    "R071",
+    "R074",
+    "R077",
+    "R080",
+    "R084",
+    "R089",
+    "R092",
+    "R096",
+    "R101",
+    "R106",
+    "R109",
+    "R114",
+    "R117",
+    "R120",
+    "R123",
+    "R126",
+    "R129",
+    "R132",
+    "R135",
+    "R138",
+    "R141",
+    "R144",
+    "R147",
+    "R150",
+    "R153",
+    "R156",
+    "R159",
+    "R162",
+    "R165",
+    "R168",
+    "R171",
+    "R174",
+    "R177",
+    "R060",
+    "R063",
+    "R066",
+    "R069",
+    "R072",
+    "R075",
+    "R078",
+    "R081",
+    "R085",
+    "R090",
+    "R093",
+    "R097",
+    "R102",
+    "R107",
+    "R110",
+    "R115",
+    "R118",
+    "R121",
+    "R124",
+    "R127",
+    "R130",
+    "R133",
+    "R136",
+    "R139",
+    "R142",
+    "R145",
+    "R148",
+    "R151",
+    "R154",
+    "R157",
+    "R160",
+    "R163",
+    "R166",
+    "R169",
+    "R172",
+    "R175",
+    "R178",
+    "R183",
+    "R193",
+    "R058",
+    "R061",
+    "R064",
+    "R067",
+    "R070",
+    "R073",
+    "R076",
+    "R079",
+    "R083",
+    "R088",
+    "R091",
+    "R095",
+    "R100",
+    "R105",
+    "R108",
+    "R113",
+    "R116",
+    "R119",
+    "R122",
+    "R125",
+    "R128",
+    "R131",
+    "R134",
+    "R137",
+    "R140",
+    "R143",
+    "R146",
+    "R149",
+    "R152",
+    "R155",
+    "R158",
+    "R161",
+    "R164",
+    "R167",
+    "R170",
+    "R173",
+    "R176",
+    "R179",
+    "R180",
+    "R187",
+    "R188",
+    "R189",
+    "R190",
+    "R194",
+    "R195",
+    "R197",
+    "R198",
+    "R199",
+    "R200",
+    "R201",
+    "R202",
+    "R203",
+    "R204",
+    "R205",
+    "R206",
+    "R207",
+    "R208",
+    "R209",
+    "R210",
+    "R211",
+    "R023",
+    "R041",
+    "R043",
+    "R045",
+    "R047",
+    "R048",
+    "R049",
+    "R087",
+    "R094",
+    "R099",
+    "R104",
+    "R112",
+    "R182",
+    "R186",
+    "R191",
+    "R002",
+    "R004",
+    "R007",
+    "R009",
+    "R010",
+    "R011",
+    "R012",
+    "R014",
+    "R020",
+    "R021",
+    "R022",
+    "R024",
+    "R028",
+    "R029",
+    "R031",
+    "R032",
+    "R033",
+    "R035",
+    "R036",
+    "R038",
+    "R039",
+    "R212",
+    "R213",
+    "R046",
+    "R054",
+    "R055",
+    "R056",
+    "R057",
+    "R082",
+    "R086",
+    "R098",
+    "R103",
+    "R111",
+    "R181",
+    "R192",
+    "R008",
+    "R030",
+    "R005",
+    "R040",
+    "R042",
+    "R044",
+    "R050",
+    "R051",
+    "R052",
+    "R053",
+    "R184",
+    "R185",
+    "R196",
+    "R001",
+    "R003",
+    "R006",
+    "R013",
+    "R015",
+    "R016",
+    "R017",
+    "R018",
+    "R019",
+    "R025",
+    "R026",
+    "R027",
+    "R034",
+    "R037"
+  ],
+  "nodes": {
+    "SoftBank": {
+      "label": "SoftBank",
+      "box": [
+        2350,
+        1780,
+        780,
+        125
+      ]
+    },
+    "MGX": {
+      "label": "MGX",
+      "box": [
+        3230,
+        1780,
+        780,
+        125
+      ]
+    },
+    "Apollo管理基金及关联方": {
+      "label": "Apollo-managed funds",
+      "box": [
+        4110,
+        1780,
+        780,
+        125
+      ]
+    },
+    "Blackstone管理基金及相关资金方": {
+      "label": "Blackstone-related funds",
+      "box": [
+        4990,
+        1780,
+        780,
+        125
+      ]
+    },
+    "Blue Owl管理基金": {
+      "label": "Blue Owl-managed funds",
+      "box": [
+        5870,
+        1780,
+        780,
+        125
+      ]
+    },
+    "BofA": {
+      "label": "BofA",
+      "box": [
+        6750,
+        1780,
+        780,
+        125
+      ]
+    },
+    "Citi": {
+      "label": "Citi",
+      "box": [
+        7630,
+        1780,
+        780,
+        125
+      ]
+    },
+    "Morgan Stanley": {
+      "label": "Morgan Stanley",
+      "box": [
+        2350,
+        2020,
+        780,
+        125
+      ]
+    },
+    "建设贷款资金方（汇总）": {
+      "label": "Construction lenders*",
+      "box": [
+        3230,
+        2020,
+        780,
+        125
+      ]
+    },
+    "项目债券持有人（汇总）": {
+      "label": "Project bondholders*",
+      "box": [
+        4110,
+        2020,
+        780,
+        125
+      ]
+    },
+    "设备融资资金方（汇总）": {
+      "label": "Equipment lenders*",
+      "box": [
+        4990,
+        2020,
+        780,
+        125
+      ]
+    },
+    "机构贷款投资者（汇总）": {
+      "label": "Institutional loan investors*",
+      "box": [
+        5870,
+        2020,
+        780,
+        125
+      ]
+    },
+    "发行投资者（汇总）": {
+      "label": "Equity offering investors*",
+      "box": [
+        6750,
+        2020,
+        780,
+        125
+      ]
+    },
+    "公司债权/融资来源（汇总）": {
+      "label": "Corporate financing sources*",
+      "box": [
+        7630,
+        2020,
+        780,
+        125
+      ]
+    },
+    "NVIDIA": {
+      "label": "NVIDIA",
+      "box": [
+        5000,
+        2490,
+        760,
+        180
+      ]
+    },
+    "AMD": {
+      "label": "AMD",
+      "box": [
+        6700,
+        2730,
+        760,
+        180
+      ]
+    },
+    "Broadcom": {
+      "label": "Broadcom",
+      "box": [
+        3300,
+        2730,
+        760,
+        180
+      ]
+    },
+    "OpenAI": {
+      "label": "OpenAI",
+      "box": [
+        4180,
+        3470,
+        850,
+        180
+      ]
+    },
+    "Anthropic": {
+      "label": "Anthropic",
+      "box": [
+        5820,
+        3470,
+        850,
+        180
+      ]
+    },
+    "Microsoft": {
+      "label": "Microsoft",
+      "box": [
+        3200,
+        4220,
+        760,
+        180
+      ]
+    },
+    "Amazon": {
+      "label": "Amazon",
+      "box": [
+        6800,
+        4220,
+        760,
+        180
+      ]
+    },
+    "Google": {
+      "label": "Google",
+      "box": [
+        5000,
+        4450,
+        760,
+        180
+      ]
+    },
+    "Oracle": {
+      "label": "Oracle",
+      "box": [
+        3000,
+        4900,
+        760,
+        180
+      ]
+    },
+    "Meta": {
+      "label": "Meta",
+      "box": [
+        7000,
+        4900,
+        760,
+        180
+      ]
+    },
+    "CoreWeave": {
+      "label": "CoreWeave",
+      "box": [
+        4200,
+        5100,
+        760,
+        180
+      ]
+    },
+    "Nebius": {
+      "label": "Nebius",
+      "box": [
+        5800,
+        5100,
+        760,
+        180
+      ]
+    },
+    "B02 Vantage Frontier / Texas": {
+      "label": "Vantage · Frontier, Texas\n$23bn historical principal / facility",
+      "box": [
+        1100,
+        1940,
+        1450,
+        135
+      ]
+    },
+    "B04 Blue Owl / Project Jupiter New Mexico": {
+      "label": "Blue Owl · Jupiter, New Mexico\n$18bn historical principal / facility",
+      "box": [
+        1100,
+        2170,
+        1450,
+        135
+      ]
+    },
+    "B03 Vantage Wisconsin": {
+      "label": "Vantage · Wisconsin\n$15bn historical principal / facility",
+      "box": [
+        1100,
+        2400,
+        1450,
+        135
+      ]
+    },
+    "A06 Related/Blackstone RD Michigan": {
+      "label": "Related/Blackstone · Michigan\n$14bn historical principal / facility",
+      "box": [
+        1100,
+        2630,
+        1450,
+        135
+      ]
+    },
+    "B01 Crusoe/Blue Owl Abilene phase2": {
+      "label": "Crusoe/Blue Owl · Abilene II\n$7.1bn historical principal / facility",
+      "box": [
+        1100,
+        2860,
+        1450,
+        135
+      ]
+    },
+    "C01 CoreWeave DDTL3.0": {
+      "label": "CoreWeave · DDTL 3.0\n$2.6bn historical principal / facility",
+      "box": [
+        1100,
+        3090,
+        1450,
+        135
+      ]
+    },
+    "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资": {
+      "label": "AI XPV · Anthropic TPU equipment\n$34.5bn historical principal / facility",
+      "box": [
+        1100,
+        3320,
+        1450,
+        135
+      ]
+    },
+    "B06 Nexus Hubbard bank commitment - interim deduplicated project amount": {
+      "label": "Nexus · Hubbard\n$15bn historical principal / facility",
+      "box": [
+        1100,
+        3550,
+        1450,
+        135
+      ]
+    },
+    "A04 Hut8 River Bend": {
+      "label": "Hut 8 · River Bend\n$3.25bn historical principal / facility",
+      "box": [
+        1100,
+        3780,
+        1450,
+        135
+      ]
+    },
+    "B05 TeraWulf Justified桥贷": {
+      "label": "TeraWulf · Justified bridge\n$0.5bn historical principal / facility",
+      "box": [
+        1100,
+        4010,
+        1450,
+        135
+      ]
+    },
+    "A15 Meridian Arc HoldCo / Indiana": {
+      "label": "Meridian Arc · Indiana\n$5.7bn historical principal / facility",
+      "box": [
+        1100,
+        4240,
+        1450,
+        135
+      ]
+    },
+    "A07 TeraWulf Lake Mariner": {
+      "label": "TeraWulf · Lake Mariner\n$3.2bn historical principal / facility",
+      "box": [
+        1100,
+        4470,
+        1450,
+        135
+      ]
+    },
+    "A09 Cipher Barber Lake 原发行": {
+      "label": "Cipher · Barber Lake original\n$1.4bn historical principal / facility",
+      "box": [
+        1100,
+        4700,
+        1450,
+        135
+      ]
+    },
+    "A10 Cipher Barber Lake 增发": {
+      "label": "Cipher · Barber Lake add-on\n$0.333bn historical principal / facility",
+      "box": [
+        1100,
+        4930,
+        1450,
+        135
+      ]
+    },
+    "A08 TeraWulf/Fluidstack Abernathy": {
+      "label": "TeraWulf/Fluidstack · Abernathy\n$1.3bn historical principal / facility",
+      "box": [
+        1100,
+        5160,
+        1450,
+        135
+      ]
+    },
+    "A01 Beignet / Meta Hyperion": {
+      "label": "Beignet · Meta Hyperion\n$27.29bn historical principal / facility",
+      "box": [
+        1100,
+        5390,
+        1450,
+        135
+      ]
+    },
+    "A02 Sopaipilla / Meta El Paso": {
+      "label": "Sopaipilla · Meta El Paso\n$12.55bn historical principal / facility",
+      "box": [
+        1100,
+        5620,
+        1450,
+        135
+      ]
+    },
+    "A05 QTS Fayetteville DC1-2": {
+      "label": "QTS · Fayetteville DC1–2\n$4.6bn historical principal / facility",
+      "box": [
+        1100,
+        5850,
+        1450,
+        135
+      ]
+    },
+    "C05 IREN Microsoft GPU financing": {
+      "label": "IREN · Microsoft GPU financing\n$3.6bn historical principal / facility",
+      "box": [
+        1100,
+        6080,
+        1450,
+        135
+      ]
+    },
+    "C10 Nscale Narvik园区": {
+      "label": "Nscale · Narvik\n$0.79bn historical principal / facility",
+      "box": [
+        8900,
+        1940,
+        1450,
+        135
+      ]
+    },
+    "A11 Cipher Black Pearl": {
+      "label": "Cipher · Black Pearl\n$2bn historical principal / facility",
+      "box": [
+        8900,
+        2170,
+        1450,
+        135
+      ]
+    },
+    "A12 Applied Digital Polaris Forge1 B2/B3": {
+      "label": "Applied Digital · Polaris 1 B2/3\n$2.35bn historical principal / facility",
+      "box": [
+        8900,
+        2400,
+        1450,
+        135
+      ]
+    },
+    "A14 Applied Digital Polaris Forge1 B4": {
+      "label": "Applied Digital · Polaris 1 B4\n$1.59bn historical principal / facility",
+      "box": [
+        8900,
+        2630,
+        1450,
+        135
+      ]
+    },
+    "C16 Mistral Paris GPU debt": {
+      "label": "Mistral · Paris GPU debt\n$0.83bn historical principal / facility",
+      "box": [
+        8900,
+        2860,
+        1450,
+        135
+      ]
+    },
+    "C02 CoreWeave DDTL4.0": {
+      "label": "CoreWeave · DDTL 4.0\n$8.5bn historical principal / facility",
+      "box": [
+        8900,
+        3090,
+        1450,
+        135
+      ]
+    },
+    "C03 CoreWeave DDTL5.0": {
+      "label": "CoreWeave · DDTL 5.0\n$3.1bn historical principal / facility",
+      "box": [
+        8900,
+        3320,
+        1450,
+        135
+      ]
+    },
+    "C04 CoreWeave DDTL5.5": {
+      "label": "CoreWeave · DDTL 5.5\n$2.6bn historical principal / facility",
+      "box": [
+        8900,
+        3550,
+        1450,
+        135
+      ]
+    },
+    "C11 Firmus Project Southgate": {
+      "label": "Firmus · Southgate\n$10bn historical principal / facility",
+      "box": [
+        8900,
+        3780,
+        1450,
+        135
+      ]
+    },
+    "A03 Hut8 Beacon Point": {
+      "label": "Hut 8 · Beacon Point\n$4.25bn historical principal / facility",
+      "box": [
+        8900,
+        4010,
+        1450,
+        135
+      ]
+    },
+    "A13 Applied Digital Polaris Forge2": {
+      "label": "Applied Digital · Polaris 2\n$2.15bn historical principal / facility",
+      "box": [
+        8900,
+        4240,
+        1450,
+        135
+      ]
+    },
+    "C07 Nscale欧洲GPU DDTL": {
+      "label": "Nscale · European GPU DDTL\n$1.4bn historical principal / facility",
+      "box": [
+        8900,
+        4470,
+        1450,
+        135
+      ]
+    },
+    "C08 Nscale Ward County": {
+      "label": "Nscale · Ward County\n$1.85bn historical principal / facility",
+      "box": [
+        8900,
+        4700,
+        1450,
+        135
+      ]
+    },
+    "C09 Nscale Madison": {
+      "label": "Nscale · Madison\n$1.2bn historical principal / facility",
+      "box": [
+        8900,
+        4930,
+        1450,
+        135
+      ]
+    },
+    "C06 IREN其他GPU部署": {
+      "label": "IREN · other GPU deployment\n$2.8bn historical principal / facility",
+      "box": [
+        8900,
+        5160,
+        1450,
+        135
+      ]
+    },
+    "C12 Lambda投资级客户GPU SPV": {
+      "label": "Lambda · investment-grade SPV\n$0.926bn historical principal / facility",
+      "box": [
+        8900,
+        5390,
+        1450,
+        135
+      ]
+    },
+    "C13 Nebius已运营合同资产融资": {
+      "label": "Nebius · operating assets\n$0.775bn historical principal / facility",
+      "box": [
+        8900,
+        5620,
+        1450,
+        135
+      ]
+    },
+    "C14 Crusoe Upper90 GPU credit": {
+      "label": "Crusoe · Upper90 GPU credit\n$0.225bn historical principal / facility",
+      "box": [
+        8900,
+        5850,
+        1450,
+        135
+      ]
+    },
+    "SpaceX.AI": {
+      "label": "SpaceX.AI",
+      "box": [
+        2400,
+        5570,
+        920,
+        145
+      ]
+    },
+    "Lambda": {
+      "label": "Lambda",
+      "box": [
+        3450,
+        5570,
+        920,
+        145
+      ]
+    },
+    "Nscale": {
+      "label": "Nscale",
+      "box": [
+        4500,
+        5570,
+        920,
+        145
+      ]
+    },
+    "Firmus": {
+      "label": "Firmus",
+      "box": [
+        5550,
+        5570,
+        920,
+        145
+      ]
+    },
+    "IREN": {
+      "label": "IREN",
+      "box": [
+        6600,
+        5570,
+        920,
+        145
+      ]
+    },
+    "Stargate": {
+      "label": "Stargate",
+      "box": [
+        7650,
+        5570,
+        920,
+        145
+      ]
+    },
+    "TeraWulf": {
+      "label": "TeraWulf",
+      "box": [
+        2400,
+        5805,
+        920,
+        145
+      ]
+    },
+    "Cipher": {
+      "label": "Cipher",
+      "box": [
+        3450,
+        5805,
+        920,
+        145
+      ]
+    },
+    "Vantage": {
+      "label": "Vantage",
+      "box": [
+        4500,
+        5805,
+        920,
+        145
+      ]
+    },
+    "Blue Owl管理平台": {
+      "label": "Blue Owl project platform",
+      "box": [
+        5550,
+        5805,
+        920,
+        145
+      ]
+    },
+    "Related / Blackstone平台": {
+      "label": "Related / Blackstone platform",
+      "box": [
+        6600,
+        5805,
+        920,
+        145
+      ]
+    },
+    "Crusoe / Blue Owl平台": {
+      "label": "Crusoe / Blue Owl platform",
+      "box": [
+        7650,
+        5805,
+        920,
+        145
+      ]
+    },
+    "AI XPV": {
+      "label": "AI XPV",
+      "box": [
+        2400,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Nexus": {
+      "label": "Nexus",
+      "box": [
+        3450,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Hut 8": {
+      "label": "Hut 8",
+      "box": [
+        4500,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Fluidstack": {
+      "label": "Fluidstack",
+      "box": [
+        5550,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Meridian Arc": {
+      "label": "Meridian Arc",
+      "box": [
+        6600,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Anthropic（最终归因待证）": {
+      "label": "Anthropic demand\n(attribution unconfirmed)",
+      "box": [
+        7650,
+        6040,
+        920,
+        145
+      ]
+    },
+    "Abernathy项目": {
+      "label": "Abernathy project vehicle",
+      "box": [
+        2400,
+        6275,
+        920,
+        145
+      ]
+    },
+    "Hyperion JV": {
+      "label": "Hyperion JV",
+      "box": [
+        3450,
+        6275,
+        920,
+        145
+      ]
+    },
+    "El Paso结构": {
+      "label": "El Paso project structure",
+      "box": [
+        4500,
+        6275,
+        920,
+        145
+      ]
+    },
+    "QTS / Blackstone平台": {
+      "label": "QTS / Blackstone platform",
+      "box": [
+        5550,
+        6275,
+        920,
+        145
+      ]
+    },
+    "Applied Digital": {
+      "label": "Applied Digital",
+      "box": [
+        6600,
+        6275,
+        920,
+        145
+      ]
+    },
+    "Mistral": {
+      "label": "Mistral",
+      "box": [
+        7650,
+        6275,
+        920,
+        145
+      ]
+    },
+    "未具名/多客户（汇总）": {
+      "label": "Undisclosed / multiple customers*",
+      "box": [
+        2400,
+        6510,
+        920,
+        145
+      ]
+    },
+    "Crusoe": {
+      "label": "Crusoe",
+      "box": [
+        3450,
+        6510,
+        920,
+        145
+      ]
+    },
+    "新Broadcom-Anthropic SPV": {
+      "label": "New Broadcom–Anthropic SPV",
+      "box": [
+        4500,
+        6510,
+        920,
+        145
+      ]
+    },
+    "SpaceX / Valor": {
+      "label": "SpaceX / Valor",
+      "box": [
+        5550,
+        6510,
+        920,
+        145
+      ]
+    }
+  },
+  "edges": {
+    "R059": {
+      "from": "Vantage",
+      "to": "B02 Vantage Frontier / Texas",
+      "start": [
+        4425.666235446313,
+        5720.5
+      ],
+      "control": [
+        3623.7128056835772,
+        3143.453842107219
+      ],
+      "end": [
+        1169.9353169469598,
+        2019.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "affiliation"
+    },
+    "R062": {
+      "from": "Blue Owl管理平台",
+      "to": "B04 Blue Owl / Project Jupiter New Mexico",
+      "start": [
+        5446.554332874828,
+        5720.5
+      ],
+      "control": [
+        3574.9881054915263,
+        3675.215572095037
+      ],
+      "end": [
+        1197.32462173315,
+        2249.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "affiliation"
+    },
+    "R065": {
+      "from": "Vantage",
+      "to": "B03 Vantage Wisconsin",
+      "start": [
+        4415.6240822320115,
+        5720.5
+      ],
+      "control": [
+        3929.7054944495812,
+        2969.460734365952
+      ],
+      "end": [
+        1179.3832599118944,
+        2479.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "affiliation"
+    },
+    "R068": {
+      "from": "Related / Blackstone平台",
+      "to": "A06 Related/Blackstone RD Michigan",
+      "start": [
+        6453.622047244095,
+        5720.5
+      ],
+      "control": [
+        3845.6692913385828,
+        4215.0
+      ],
+      "end": [
+        1237.716535433071,
+        2709.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "affiliation"
+    },
+    "R071": {
+      "from": "Crusoe / Blue Owl平台",
+      "to": "B01 Crusoe/Blue Owl Abilene phase2",
+      "start": [
+        7462.062818336163,
+        5720.5
+      ],
+      "control": [
+        4820.522412015547,
+        3326.743097457126
+      ],
+      "end": [
+        1276.8166383701189,
+        2939.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "affiliation"
+    },
+    "R074": {
+      "from": "CoreWeave",
+      "to": "C01 CoreWeave DDTL3.0",
+      "start": [
+        4042.686567164179,
+        4998.0
+      ],
+      "control": [
+        3503.1078600770325,
+        2741.2516519046585
+      ],
+      "end": [
+        1222.6119402985075,
+        3169.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "affiliation"
+    },
+    "R077": {
+      "from": "AI XPV",
+      "to": "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资",
+      "start": [
+        2359.613970588235,
+        5955.5
+      ],
+      "control": [
+        3192.399485588013,
+        3987.5468234970785
+      ],
+      "end": [
+        1137.9963235294117,
+        3399.5
+      ],
+      "obstacle_samples": 13,
+      "layer": "affiliation"
+    },
+    "R080": {
+      "from": "Nexus",
+      "to": "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+      "start": [
+        3370.251004016064,
+        5955.5
+      ],
+      "control": [
+        3436.2503258353836,
+        3694.3140785429678
+      ],
+      "end": [
+        1175.0301204819277,
+        3629.5
+      ],
+      "obstacle_samples": 10,
+      "layer": "affiliation"
+    },
+    "R084": {
+      "from": "Hut 8",
+      "to": "A04 Hut8 River Bend",
+      "start": [
+        4372.876106194691,
+        5955.5
+      ],
+      "control": [
+        3211.4158246647658,
+        4282.897604212534
+      ],
+      "end": [
+        1219.6017699115043,
+        3859.5
+      ],
+      "obstacle_samples": 10,
+      "layer": "affiliation"
+    },
+    "R089": {
+      "from": "TeraWulf",
+      "to": "B05 TeraWulf Justified桥贷",
+      "start": [
+        2338.802228412256,
+        5720.5
+      ],
+      "control": [
+        3044.03767924007,
+        3966.502649884249
+      ],
+      "end": [
+        1157.5766016713092,
+        4089.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "affiliation"
+    },
+    "R092": {
+      "from": "Meridian Arc",
+      "to": "A15 Meridian Arc HoldCo / Indiana",
+      "start": [
+        6341.805555555556,
+        5955.5
+      ],
+      "control": [
+        4184.5040775672,
+        4092.0631580508425
+      ],
+      "end": [
+        1342.9166666666667,
+        4319.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "affiliation"
+    },
+    "R096": {
+      "from": "TeraWulf",
+      "to": "A07 TeraWulf Lake Mariner",
+      "start": [
+        2317.7153558052432,
+        5720.5
+      ],
+      "control": [
+        2893.862972537773,
+        4018.7553121298906
+      ],
+      "end": [
+        1177.4157303370787,
+        4549.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "affiliation"
+    },
+    "R101": {
+      "from": "Cipher",
+      "to": "A09 Cipher Barber Lake 原发行",
+      "start": [
+        3270.294117647059,
+        5720.5
+      ],
+      "control": [
+        2588.82238695381,
+        4571.2878251286365
+      ],
+      "end": [
+        1269.0723981900453,
+        4779.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "affiliation"
+    },
+    "R106": {
+      "from": "Cipher",
+      "to": "A10 Cipher Barber Lake 增发",
+      "start": [
+        3223.057142857143,
+        5720.5
+      ],
+      "control": [
+        2529.9887336243933,
+        4662.140462347548
+      ],
+      "end": [
+        1313.5142857142857,
+        5009.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "affiliation"
+    },
+    "R109": {
+      "from": "Abernathy项目",
+      "to": "A08 TeraWulf/Fluidstack Abernathy",
+      "start": [
+        2301.479820627803,
+        6190.5
+      ],
+      "control": [
+        2788.7360242888317,
+        4500.519220409289
+      ],
+      "end": [
+        1192.6905829596412,
+        5239.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "affiliation"
+    },
+    "R114": {
+      "from": "Hyperion JV",
+      "to": "A01 Beignet / Meta Hyperion",
+      "start": [
+        3225.6214689265535,
+        6190.5
+      ],
+      "control": [
+        2656.0371594045623,
+        4800.578975043392
+      ],
+      "end": [
+        1311.1016949152543,
+        5469.5
+      ],
+      "obstacle_samples": 11,
+      "layer": "affiliation"
+    },
+    "R117": {
+      "from": "El Paso结构",
+      "to": "A02 Sopaipilla / Meta El Paso",
+      "start": [
+        4061.374045801527,
+        6190.5
+      ],
+      "control": [
+        3089.6928819398627,
+        4373.888647328072
+      ],
+      "end": [
+        1512.671755725191,
+        5699.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "affiliation"
+    },
+    "R120": {
+      "from": "QTS / Blackstone平台",
+      "to": "A05 QTS Fayetteville DC1-2",
+      "start": [
+        5078.0,
+        6229.921348314607
+      ],
+      "control": [
+        3609.6168102918036,
+        4482.402010150198
+      ],
+      "end": [
+        1837.0,
+        5920.387640449439
+      ],
+      "obstacle_samples": 17,
+      "layer": "affiliation"
+    },
+    "R123": {
+      "from": "IREN",
+      "to": "C05 IREN Microsoft GPU financing",
+      "start": [
+        6128.0,
+        5613.767272727273
+      ],
+      "control": [
+        3880.935707931134,
+        4717.412447385668
+      ],
+      "end": [
+        1837.0,
+        6011.66
+      ],
+      "obstacle_samples": 11,
+      "layer": "affiliation"
+    },
+    "R126": {
+      "from": "Nscale",
+      "to": "C10 Nscale Narvik园区",
+      "start": [
+        4602.424242424242,
+        5485.5
+      ],
+      "control": [
+        6703.030303030303,
+        3752.5
+      ],
+      "end": [
+        8803.636363636364,
+        2019.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "affiliation"
+    },
+    "R129": {
+      "from": "Cipher",
+      "to": "A11 Cipher Black Pearl",
+      "start": [
+        3576.6918844566712,
+        5720.5
+      ],
+      "control": [
+        6400.698807153307,
+        4317.773141592032
+      ],
+      "end": [
+        8780.804676753783,
+        2249.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "affiliation"
+    },
+    "R132": {
+      "from": "Applied Digital",
+      "to": "A12 Applied Digital Polaris Forge1 B2/B3",
+      "start": [
+        6650.154838709677,
+        6190.5
+      ],
+      "control": [
+        7106.535738550435,
+        3952.1920762426307
+      ],
+      "end": [
+        8852.812903225806,
+        2479.5
+      ],
+      "obstacle_samples": 14,
+      "layer": "affiliation"
+    },
+    "R135": {
+      "from": "Applied Digital",
+      "to": "A14 Applied Digital Polaris Forge1 B4",
+      "start": [
+        6653.319615912208,
+        6190.5
+      ],
+      "control": [
+        6821.297203175454,
+        3862.991854435125
+      ],
+      "end": [
+        8849.835390946502,
+        2709.5
+      ],
+      "obstacle_samples": 14,
+      "layer": "affiliation"
+    },
+    "R138": {
+      "from": "Mistral",
+      "to": "C16 Mistral Paris GPU debt",
+      "start": [
+        7680.92972181552,
+        6190.5
+      ],
+      "control": [
+        7210.072062599365,
+        4174.8671237453445
+      ],
+      "end": [
+        8870.900439238652,
+        2939.5
+      ],
+      "obstacle_samples": 15,
+      "layer": "affiliation"
+    },
+    "R141": {
+      "from": "CoreWeave",
+      "to": "C02 CoreWeave DDTL4.0",
+      "start": [
+        4438.507462686567,
+        4998.0
+      ],
+      "control": [
+        6143.774006693344,
+        3072.3568516205105
+      ],
+      "end": [
+        8714.10447761194,
+        3169.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "affiliation"
+    },
+    "R144": {
+      "from": "CoreWeave",
+      "to": "C03 CoreWeave DDTL5.0",
+      "start": [
+        4469.3258426966295,
+        4998.0
+      ],
+      "control": [
+        6190.1132904876595,
+        3170.0526411500323
+      ],
+      "end": [
+        8690.08426966292,
+        3399.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "affiliation"
+    },
+    "R147": {
+      "from": "CoreWeave",
+      "to": "C04 CoreWeave DDTL5.5",
+      "start": [
+        4509.290322580645,
+        4998.0
+      ],
+      "control": [
+        6458.834811015421,
+        3933.8744945878634
+      ],
+      "end": [
+        8658.935483870968,
+        3629.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "affiliation"
+    },
+    "R150": {
+      "from": "Firmus",
+      "to": "C11 Firmus Project Southgate",
+      "start": [
+        5708.1424581005585,
+        5485.5
+      ],
+      "control": [
+        6475.644615726255,
+        3261.318759777315
+      ],
+      "end": [
+        8751.215083798883,
+        3859.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "affiliation"
+    },
+    "R153": {
+      "from": "Hut 8",
+      "to": "A03 Hut8 Beacon Point",
+      "start": [
+        4683.152709359606,
+        5955.5
+      ],
+      "control": [
+        6391.223240076519,
+        4341.485168376681
+      ],
+      "end": [
+        8727.68472906404,
+        4089.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "affiliation"
+    },
+    "R156": {
+      "from": "Applied Digital",
+      "to": "A13 Applied Digital Polaris Forge2",
+      "start": [
+        6695.503685503685,
+        6190.5
+      ],
+      "control": [
+        6692.594931491323,
+        4056.704948860576
+      ],
+      "end": [
+        8810.14742014742,
+        4319.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "affiliation"
+    },
+    "R159": {
+      "from": "Nscale",
+      "to": "C07 Nscale欧洲GPU DDTL",
+      "start": [
+        4838.0,
+        5485.5
+      ],
+      "control": [
+        6443.210812460034,
+        3950.343249840135
+      ],
+      "end": [
+        8582.0,
+        4549.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "affiliation"
+    },
+    "R162": {
+      "from": "Nscale",
+      "to": "C08 Nscale Ward County",
+      "start": [
+        4927.356321839081,
+        5485.5
+      ],
+      "control": [
+        6712.64367816092,
+        5132.5
+      ],
+      "end": [
+        8497.931034482759,
+        4779.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "affiliation"
+    },
+    "R165": {
+      "from": "Nscale",
+      "to": "C09 Nscale Madison",
+      "start": [
+        4972.0,
+        5501.345454545454
+      ],
+      "control": [
+        6636.80957777146,
+        5077.297168201516
+      ],
+      "end": [
+        8353.4375,
+        5009.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "affiliation"
+    },
+    "R168": {
+      "from": "IREN",
+      "to": "C06 IREN其他GPU部署",
+      "start": [
+        7072.0,
+        5485.860869565217
+      ],
+      "control": [
+        7763.012195121952,
+        5362.680434782609
+      ],
+      "end": [
+        8454.024390243903,
+        5239.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "affiliation"
+    },
+    "R171": {
+      "from": "Lambda",
+      "to": "C12 Lambda投资级客户GPU SPV",
+      "start": [
+        3922.0,
+        5554.411009174312
+      ],
+      "control": [
+        6029.2961903347,
+        5084.594131922986
+      ],
+      "end": [
+        8163.0,
+        5414.341284403669
+      ],
+      "obstacle_samples": 3,
+      "layer": "affiliation"
+    },
+    "R174": {
+      "from": "Nebius",
+      "to": "C13 Nebius已运营合同资产融资",
+      "start": [
+        6192.0,
+        5165.754838709678
+      ],
+      "control": [
+        7338.806370283324,
+        5175.6075639675655
+      ],
+      "end": [
+        8426.057692307691,
+        5540.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "affiliation"
+    },
+    "R177": {
+      "from": "Crusoe",
+      "to": "C14 Crusoe Upper90 GPU credit",
+      "start": [
+        3922.0,
+        6452.840366972477
+      ],
+      "control": [
+        6034.672336399393,
+        5794.071397968828
+      ],
+      "end": [
+        8243.522727272728,
+        5929.5
+      ],
+      "obstacle_samples": 22,
+      "layer": "affiliation"
+    },
+    "R060": {
+      "from": "B02 Vantage Frontier / Texas",
+      "to": "Oracle",
+      "start": [
+        1151.0304054054054,
+        2019.5
+      ],
+      "control": [
+        3389.255156304095,
+        2544.457690484132
+      ],
+      "end": [
+        2934.527027027027,
+        4798.0
+      ],
+      "obstacle_samples": 8,
+      "layer": "delivery"
+    },
+    "R063": {
+      "from": "B04 Blue Owl / Project Jupiter New Mexico",
+      "to": "Oracle",
+      "start": [
+        1155.3296703296703,
+        2249.5
+      ],
+      "control": [
+        3355.422527598871,
+        2609.764953822627
+      ],
+      "end": [
+        2929.010989010989,
+        4798.0
+      ],
+      "obstacle_samples": 8,
+      "layer": "delivery"
+    },
+    "R066": {
+      "from": "B03 Vantage Wisconsin",
+      "to": "Oracle",
+      "start": [
+        1160.42,
+        2479.5
+      ],
+      "control": [
+        3315.309510596964,
+        2670.6167719463074
+      ],
+      "end": [
+        2922.48,
+        4798.0
+      ],
+      "obstacle_samples": 6,
+      "layer": "delivery"
+    },
+    "R069": {
+      "from": "A06 Related/Blackstone RD Michigan",
+      "to": "Oracle",
+      "start": [
+        1166.5418502202642,
+        2709.5
+      ],
+      "control": [
+        3267.5197076966933,
+        2726.799156922153
+      ],
+      "end": [
+        2914.625550660793,
+        4798.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "delivery"
+    },
+    "R072": {
+      "from": "B01 Crusoe/Blue Owl Abilene phase2",
+      "to": "Oracle",
+      "start": [
+        1174.0441176470588,
+        2939.5
+      ],
+      "control": [
+        3210.354993390645,
+        2778.2683452561178
+      ],
+      "end": [
+        2905.0,
+        4798.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "delivery"
+    },
+    "R075": {
+      "from": "C01 CoreWeave DDTL3.0",
+      "to": "Oracle",
+      "start": [
+        1183.4530386740332,
+        3169.5
+      ],
+      "control": [
+        3141.791123830748,
+        2825.274320120283
+      ],
+      "end": [
+        2892.92817679558,
+        4798.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "delivery"
+    },
+    "R078": {
+      "from": "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资",
+      "to": "Anthropic",
+      "start": [
+        1837.0,
+        3343.4216101694915
+      ],
+      "control": [
+        3622.705450111209,
+        2999.968785653169
+      ],
+      "end": [
+        5383.0,
+        3456.112288135593
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R081": {
+      "from": "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+      "to": "Anthropic",
+      "start": [
+        1837.0,
+        3537.508474576271
+      ],
+      "control": [
+        3616.7786874173153,
+        3907.4001847402337
+      ],
+      "end": [
+        5383.0,
+        3477.406779661017
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R085": {
+      "from": "A04 Hut8 River Bend",
+      "to": "Anthropic",
+      "start": [
+        1837.0,
+        3731.595338983051
+      ],
+      "control": [
+        3621.7966183585513,
+        3794.761332995593
+      ],
+      "end": [
+        5383.0,
+        3498.701271186441
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R090": {
+      "from": "B05 TeraWulf Justified桥贷",
+      "to": "Anthropic",
+      "start": [
+        1794.888888888889,
+        3930.5
+      ],
+      "control": [
+        3588.9444444444443,
+        3725.247881355932
+      ],
+      "end": [
+        5383.0,
+        3519.9957627118642
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R093": {
+      "from": "A15 Meridian Arc HoldCo / Indiana",
+      "to": "Anthropic（最终归因待证）",
+      "start": [
+        1389.2916666666665,
+        4319.5
+      ],
+      "control": [
+        4471.896937423307,
+        4751.7990301787695
+      ],
+      "end": [
+        7342.513888888889,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "delivery"
+    },
+    "R097": {
+      "from": "A07 TeraWulf Lake Mariner",
+      "to": "Anthropic（最终归因待证）",
+      "start": [
+        1431.671974522293,
+        4549.5
+      ],
+      "control": [
+        4539.389200088479,
+        4523.159016954085
+      ],
+      "end": [
+        7297.468152866242,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "delivery"
+    },
+    "R102": {
+      "from": "A09 Cipher Barber Lake 原发行",
+      "to": "Anthropic（最终归因待证）",
+      "start": [
+        1488.6007462686566,
+        4779.5
+      ],
+      "control": [
+        4683.466034624014,
+        3799.966787761762
+      ],
+      "end": [
+        7236.95895522388,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "delivery"
+    },
+    "R107": {
+      "from": "A10 Cipher Barber Lake 增发",
+      "to": "Anthropic（最终归因待证）",
+      "start": [
+        1569.1216216216217,
+        5009.5
+      ],
+      "control": [
+        4640.8942983124,
+        3907.24768963112
+      ],
+      "end": [
+        7178.0,
+        5960.012213740458
+      ],
+      "obstacle_samples": 9,
+      "layer": "delivery"
+    },
+    "R110": {
+      "from": "A08 TeraWulf/Fluidstack Abernathy",
+      "to": "Anthropic（最终归因待证）",
+      "start": [
+        1691.7329545454545,
+        5239.5
+      ],
+      "control": [
+        4534.732564008797,
+        4864.721688724104
+      ],
+      "end": [
+        7178.0,
+        5976.586259541985
+      ],
+      "obstacle_samples": 14,
+      "layer": "delivery"
+    },
+    "R115": {
+      "from": "A01 Beignet / Meta Hyperion",
+      "to": "Meta",
+      "start": [
+        1837.0,
+        5328.791525423729
+      ],
+      "control": [
+        4189.393639436593,
+        4732.046122029677
+      ],
+      "end": [
+        6608.0,
+        4932.55593220339
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R118": {
+      "from": "A02 Sopaipilla / Meta El Paso",
+      "to": "Meta",
+      "start": [
+        1751.4583333333335,
+        5540.5
+      ],
+      "control": [
+        4088.877735023917,
+        4499.691634773042
+      ],
+      "end": [
+        6608.0,
+        4947.837288135594
+      ],
+      "obstacle_samples": 1,
+      "layer": "delivery"
+    },
+    "R121": {
+      "from": "A05 QTS Fayetteville DC1-2",
+      "to": "Microsoft",
+      "start": [
+        1202.4233128834355,
+        5770.5
+      ],
+      "control": [
+        2135.506134969325,
+        5046.25
+      ],
+      "end": [
+        3068.588957055215,
+        4322.0
+      ],
+      "obstacle_samples": 11,
+      "layer": "delivery"
+    },
+    "R124": {
+      "from": "C05 IREN Microsoft GPU financing",
+      "to": "Microsoft",
+      "start": [
+        1189.758064516129,
+        6000.5
+      ],
+      "control": [
+        2137.298387096774,
+        5161.25
+      ],
+      "end": [
+        3084.8387096774195,
+        4322.0
+      ],
+      "obstacle_samples": 12,
+      "layer": "delivery"
+    },
+    "R127": {
+      "from": "C10 Nscale Narvik园区",
+      "to": "Microsoft",
+      "start": [
+        8701.25,
+        2019.5
+      ],
+      "control": [
+        6486.654743989514,
+        4090.0743599737852
+      ],
+      "end": [
+        3455.0,
+        4118.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "delivery"
+    },
+    "R130": {
+      "from": "A11 Cipher Black Pearl",
+      "to": "Amazon",
+      "start": [
+        8818.560975609756,
+        2249.5
+      ],
+      "control": [
+        6743.865630582486,
+        2038.8312705907442
+      ],
+      "end": [
+        6904.487804878048,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "delivery"
+    },
+    "R133": {
+      "from": "A12 Applied Digital Polaris Forge1 B2/B3",
+      "to": "CoreWeave",
+      "start": [
+        8761.611111111111,
+        2479.5
+      ],
+      "control": [
+        6768.83311756066,
+        4085.5922169883074
+      ],
+      "end": [
+        4377.555555555556,
+        4998.0
+      ],
+      "obstacle_samples": 5,
+      "layer": "delivery"
+    },
+    "R136": {
+      "from": "A14 Applied Digital Polaris Forge1 B4",
+      "to": "CoreWeave",
+      "start": [
+        8748.724696356276,
+        2709.5
+      ],
+      "control": [
+        6655.143417964098,
+        4013.0867272279856
+      ],
+      "end": [
+        4394.0890688259105,
+        4998.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "delivery"
+    },
+    "R139": {
+      "from": "C16 Mistral Paris GPU debt",
+      "to": "Mistral",
+      "start": [
+        8870.900439238652,
+        2939.5
+      ],
+      "control": [
+        7210.072062599365,
+        4174.8671237453445
+      ],
+      "end": [
+        7680.92972181552,
+        6190.5
+      ],
+      "obstacle_samples": 15,
+      "layer": "delivery"
+    },
+    "R142": {
+      "from": "C02 CoreWeave DDTL4.0",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8748.90350877193,
+        3169.5
+      ],
+      "control": [
+        4909.736740337318,
+        3381.536347739355
+      ],
+      "end": [
+        2560.5994152046783,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "delivery"
+    },
+    "R145": {
+      "from": "C03 CoreWeave DDTL5.0",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8738.009404388715,
+        3399.5
+      ],
+      "control": [
+        4950.178820150424,
+        3476.152365426738
+      ],
+      "end": [
+        2572.17868338558,
+        6425.5
+      ],
+      "obstacle_samples": 12,
+      "layer": "delivery"
+    },
+    "R148": {
+      "from": "C04 CoreWeave DDTL5.5",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8725.422297297297,
+        3629.5
+      ],
+      "control": [
+        5199.610511660539,
+        4026.4135824904997
+      ],
+      "end": [
+        2585.5574324324325,
+        6425.5
+      ],
+      "obstacle_samples": 12,
+      "layer": "delivery"
+    },
+    "R151": {
+      "from": "C11 Firmus Project Southgate",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8710.714285714286,
+        3859.5
+      ],
+      "control": [
+        5036.380405984235,
+        3667.328631028222
+      ],
+      "end": [
+        2601.190476190476,
+        6425.5
+      ],
+      "obstacle_samples": 11,
+      "layer": "delivery"
+    },
+    "R154": {
+      "from": "A03 Hut8 Beacon Point",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8693.3,
+        4089.5
+      ],
+      "control": [
+        5387.2656905183485,
+        4557.490795347705
+      ],
+      "end": [
+        2619.7,
+        6425.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "delivery"
+    },
+    "R157": {
+      "from": "A13 Applied Digital Polaris Forge2",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8672.356828193833,
+        4319.5
+      ],
+      "control": [
+        5294.484870649414,
+        4334.0069701395505
+      ],
+      "end": [
+        2641.9603524229074,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "delivery"
+    },
+    "R160": {
+      "from": "C07 Nscale欧洲GPU DDTL",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8646.691176470587,
+        4549.5
+      ],
+      "control": [
+        5328.5763142252345,
+        4437.975040039074
+      ],
+      "end": [
+        2669.2401960784314,
+        6425.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "delivery"
+    },
+    "R163": {
+      "from": "C08 Nscale Ward County",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8614.502762430939,
+        4779.5
+      ],
+      "control": [
+        5229.769381356902,
+        4061.1434393528752
+      ],
+      "end": [
+        2703.453038674033,
+        6425.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "delivery"
+    },
+    "R166": {
+      "from": "C09 Nscale Madison",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8572.943037974683,
+        5009.5
+      ],
+      "control": [
+        5282.366425739057,
+        4162.77246929183
+      ],
+      "end": [
+        2747.626582278481,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "delivery"
+    },
+    "R169": {
+      "from": "C06 IREN其他GPU部署",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8517.222222222223,
+        5239.5
+      ],
+      "control": [
+        5438.349076213096,
+        4755.483892329169
+      ],
+      "end": [
+        2806.8518518518517,
+        6425.5
+      ],
+      "obstacle_samples": 13,
+      "layer": "delivery"
+    },
+    "R172": {
+      "from": "C12 Lambda投资级客户GPU SPV",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8438.61607142857,
+        5469.5
+      ],
+      "control": [
+        5468.522124181377,
+        4865.060005183324
+      ],
+      "end": [
+        2872.0,
+        6428.670769230769
+      ],
+      "obstacle_samples": 15,
+      "layer": "delivery"
+    },
+    "R175": {
+      "from": "C13 Nebius已运营合同资产融资",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8319.38202247191,
+        5699.5
+      ],
+      "control": [
+        5378.639275483656,
+        4487.226847790038
+      ],
+      "end": [
+        2872.0,
+        6445.372307692308
+      ],
+      "obstacle_samples": 15,
+      "layer": "delivery"
+    },
+    "R178": {
+      "from": "C14 Crusoe Upper90 GPU credit",
+      "to": "未具名/多客户（汇总）",
+      "start": [
+        8163.0,
+        5924.833846153846
+      ],
+      "control": [
+        5477.092383689564,
+        5795.500049157124
+      ],
+      "end": [
+        2872.0,
+        6462.073846153846
+      ],
+      "obstacle_samples": 20,
+      "layer": "delivery"
+    },
+    "R183": {
+      "from": "AI XPV",
+      "to": "Anthropic",
+      "start": [
+        2512.4474708171206,
+        5955.5
+      ],
+      "control": [
+        3990.2214360407906,
+        4619.851044669401
+      ],
+      "end": [
+        5684.264591439689,
+        3572.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "delivery"
+    },
+    "R193": {
+      "from": "新Broadcom-Anthropic SPV",
+      "to": "Anthropic",
+      "start": [
+        4536.690789473684,
+        6425.5
+      ],
+      "control": [
+        5321.307787256433,
+        5070.441253538631
+      ],
+      "end": [
+        5775.710526315789,
+        3572.0
+      ],
+      "obstacle_samples": 10,
+      "layer": "delivery"
+    },
+    "R058": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B02 Vantage Frontier / Texas",
+      "start": [
+        2828.0,
+        2004.9014084507041
+      ],
+      "control": [
+        2304.350833297808,
+        2735.76264325806
+      ],
+      "end": [
+        1837.0,
+        1967.6807511737088
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R061": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B04 Blue Owl / Project Jupiter New Mexico",
+      "start": [
+        2828.0,
+        2048.3098591549297
+      ],
+      "control": [
+        2360.5994230545193,
+        2482.2160327262845
+      ],
+      "end": [
+        1837.0,
+        2118.0985915492956
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R064": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B03 Vantage Wisconsin",
+      "start": [
+        2828.0,
+        2091.718309859155
+      ],
+      "control": [
+        2186.809210526316,
+        2206.1091549295775
+      ],
+      "end": [
+        1545.6184210526317,
+        2320.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R067": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A06 Related/Blackstone RD Michigan",
+      "start": [
+        3742.3852459016393,
+        2094.5
+      ],
+      "control": [
+        2653.0876949609456,
+        2498.9137777957326
+      ],
+      "end": [
+        1492.2868852459017,
+        2550.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R070": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B01 Crusoe/Blue Owl Abilene phase2",
+      "start": [
+        3041.089285714286,
+        2094.5
+      ],
+      "control": [
+        2318.0865649002994,
+        2809.6091722216775
+      ],
+      "end": [
+        1301.5892857142858,
+        2780.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R073": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C01 CoreWeave DDTL3.0",
+      "start": [
+        4719.154205607477,
+        2094.5
+      ],
+      "control": [
+        3345.8242859831153,
+        3613.108503404246
+      ],
+      "end": [
+        1389.0233644859813,
+        3010.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R076": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资",
+      "start": [
+        4767.073076923077,
+        2094.5
+      ],
+      "control": [
+        3401.135796983921,
+        3710.7831215075075
+      ],
+      "end": [
+        1337.8884615384616,
+        3240.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R079": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+      "start": [
+        3126.2843137254904,
+        2094.5
+      ],
+      "control": [
+        2810.2207388694533,
+        3675.9032277763517
+      ],
+      "end": [
+        1210.6764705882354,
+        3470.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "financing"
+    },
+    "R083": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A04 Hut8 River Bend",
+      "start": [
+        3982.588068181818,
+        2094.5
+      ],
+      "control": [
+        3416.8953335321785,
+        4278.713348695786
+      ],
+      "end": [
+        1235.9630681818182,
+        3700.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R088": {
+      "from": "建设贷款资金方（汇总）",
+      "to": "B05 TeraWulf Justified桥贷",
+      "start": [
+        3150.258793969849,
+        2094.5
+      ],
+      "control": [
+        3259.971644671774,
+        4181.640693485076
+      ],
+      "end": [
+        1185.0929648241206,
+        3930.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "financing"
+    },
+    "R091": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A15 Meridian Arc HoldCo / Indiana",
+      "start": [
+        4008.988738738739,
+        2094.5
+      ],
+      "control": [
+        3558.091707252656,
+        4415.159109691522
+      ],
+      "end": [
+        1207.7905405405406,
+        4160.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R095": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A07 TeraWulf Lake Mariner",
+      "start": [
+        4018.4714285714285,
+        2094.5
+      ],
+      "control": [
+        3618.1056659627493,
+        4483.399205937909
+      ],
+      "end": [
+        1197.6714285714286,
+        4390.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R100": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A09 Cipher Barber Lake 原发行",
+      "start": [
+        4026.3264925373132,
+        2094.5
+      ],
+      "control": [
+        3671.775278943394,
+        4552.478359626388
+      ],
+      "end": [
+        1189.2891791044776,
+        4620.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R105": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A10 Cipher Barber Lake 增发",
+      "start": [
+        4032.9398625429553,
+        2094.5
+      ],
+      "control": [
+        3372.15548968672,
+        4263.343447729118
+      ],
+      "end": [
+        1182.2319587628865,
+        4850.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R108": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A08 TeraWulf/Fluidstack Abernathy",
+      "start": [
+        4038.584394904459,
+        2094.5
+      ],
+      "control": [
+        3401.478238422735,
+        4348.705745935802
+      ],
+      "end": [
+        1176.2085987261146,
+        5080.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R113": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A01 Beignet / Meta Hyperion",
+      "start": [
+        4043.458456973294,
+        2094.5
+      ],
+      "control": [
+        3166.5978233195187,
+        4202.110773222112
+      ],
+      "end": [
+        1171.0074183976262,
+        5310.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R116": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A02 Sopaipilla / Meta El Paso",
+      "start": [
+        4047.7097222222224,
+        2094.5
+      ],
+      "control": [
+        3182.469428289004,
+        4298.580900844109
+      ],
+      "end": [
+        1166.4708333333333,
+        5540.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "financing"
+    },
+    "R119": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A05 QTS Fayetteville DC1-2",
+      "start": [
+        4051.4503916449084,
+        2094.5
+      ],
+      "control": [
+        2921.463591378386,
+        4179.664884244044
+      ],
+      "end": [
+        1162.4791122715405,
+        5770.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "financing"
+    },
+    "R122": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C05 IREN Microsoft GPU financing",
+      "start": [
+        4918.619458128079,
+        2094.5
+      ],
+      "control": [
+        2758.570425321954,
+        3770.7687583585957
+      ],
+      "end": [
+        1176.17118226601,
+        6000.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R125": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C10 Nscale Narvik园区",
+      "start": [
+        5392.0,
+        2011.7749360613811
+      ],
+      "control": [
+        6800.0016844568,
+        3083.196937800505
+      ],
+      "end": [
+        8163.0,
+        1955.0792838874681
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R128": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A11 Cipher Black Pearl",
+      "start": [
+        4512.0,
+        2032.58872651357
+      ],
+      "control": [
+        6314.025077390954,
+        2839.387225934883
+      ],
+      "end": [
+        8163.0,
+        2146.9206680584552
+      ],
+      "obstacle_samples": 1,
+      "layer": "financing"
+    },
+    "R131": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A12 Applied Digital Polaris Forge1 B2/B3",
+      "start": [
+        4512.0,
+        2051.8914405010437
+      ],
+      "control": [
+        6305.866610521747,
+        2595.4590987407882
+      ],
+      "end": [
+        8163.0,
+        2341.5323590814196
+      ],
+      "obstacle_samples": 1,
+      "layer": "financing"
+    },
+    "R134": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A14 Applied Digital Polaris Forge1 B4",
+      "start": [
+        4512.0,
+        2071.1941544885176
+      ],
+      "control": [
+        6343.333399521695,
+        2707.642468100362
+      ],
+      "end": [
+        8275.72950819672,
+        2550.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R137": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C16 Mistral Paris GPU debt",
+      "start": [
+        5336.7797619047615,
+        2094.5
+      ],
+      "control": [
+        6895.5556511646955,
+        2613.484650389279
+      ],
+      "end": [
+        8529.94642857143,
+        2780.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R140": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C02 CoreWeave DDTL4.0",
+      "start": [
+        5262.238317757009,
+        2094.5
+      ],
+      "control": [
+        6645.517023239387,
+        3613.489326468145
+      ],
+      "end": [
+        8609.490654205607,
+        3010.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R143": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C03 CoreWeave DDTL5.0",
+      "start": [
+        5214.073076923077,
+        2094.5
+      ],
+      "control": [
+        6590.431212645334,
+        3711.31828173004
+      ],
+      "end": [
+        8660.888461538461,
+        3240.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R146": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C04 CoreWeave DDTL5.5",
+      "start": [
+        5180.388888888889,
+        2094.5
+      ],
+      "control": [
+        6665.311599675727,
+        3480.932084779315
+      ],
+      "end": [
+        8696.833333333334,
+        3470.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R149": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C11 Firmus Project Southgate",
+      "start": [
+        5155.508522727273,
+        2094.5
+      ],
+      "control": [
+        6631.599787725033,
+        3581.4083970788383
+      ],
+      "end": [
+        8723.383522727272,
+        3700.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R152": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A03 Hut8 Beacon Point",
+      "start": [
+        4289.324120603015,
+        2094.5
+      ],
+      "control": [
+        6211.239722676245,
+        3705.1067749495605
+      ],
+      "end": [
+        8708.640703517587,
+        3930.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R155": {
+      "from": "项目债券持有人（汇总）",
+      "to": "A13 Applied Digital Polaris Forge2",
+      "start": [
+        4270.745495495496,
+        2094.5
+      ],
+      "control": [
+        6184.231573136521,
+        3807.9697361376657
+      ],
+      "end": [
+        8728.466216216217,
+        4160.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R158": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C07 Nscale欧洲GPU DDTL",
+      "start": [
+        5108.895918367347,
+        2094.5
+      ],
+      "control": [
+        6845.435130920124,
+        3395.0300147189796
+      ],
+      "end": [
+        8773.124489795919,
+        4390.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R161": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C08 Nscale Ward County",
+      "start": [
+        5098.692164179104,
+        2094.5
+      ],
+      "control": [
+        6715.206868769999,
+        3687.436513356666
+      ],
+      "end": [
+        8784.013059701492,
+        4620.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "financing"
+    },
+    "R164": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C09 Nscale Madison",
+      "start": [
+        5090.101374570447,
+        2094.5
+      ],
+      "control": [
+        6834.173427723373,
+        3616.897866347905
+      ],
+      "end": [
+        8793.180412371134,
+        4850.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R167": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C06 IREN其他GPU部署",
+      "start": [
+        5082.769108280255,
+        2094.5
+      ],
+      "control": [
+        6941.886942675159,
+        3587.5
+      ],
+      "end": [
+        8801.004777070064,
+        5080.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R170": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C12 Lambda投资级客户GPU SPV",
+      "start": [
+        5076.43768545994,
+        2094.5
+      ],
+      "control": [
+        6942.09940652819,
+        3702.5
+      ],
+      "end": [
+        8807.76112759644,
+        5310.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R173": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C13 Nebius已运营合同资产融资",
+      "start": [
+        5070.915277777778,
+        2094.5
+      ],
+      "control": [
+        7213.221443616283,
+        3523.232616485895
+      ],
+      "end": [
+        8813.654166666667,
+        5540.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R176": {
+      "from": "设备融资资金方（汇总）",
+      "to": "C14 Crusoe Upper90 GPU credit",
+      "start": [
+        5066.056135770235,
+        2094.5
+      ],
+      "control": [
+        7068.404725907265,
+        3803.9121003020637
+      ],
+      "end": [
+        8818.839425587468,
+        5770.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R179": {
+      "from": "Apollo管理基金及关联方",
+      "to": "AI XPV",
+      "start": [
+        4080.095070422535,
+        1854.5
+      ],
+      "control": [
+        4741.847507284909,
+        4501.02751061119
+      ],
+      "end": [
+        2433.919014084507,
+        5955.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R180": {
+      "from": "Blackstone管理基金及相关资金方",
+      "to": "AI XPV",
+      "start": [
+        4944.705399061033,
+        1854.5
+      ],
+      "control": [
+        2330.8885974366294,
+        3073.7976785336523
+      ],
+      "end": [
+        2451.37441314554,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "financing"
+    },
+    "R187": {
+      "from": "BofA",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        6714.561310782241,
+        1854.5
+      ],
+      "control": [
+        5789.9250758853705,
+        4217.321340555317
+      ],
+      "end": [
+        4540.1955602537,
+        6425.5
+      ],
+      "obstacle_samples": 10,
+      "layer": "financing"
+    },
+    "R188": {
+      "from": "Citi",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        7580.700845665962,
+        1854.5
+      ],
+      "control": [
+        5918.198723227665,
+        4040.6672035146657
+      ],
+      "end": [
+        4555.916490486258,
+        6425.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "financing"
+    },
+    "R189": {
+      "from": "Morgan Stanley",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        2385.673719376392,
+        2094.5
+      ],
+      "control": [
+        3260.2583627228487,
+        4337.738746110137
+      ],
+      "end": [
+        4459.537861915367,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "financing"
+    },
+    "R190": {
+      "from": "Blackstone管理基金及相关资金方",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        4982.282241014799,
+        1854.5
+      ],
+      "control": [
+        4347.647194642358,
+        4098.782942891739
+      ],
+      "end": [
+        4508.753699788584,
+        6425.5
+      ],
+      "obstacle_samples": 11,
+      "layer": "financing"
+    },
+    "R194": {
+      "from": "Citi",
+      "to": "Nebius",
+      "start": [
+        7588.935240963855,
+        1854.5
+      ],
+      "control": [
+        6880.217663333265,
+        3513.1411544080765
+      ],
+      "end": [
+        5856.222891566265,
+        4998.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R195": {
+      "from": "机构贷款投资者（汇总）",
+      "to": "Lambda",
+      "start": [
+        5819.214084507043,
+        2094.5
+      ],
+      "control": [
+        4663.408450704225,
+        3790.0
+      ],
+      "end": [
+        3507.6028169014085,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R197": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX / Valor",
+      "start": [
+        7595.487750556793,
+        2094.5
+      ],
+      "control": [
+        6787.400165141609,
+        4350.372945684323
+      ],
+      "end": [
+        5589.144766146993,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "financing"
+    },
+    "R198": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX.AI",
+      "start": [
+        7520.243661971831,
+        2094.5
+      ],
+      "control": [
+        4620.809703453777,
+        3198.411137407225
+      ],
+      "end": [
+        2524.4887323943663,
+        5485.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R199": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX.AI",
+      "start": [
+        7520.243661971831,
+        2094.5
+      ],
+      "control": [
+        4581.4964802914665,
+        3140.4933466638763
+      ],
+      "end": [
+        2524.4887323943663,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "financing"
+    },
+    "R200": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX / Valor",
+      "start": [
+        7595.487750556793,
+        2094.5
+      ],
+      "control": [
+        6923.505216390247,
+        4413.423838022222
+      ],
+      "end": [
+        5589.144766146993,
+        6425.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "financing"
+    },
+    "R201": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "CoreWeave",
+      "start": [
+        7547.034090909091,
+        2094.5
+      ],
+      "control": [
+        6688.634799056294,
+        4390.745287585418
+      ],
+      "end": [
+        4313.590909090909,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R202": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "CoreWeave",
+      "start": [
+        7547.034090909091,
+        2094.5
+      ],
+      "control": [
+        6641.866022903042,
+        4338.661877778388
+      ],
+      "end": [
+        4313.590909090909,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R203": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Nebius",
+      "start": [
+        7585.73538961039,
+        2094.5
+      ],
+      "control": [
+        6723.169642857143,
+        3546.25
+      ],
+      "end": [
+        5860.603896103896,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R204": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Nscale",
+      "start": [
+        7564.314084507042,
+        2094.5
+      ],
+      "control": [
+        6631.97178588873,
+        4286.006546233099
+      ],
+      "end": [
+        4574.502816901409,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R205": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Amazon",
+      "start": [
+        7601.893181818182,
+        2094.5
+      ],
+      "control": [
+        7220.1875,
+        3106.25
+      ],
+      "end": [
+        6838.481818181818,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R206": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Fluidstack",
+      "start": [
+        7591.452736318408,
+        2094.5
+      ],
+      "control": [
+        6237.324881308877,
+        3841.1827508943034
+      ],
+      "end": [
+        5593.721393034826,
+        5955.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R207": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Lambda",
+      "start": [
+        7542.2788732394365,
+        2094.5
+      ],
+      "control": [
+        4833.823467179738,
+        2951.569881331493
+      ],
+      "end": [
+        3549.495774647887,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R208": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Crusoe",
+      "start": [
+        7560.643652561247,
+        2094.5
+      ],
+      "control": [
+        4373.5795761769705,
+        3169.778532924173
+      ],
+      "end": [
+        3528.6659242761693,
+        6425.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "financing"
+    },
+    "R209": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Applied Digital",
+      "start": [
+        7611.965922444183,
+        2094.5
+      ],
+      "control": [
+        8671.297212146108,
+        4518.937009990991
+      ],
+      "end": [
+        6620.454759106933,
+        6190.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "financing"
+    },
+    "R210": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "OpenAI",
+      "start": [
+        7452.741379310345,
+        2094.5
+      ],
+      "control": [
+        5937.7155172413795,
+        2731.25
+      ],
+      "end": [
+        4422.689655172414,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R211": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Anthropic",
+      "start": [
+        7537.003448275862,
+        2094.5
+      ],
+      "control": [
+        7211.079350636656,
+        3316.585971817315
+      ],
+      "end": [
+        5947.324137931035,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R023": {
+      "from": "Anthropic",
+      "to": "SpaceX.AI",
+      "start": [
+        5653.885714285714,
+        3572.0
+      ],
+      "control": [
+        4189.937346000537,
+        4682.140820629446
+      ],
+      "end": [
+        2537.614285714286,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R041": {
+      "from": "Lambda",
+      "to": "NVIDIA",
+      "start": [
+        3492.5243506493507,
+        5485.5
+      ],
+      "control": [
+        4412.6483720791,
+        4135.399435329064
+      ],
+      "end": [
+        4948.668831168831,
+        2592.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "commercial"
+    },
+    "R043": {
+      "from": "Nscale",
+      "to": "NVIDIA",
+      "start": [
+        4513.717532467533,
+        5485.5
+      ],
+      "control": [
+        4960.801335098473,
+        4073.20158922791
+      ],
+      "end": [
+        4983.441558441558,
+        2592.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "commercial"
+    },
+    "R045": {
+      "from": "Firmus",
+      "to": "NVIDIA",
+      "start": [
+        5534.910714285715,
+        5485.5
+      ],
+      "control": [
+        5488.2144287343235,
+        4000.9550127260136
+      ],
+      "end": [
+        5018.214285714285,
+        2592.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "commercial"
+    },
+    "R047": {
+      "from": "IREN",
+      "to": "NVIDIA",
+      "start": [
+        6556.103896103896,
+        5485.5
+      ],
+      "control": [
+        5480.642476487035,
+        4207.011287303075
+      ],
+      "end": [
+        5052.987012987013,
+        2592.0
+      ],
+      "obstacle_samples": 1,
+      "layer": "commercial"
+    },
+    "R048": {
+      "from": "Anthropic",
+      "to": "Nscale",
+      "start": [
+        5755.885714285714,
+        3572.0
+      ],
+      "control": [
+        5819.109691130639,
+        4946.504662996402
+      ],
+      "end": [
+        4553.114285714286,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R049": {
+      "from": "Anthropic",
+      "to": "Nscale",
+      "start": [
+        5755.885714285714,
+        3572.0
+      ],
+      "control": [
+        5759.8451326858685,
+        4909.252654831117
+      ],
+      "end": [
+        4553.114285714286,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R087": {
+      "from": "Fluidstack",
+      "to": "A04 Hut8 River Bend",
+      "start": [
+        5383.617256637168,
+        5955.5
+      ],
+      "control": [
+        4044.5812647164194,
+        3480.932721972544
+      ],
+      "end": [
+        1256.537610619469,
+        3859.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "commercial"
+    },
+    "R094": {
+      "from": "Fluidstack",
+      "to": "A15 Meridian Arc HoldCo / Indiana",
+      "start": [
+        5341.097222222223,
+        5955.5
+      ],
+      "control": [
+        3731.2970667082413,
+        4117.7636560700585
+      ],
+      "end": [
+        1296.5416666666667,
+        4319.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "commercial"
+    },
+    "R099": {
+      "from": "Fluidstack",
+      "to": "A07 TeraWulf Lake Mariner",
+      "start": [
+        5310.493630573248,
+        5955.5
+      ],
+      "control": [
+        3850.2488394338952,
+        3743.6528797497213
+      ],
+      "end": [
+        1325.3343949044586,
+        4549.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "commercial"
+    },
+    "R104": {
+      "from": "Fluidstack",
+      "to": "A09 Cipher Barber Lake 原发行",
+      "start": [
+        5269.384328358209,
+        5955.5
+      ],
+      "control": [
+        3778.0334015467643,
+        3835.452537634577
+      ],
+      "end": [
+        1364.0111940298507,
+        4779.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "commercial"
+    },
+    "R112": {
+      "from": "Fluidstack",
+      "to": "A08 TeraWulf/Fluidstack Abernathy",
+      "start": [
+        5122.698863636364,
+        5955.5
+      ],
+      "control": [
+        3457.8549288636227,
+        4861.7482548683565
+      ],
+      "end": [
+        1502.0170454545455,
+        5239.5
+      ],
+      "obstacle_samples": 8,
+      "layer": "commercial"
+    },
+    "R182": {
+      "from": "Google",
+      "to": "AI XPV",
+      "start": [
+        4833.207547169812,
+        4552.0
+      ],
+      "control": [
+        3477.0056511106786,
+        4912.502170282641
+      ],
+      "end": [
+        2538.1761006289307,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "commercial"
+    },
+    "R186": {
+      "from": "Meta",
+      "to": "Hyperion JV",
+      "start": [
+        6736.654545454546,
+        5002.0
+      ],
+      "control": [
+        4792.471692388368,
+        4537.866171091951
+      ],
+      "end": [
+        3668.163636363636,
+        6190.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "commercial"
+    },
+    "R191": {
+      "from": "新Broadcom-Anthropic SPV",
+      "to": "Broadcom",
+      "start": [
+        4473.174603174603,
+        6425.5
+      ],
+      "control": [
+        3697.8560603417013,
+        4693.80451347177
+      ],
+      "end": [
+        3332.3809523809523,
+        2832.0
+      ],
+      "obstacle_samples": 11,
+      "layer": "commercial"
+    },
+    "R002": {
+      "from": "OpenAI",
+      "to": "Microsoft",
+      "start": [
+        4046.72,
+        3572.0
+      ],
+      "control": [
+        3668.7287204883246,
+        3817.205528104744
+      ],
+      "end": [
+        3333.28,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R004": {
+      "from": "OpenAI",
+      "to": "Amazon",
+      "start": [
+        4536.32,
+        3572.0
+      ],
+      "control": [
+        5480.367799379087,
+        3878.64848750239
+      ],
+      "end": [
+        6443.68,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R007": {
+      "from": "OpenAI",
+      "to": "NVIDIA",
+      "start": [
+        4265.34693877551,
+        3368.0
+      ],
+      "control": [
+        4616.842788171594,
+        3002.460292143579
+      ],
+      "end": [
+        4914.65306122449,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R009": {
+      "from": "OpenAI",
+      "to": "AMD",
+      "start": [
+        4527.351351351352,
+        3368.0
+      ],
+      "control": [
+        5449.861390780417,
+        3133.582033468447
+      ],
+      "end": [
+        6352.648648648648,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R010": {
+      "from": "OpenAI",
+      "to": "Broadcom",
+      "start": [
+        4058.7027027027025,
+        3368.0
+      ],
+      "control": [
+        3740.0,
+        3100.0
+      ],
+      "end": [
+        3421.2972972972975,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R011": {
+      "from": "OpenAI",
+      "to": "Oracle",
+      "start": [
+        4095.8321678321677,
+        3572.0
+      ],
+      "control": [
+        3728.835274581531,
+        4299.563373430914
+      ],
+      "end": [
+        3084.1678321678323,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R012": {
+      "from": "OpenAI",
+      "to": "CoreWeave",
+      "start": [
+        4181.251533742331,
+        3572.0
+      ],
+      "control": [
+        4224.997365648047,
+        4284.570584470576
+      ],
+      "end": [
+        4198.748466257669,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R014": {
+      "from": "OpenAI",
+      "to": "Google",
+      "start": [
+        4265.34693877551,
+        3572.0
+      ],
+      "control": [
+        4590.0,
+        3960.0
+      ],
+      "end": [
+        4914.65306122449,
+        4348.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R020": {
+      "from": "Anthropic",
+      "to": "Amazon",
+      "start": [
+        5953.28,
+        3572.0
+      ],
+      "control": [
+        6267.457440976649,
+        3900.588943790512
+      ],
+      "end": [
+        6666.72,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R021": {
+      "from": "Anthropic",
+      "to": "Google",
+      "start": [
+        5734.65306122449,
+        3572.0
+      ],
+      "control": [
+        5383.157211828406,
+        3937.539707856421
+      ],
+      "end": [
+        5085.34693877551,
+        4348.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R022": {
+      "from": "Anthropic",
+      "to": "Microsoft",
+      "start": [
+        5463.68,
+        3572.0
+      ],
+      "control": [
+        4500.367799379087,
+        3811.35151249761
+      ],
+      "end": [
+        3556.32,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R024": {
+      "from": "Anthropic",
+      "to": "Broadcom",
+      "start": [
+        5472.648648648648,
+        3368.0
+      ],
+      "control": [
+        4550.138609219583,
+        3133.582033468447
+      ],
+      "end": [
+        3647.3513513513512,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R028": {
+      "from": "Meta",
+      "to": "AMD",
+      "start": [
+        6985.898617511521,
+        4798.0
+      ],
+      "control": [
+        7939.636315285742,
+        3664.359034753123
+      ],
+      "end": [
+        6714.101382488479,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R029": {
+      "from": "Meta",
+      "to": "NVIDIA",
+      "start": [
+        6915.352697095435,
+        4798.0
+      ],
+      "control": [
+        5180.4523528750915,
+        4375.122528734364
+      ],
+      "end": [
+        5084.647302904565,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R031": {
+      "from": "Meta",
+      "to": "CoreWeave",
+      "start": [
+        6608.0,
+        4928.0
+      ],
+      "control": [
+        5587.175531002176,
+        4820.457434030468
+      ],
+      "end": [
+        4592.0,
+        5072.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R032": {
+      "from": "Meta",
+      "to": "Nebius",
+      "start": [
+        6608.0,
+        4965.333333333333
+      ],
+      "control": [
+        6400.0,
+        5000.0
+      ],
+      "end": [
+        6192.0,
+        5034.666666666667
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R033": {
+      "from": "Microsoft",
+      "to": "Nebius",
+      "start": [
+        3501.3636363636365,
+        4322.0
+      ],
+      "control": [
+        4500.0,
+        4660.0
+      ],
+      "end": [
+        5498.636363636364,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R035": {
+      "from": "NVIDIA",
+      "to": "CoreWeave",
+      "start": [
+        4968.735632183908,
+        2592.0
+      ],
+      "control": [
+        4600.0,
+        3795.0
+      ],
+      "end": [
+        4231.264367816092,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R036": {
+      "from": "CoreWeave",
+      "to": "NVIDIA",
+      "start": [
+        4231.264367816092,
+        4998.0
+      ],
+      "control": [
+        4666.926668999455,
+        3815.5139215323998
+      ],
+      "end": [
+        4968.735632183908,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R038": {
+      "from": "Nebius",
+      "to": "NVIDIA",
+      "start": [
+        5768.735632183908,
+        4998.0
+      ],
+      "control": [
+        5433.463334499727,
+        3784.7430392338
+      ],
+      "end": [
+        5031.264367816092,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R039": {
+      "from": "Google",
+      "to": "CoreWeave",
+      "start": [
+        4874.461538461538,
+        4552.0
+      ],
+      "control": [
+        4600.0,
+        4775.0
+      ],
+      "end": [
+        4325.538461538462,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R212": {
+      "from": "Anthropic",
+      "to": "CoreWeave",
+      "start": [
+        5718.625766871166,
+        3572.0
+      ],
+      "control": [
+        4478.04064737525,
+        3756.304201685831
+      ],
+      "end": [
+        4301.374233128834,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R213": {
+      "from": "Microsoft",
+      "to": "CoreWeave",
+      "start": [
+        3315.909090909091,
+        4322.0
+      ],
+      "control": [
+        3700.0,
+        4660.0
+      ],
+      "end": [
+        4084.090909090909,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R046": {
+      "from": "IREN",
+      "to": "NVIDIA",
+      "start": [
+        6556.103896103896,
+        5485.5
+      ],
+      "control": [
+        5418.524097133366,
+        4239.280575279006
+      ],
+      "end": [
+        5052.987012987013,
+        2592.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "warrant"
+    },
+    "R054": {
+      "from": "Google",
+      "to": "TeraWulf",
+      "start": [
+        4804.280442804428,
+        4552.0
+      ],
+      "control": [
+        3514.5226678719273,
+        4812.568873061532
+      ],
+      "end": [
+        2562.140221402214,
+        5720.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "support"
+    },
+    "R055": {
+      "from": "TeraWulf",
+      "to": "Google",
+      "start": [
+        2562.140221402214,
+        5720.5
+      ],
+      "control": [
+        3514.5226678719273,
+        4812.568873061532
+      ],
+      "end": [
+        4804.280442804428,
+        4552.0
+      ],
+      "obstacle_samples": 5,
+      "layer": "warrant"
+    },
+    "R056": {
+      "from": "Google",
+      "to": "Cipher",
+      "start": [
+        4883.321033210332,
+        4552.0
+      ],
+      "control": [
+        3184.969339971446,
+        3957.9966980433446
+      ],
+      "end": [
+        3546.660516605166,
+        5720.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "support"
+    },
+    "R057": {
+      "from": "Cipher",
+      "to": "Google",
+      "start": [
+        3546.660516605166,
+        5720.5
+      ],
+      "control": [
+        3184.969339971446,
+        3957.9966980433446
+      ],
+      "end": [
+        4883.321033210332,
+        4552.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "warrant"
+    },
+    "R082": {
+      "from": "Google",
+      "to": "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+      "start": [
+        4608.0,
+        4359.538461538462
+      ],
+      "control": [
+        3066.7247112057767,
+        3819.1288155441994
+      ],
+      "end": [
+        1444.5,
+        3629.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "support"
+    },
+    "R086": {
+      "from": "Google",
+      "to": "A04 Hut8 River Bend",
+      "start": [
+        4608.0,
+        4382.65641025641
+      ],
+      "control": [
+        3153.1064009032666,
+        3726.8533765244274
+      ],
+      "end": [
+        1562.7611940298507,
+        3859.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "support"
+    },
+    "R098": {
+      "from": "Google",
+      "to": "A07 TeraWulf Lake Mariner",
+      "start": [
+        4608.0,
+        4452.010256410256
+      ],
+      "control": [
+        3222.5,
+        4459.115384615385
+      ],
+      "end": [
+        1837.0,
+        4466.220512820513
+      ],
+      "obstacle_samples": 0,
+      "layer": "support"
+    },
+    "R103": {
+      "from": "Google",
+      "to": "A09 Cipher Barber Lake 原发行",
+      "start": [
+        4608.0,
+        4475.128205128205
+      ],
+      "control": [
+        3222.5,
+        4563.942307692308
+      ],
+      "end": [
+        1837.0,
+        4652.75641025641
+      ],
+      "obstacle_samples": 0,
+      "layer": "support"
+    },
+    "R111": {
+      "from": "Google",
+      "to": "A08 TeraWulf/Fluidstack Abernathy",
+      "start": [
+        4608.0,
+        4521.364102564103
+      ],
+      "control": [
+        3206.675639884335,
+        5538.804193396163
+      ],
+      "end": [
+        1536.6901408450703,
+        5080.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "support"
+    },
+    "R181": {
+      "from": "Broadcom",
+      "to": "AI XPV",
+      "start": [
+        3272.26586102719,
+        2832.0
+      ],
+      "control": [
+        2461.6346994843934,
+        4288.799084050347
+      ],
+      "end": [
+        2422.9758308157097,
+        5955.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "support"
+    },
+    "R192": {
+      "from": "Broadcom",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        3332.3809523809523,
+        2832.0
+      ],
+      "control": [
+        3697.8560603417013,
+        4693.80451347177
+      ],
+      "end": [
+        4473.174603174603,
+        6425.5
+      ],
+      "obstacle_samples": 11,
+      "layer": "support"
+    },
+    "R008": {
+      "from": "AMD",
+      "to": "OpenAI",
+      "start": [
+        6352.648648648648,
+        2832.0
+      ],
+      "control": [
+        5449.861390780417,
+        3133.582033468447
+      ],
+      "end": [
+        4527.351351351352,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "warrant"
+    },
+    "R030": {
+      "from": "AMD",
+      "to": "Meta",
+      "start": [
+        6714.101382488479,
+        2832.0
+      ],
+      "control": [
+        7870.295822494832,
+        3673.945277996106
+      ],
+      "end": [
+        6985.898617511521,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "warrant"
+    },
+    "R005": {
+      "from": "SoftBank",
+      "to": "OpenAI",
+      "start": [
+        2430.671597633136,
+        1854.5
+      ],
+      "control": [
+        2164.596033483759,
+        3786.689225603017
+      ],
+      "end": [
+        4069.550295857988,
+        3368.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "capital"
+    },
+    "R040": {
+      "from": "NVIDIA",
+      "to": "Lambda",
+      "start": [
+        4948.668831168831,
+        2592.0
+      ],
+      "control": [
+        4412.6483720791,
+        4135.399435329064
+      ],
+      "end": [
+        3492.5243506493507,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "capital"
+    },
+    "R042": {
+      "from": "NVIDIA",
+      "to": "Nscale",
+      "start": [
+        4983.441558441558,
+        2592.0
+      ],
+      "control": [
+        4960.801335098473,
+        4073.20158922791
+      ],
+      "end": [
+        4513.717532467533,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "capital"
+    },
+    "R044": {
+      "from": "NVIDIA",
+      "to": "Firmus",
+      "start": [
+        5018.214285714285,
+        2592.0
+      ],
+      "control": [
+        5488.2144287343235,
+        4000.9550127260136
+      ],
+      "end": [
+        5534.910714285715,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "capital"
+    },
+    "R050": {
+      "from": "SoftBank",
+      "to": "Stargate",
+      "start": [
+        2454.1820580474932,
+        1854.5
+      ],
+      "control": [
+        5225.677375635781,
+        3344.6310980572457
+      ],
+      "end": [
+        7531.833773087072,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "capital"
+    },
+    "R051": {
+      "from": "OpenAI",
+      "to": "Stargate",
+      "start": [
+        4348.542857142857,
+        3572.0
+      ],
+      "control": [
+        5836.262398586959,
+        4682.745187414248
+      ],
+      "end": [
+        7510.3738095238095,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R052": {
+      "from": "Oracle",
+      "to": "Stargate",
+      "start": [
+        3392.0,
+        4956.481720430107
+      ],
+      "control": [
+        5441.874569521731,
+        4140.48021842926
+      ],
+      "end": [
+        7178.0,
+        5501.991397849462
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R053": {
+      "from": "MGX",
+      "to": "Stargate",
+      "start": [
+        3316.883905013193,
+        1854.5
+      ],
+      "control": [
+        4945.969262880892,
+        4239.351515380141
+      ],
+      "end": [
+        7551.453825857519,
+        5485.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "capital"
+    },
+    "R184": {
+      "from": "Blue Owl管理基金",
+      "to": "Hyperion JV",
+      "start": [
+        5829.890989988877,
+        1854.5
+      ],
+      "control": [
+        4821.182338397214,
+        4107.827454870809
+      ],
+      "end": [
+        3495.4927697441603,
+        6190.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "capital"
+    },
+    "R185": {
+      "from": "Meta",
+      "to": "Hyperion JV",
+      "start": [
+        6736.654545454546,
+        5002.0
+      ],
+      "control": [
+        4817.754175116518,
+        4603.140944680994
+      ],
+      "end": [
+        3668.163636363636,
+        6190.5
+      ],
+      "obstacle_samples": 9,
+      "layer": "capital"
+    },
+    "R196": {
+      "from": "发行投资者（汇总）",
+      "to": "Meta",
+      "start": [
+        6756.467013888889,
+        2094.5
+      ],
+      "control": [
+        7969.685336505505,
+        3351.121622144584
+      ],
+      "end": [
+        6991.145833333333,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R001": {
+      "from": "Microsoft",
+      "to": "OpenAI",
+      "start": [
+        3333.28,
+        4118.0
+      ],
+      "control": [
+        3668.7287204883246,
+        3817.205528104744
+      ],
+      "end": [
+        4046.72,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R003": {
+      "from": "Amazon",
+      "to": "OpenAI",
+      "start": [
+        6443.68,
+        4118.0
+      ],
+      "control": [
+        5480.367799379087,
+        3878.64848750239
+      ],
+      "end": [
+        4536.32,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R006": {
+      "from": "NVIDIA",
+      "to": "OpenAI",
+      "start": [
+        4914.65306122449,
+        2592.0
+      ],
+      "control": [
+        4616.842788171594,
+        3002.460292143579
+      ],
+      "end": [
+        4265.34693877551,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R013": {
+      "from": "OpenAI",
+      "to": "CoreWeave",
+      "start": [
+        4181.251533742331,
+        3572.0
+      ],
+      "control": [
+        4155.002634351953,
+        4285.429415529424
+      ],
+      "end": [
+        4198.748466257669,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R015": {
+      "from": "Amazon",
+      "to": "Anthropic",
+      "start": [
+        6666.72,
+        4118.0
+      ],
+      "control": [
+        6267.457440976649,
+        3900.588943790512
+      ],
+      "end": [
+        5953.28,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R016": {
+      "from": "Amazon",
+      "to": "Anthropic",
+      "start": [
+        6666.72,
+        4118.0
+      ],
+      "control": [
+        6310.0,
+        3845.0
+      ],
+      "end": [
+        5953.28,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R017": {
+      "from": "Google",
+      "to": "Anthropic",
+      "start": [
+        5085.34693877551,
+        4348.0
+      ],
+      "control": [
+        5383.157211828406,
+        3937.539707856421
+      ],
+      "end": [
+        5734.65306122449,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R018": {
+      "from": "Microsoft",
+      "to": "Anthropic",
+      "start": [
+        3556.32,
+        4118.0
+      ],
+      "control": [
+        4500.367799379087,
+        3811.35151249761
+      ],
+      "end": [
+        5463.68,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R019": {
+      "from": "NVIDIA",
+      "to": "Anthropic",
+      "start": [
+        5085.34693877551,
+        2592.0
+      ],
+      "control": [
+        5410.0,
+        2980.0
+      ],
+      "end": [
+        5734.65306122449,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R025": {
+      "from": "Broadcom",
+      "to": "Anthropic",
+      "start": [
+        3647.3513513513512,
+        2832.0
+      ],
+      "control": [
+        4550.138609219583,
+        3133.582033468447
+      ],
+      "end": [
+        5472.648648648648,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R026": {
+      "from": "AMD",
+      "to": "Meta",
+      "start": [
+        6714.101382488479,
+        2832.0
+      ],
+      "control": [
+        7662.274344122099,
+        3702.7040077250554
+      ],
+      "end": [
+        6985.898617511521,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R027": {
+      "from": "NVIDIA",
+      "to": "Meta",
+      "start": [
+        5084.647302904565,
+        2592.0
+      ],
+      "control": [
+        5180.4523528750915,
+        4375.122528734364
+      ],
+      "end": [
+        6915.352697095435,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R034": {
+      "from": "NVIDIA",
+      "to": "CoreWeave",
+      "start": [
+        4968.735632183908,
+        2592.0
+      ],
+      "control": [
+        4666.926668999455,
+        3815.5139215323998
+      ],
+      "end": [
+        4231.264367816092,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R037": {
+      "from": "NVIDIA",
+      "to": "Nebius",
+      "start": [
+        5031.264367816092,
+        2592.0
+      ],
+      "control": [
+        5433.463334499727,
+        3784.7430392338
+      ],
+      "end": [
+        5768.735632183908,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    }
+  },
+  "omissions": [],
+  "coordinate_system": {
+    "width": 10000,
+    "height": 8000,
+    "origin": "top-left",
+    "node_box_format": "center_x,center_y,width,height"
+  },
+  "note": "Reference geometry only; rebuild responsive interactive routing."
+}

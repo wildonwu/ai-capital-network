@@ -1,0 +1,11 @@
+default { n: 36, e: 89 } rows 89 cutoff: Intra-month October preview — research cutoff 2026-10-28 17:04:34 UTC (2026-10-29 01:04 As
+full { n: 91, e: 213 } url release=2026-10-29T010434%2B0800-research-preview&view=full-network
+focus OpenAI rows 16 url release=2026-10-29T010434%2B0800-research-preview&node=OpenAI
+edge detail:  Procurement / commercial · record R002 · no deal ID linkedOpenAI → MicrosoftDirection: OpenAI is the buyer/customer in a procurement or service agreement with supplier Microsoft.Amount250 USD bn — basis: contractedStatus (raw)contractedLabel (raw)Azure采购2500亿
+after Esc url release=2026-10-29T010434%2B0800-research-preview detail present false
+oct-only full { n: 91, e: 20 } rows 20
+url restore support-only { n: 91, e: 9 } rows 9
+zh search results 2
+csv download acn-2026-10-29T010434_0800-research-preview-full-network.csv
+mobile horizontal overflow false
+page errors []

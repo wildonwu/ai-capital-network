@@ -1,0 +1,2291 @@
+{
+  "view_id": "companies-network",
+  "node_ids": [
+    "SoftBank",
+    "MGX",
+    "Apollo管理基金及关联方",
+    "Blackstone管理基金及相关资金方",
+    "BofA",
+    "Citi",
+    "Morgan Stanley",
+    "机构贷款投资者（汇总）",
+    "发行投资者（汇总）",
+    "公司债权/融资来源（汇总）",
+    "NVIDIA",
+    "AMD",
+    "Broadcom",
+    "OpenAI",
+    "Anthropic",
+    "Microsoft",
+    "Amazon",
+    "Google",
+    "Oracle",
+    "Meta",
+    "CoreWeave",
+    "Nebius",
+    "SpaceX.AI",
+    "Lambda",
+    "Nscale",
+    "Firmus",
+    "IREN",
+    "Stargate",
+    "TeraWulf",
+    "Cipher",
+    "AI XPV",
+    "Fluidstack",
+    "Applied Digital",
+    "Crusoe",
+    "新Broadcom-Anthropic SPV",
+    "SpaceX / Valor"
+  ],
+  "edge_ids": [
+    "R183",
+    "R193",
+    "R179",
+    "R180",
+    "R187",
+    "R188",
+    "R189",
+    "R190",
+    "R194",
+    "R195",
+    "R197",
+    "R198",
+    "R199",
+    "R200",
+    "R201",
+    "R202",
+    "R203",
+    "R204",
+    "R205",
+    "R206",
+    "R207",
+    "R208",
+    "R209",
+    "R210",
+    "R211",
+    "R023",
+    "R041",
+    "R043",
+    "R045",
+    "R047",
+    "R048",
+    "R049",
+    "R182",
+    "R191",
+    "R002",
+    "R004",
+    "R007",
+    "R009",
+    "R010",
+    "R011",
+    "R012",
+    "R014",
+    "R020",
+    "R021",
+    "R022",
+    "R024",
+    "R028",
+    "R029",
+    "R031",
+    "R032",
+    "R033",
+    "R035",
+    "R036",
+    "R038",
+    "R039",
+    "R212",
+    "R213",
+    "R046",
+    "R054",
+    "R055",
+    "R056",
+    "R057",
+    "R181",
+    "R192",
+    "R008",
+    "R030",
+    "R005",
+    "R040",
+    "R042",
+    "R044",
+    "R050",
+    "R051",
+    "R052",
+    "R053",
+    "R196",
+    "R001",
+    "R003",
+    "R006",
+    "R013",
+    "R015",
+    "R016",
+    "R017",
+    "R018",
+    "R019",
+    "R025",
+    "R026",
+    "R027",
+    "R034",
+    "R037"
+  ],
+  "nodes": {
+    "SoftBank": {
+      "label": "SoftBank",
+      "box": [
+        1100,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "MGX": {
+      "label": "MGX",
+      "box": [
+        2660,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "Apollo管理基金及关联方": {
+      "label": "Apollo-managed funds",
+      "box": [
+        4220,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "Blackstone管理基金及相关资金方": {
+      "label": "Blackstone-related funds",
+      "box": [
+        5780,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "BofA": {
+      "label": "BofA",
+      "box": [
+        7340,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "Citi": {
+      "label": "Citi",
+      "box": [
+        8900,
+        1780,
+        1300,
+        125
+      ]
+    },
+    "Morgan Stanley": {
+      "label": "Morgan Stanley",
+      "box": [
+        1100,
+        2020,
+        1300,
+        125
+      ]
+    },
+    "机构贷款投资者（汇总）": {
+      "label": "Institutional loan investors*",
+      "box": [
+        2660,
+        2020,
+        1300,
+        125
+      ]
+    },
+    "发行投资者（汇总）": {
+      "label": "Equity offering investors*",
+      "box": [
+        4220,
+        2020,
+        1300,
+        125
+      ]
+    },
+    "公司债权/融资来源（汇总）": {
+      "label": "Corporate financing sources*",
+      "box": [
+        5780,
+        2020,
+        1300,
+        125
+      ]
+    },
+    "NVIDIA": {
+      "label": "NVIDIA",
+      "box": [
+        5000.0,
+        2490,
+        960,
+        180
+      ]
+    },
+    "AMD": {
+      "label": "AMD",
+      "box": [
+        7550.0,
+        2730,
+        960,
+        180
+      ]
+    },
+    "Broadcom": {
+      "label": "Broadcom",
+      "box": [
+        2450.0,
+        2730,
+        960,
+        180
+      ]
+    },
+    "OpenAI": {
+      "label": "OpenAI",
+      "box": [
+        3770.0,
+        3470,
+        1050,
+        180
+      ]
+    },
+    "Anthropic": {
+      "label": "Anthropic",
+      "box": [
+        6230.0,
+        3470,
+        1050,
+        180
+      ]
+    },
+    "Microsoft": {
+      "label": "Microsoft",
+      "box": [
+        2300.0,
+        4220,
+        960,
+        180
+      ]
+    },
+    "Amazon": {
+      "label": "Amazon",
+      "box": [
+        7700.0,
+        4220,
+        960,
+        180
+      ]
+    },
+    "Google": {
+      "label": "Google",
+      "box": [
+        5000.0,
+        4450,
+        960,
+        180
+      ]
+    },
+    "Oracle": {
+      "label": "Oracle",
+      "box": [
+        2000.0,
+        4900,
+        960,
+        180
+      ]
+    },
+    "Meta": {
+      "label": "Meta",
+      "box": [
+        8000.0,
+        4900,
+        960,
+        180
+      ]
+    },
+    "CoreWeave": {
+      "label": "CoreWeave",
+      "box": [
+        3800.0,
+        5100,
+        960,
+        180
+      ]
+    },
+    "Nebius": {
+      "label": "Nebius",
+      "box": [
+        6200.0,
+        5100,
+        960,
+        180
+      ]
+    },
+    "SpaceX.AI": {
+      "label": "SpaceX.AI",
+      "box": [
+        1100,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "Lambda": {
+      "label": "Lambda",
+      "box": [
+        2660,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "Nscale": {
+      "label": "Nscale",
+      "box": [
+        4220,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "Firmus": {
+      "label": "Firmus",
+      "box": [
+        5780,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "IREN": {
+      "label": "IREN",
+      "box": [
+        7340,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "Stargate": {
+      "label": "Stargate",
+      "box": [
+        8900,
+        5570,
+        1350,
+        145
+      ]
+    },
+    "TeraWulf": {
+      "label": "TeraWulf",
+      "box": [
+        1100,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "Cipher": {
+      "label": "Cipher",
+      "box": [
+        2660,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "AI XPV": {
+      "label": "AI XPV",
+      "box": [
+        4220,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "Fluidstack": {
+      "label": "Fluidstack",
+      "box": [
+        5780,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "Applied Digital": {
+      "label": "Applied Digital",
+      "box": [
+        7340,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "Crusoe": {
+      "label": "Crusoe",
+      "box": [
+        8900,
+        5805,
+        1350,
+        145
+      ]
+    },
+    "新Broadcom-Anthropic SPV": {
+      "label": "New Broadcom–Anthropic SPV",
+      "box": [
+        1100,
+        6040,
+        1350,
+        145
+      ]
+    },
+    "SpaceX / Valor": {
+      "label": "SpaceX / Valor",
+      "box": [
+        2660,
+        6040,
+        1350,
+        145
+      ]
+    }
+  },
+  "edges": {
+    "R183": {
+      "from": "AI XPV",
+      "to": "Anthropic",
+      "start": [
+        4292.738758029978,
+        5720.5
+      ],
+      "control": [
+        4004.85949245674,
+        3602.4200817412784
+      ],
+      "end": [
+        6142.197002141327,
+        3572.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "delivery"
+    },
+    "R193": {
+      "from": "新Broadcom-Anthropic SPV",
+      "to": "Anthropic",
+      "start": [
+        1268.6712062256809,
+        5955.5
+      ],
+      "control": [
+        3468.369807982861,
+        4406.11865969611
+      ],
+      "end": [
+        6026.396887159533,
+        3572.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "delivery"
+    },
+    "R179": {
+      "from": "Apollo管理基金及关联方",
+      "to": "AI XPV",
+      "start": [
+        4220.0,
+        1854.5
+      ],
+      "control": [
+        4620.0,
+        3787.5
+      ],
+      "end": [
+        4220.0,
+        5720.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "financing"
+    },
+    "R180": {
+      "from": "Blackstone管理基金及相关资金方",
+      "to": "AI XPV",
+      "start": [
+        5751.12546583851,
+        1854.5
+      ],
+      "control": [
+        5374.904717480492,
+        3932.053603398635
+      ],
+      "end": [
+        4252.750310559006,
+        5720.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R187": {
+      "from": "BofA",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        7230.87323943662,
+        1854.5
+      ],
+      "control": [
+        4227.3239436619715,
+        3905.0
+      ],
+      "end": [
+        1223.774647887324,
+        5955.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R188": {
+      "from": "Citi",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        8763.591549295774,
+        1854.5
+      ],
+      "control": [
+        4817.424903502561,
+        3553.9450226797558
+      ],
+      "end": [
+        1254.718309859155,
+        5955.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R189": {
+      "from": "Morgan Stanley",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        1100.0,
+        2094.5
+      ],
+      "control": [
+        1100.0,
+        4025.0
+      ],
+      "end": [
+        1100.0,
+        5955.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "financing"
+    },
+    "R190": {
+      "from": "Blackstone管理基金及相关资金方",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        5698.154929577465,
+        1854.5
+      ],
+      "control": [
+        2368.461665492451,
+        2721.782524002617
+      ],
+      "end": [
+        1192.8309859154929,
+        5955.5
+      ],
+      "obstacle_samples": 7,
+      "layer": "financing"
+    },
+    "R194": {
+      "from": "Citi",
+      "to": "Nebius",
+      "start": [
+        8839.41265060241,
+        1854.5
+      ],
+      "control": [
+        7561.182228915663,
+        3426.25
+      ],
+      "end": [
+        6282.951807228916,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R195": {
+      "from": "机构贷款投资者（汇总）",
+      "to": "Lambda",
+      "start": [
+        2660.0,
+        2094.5
+      ],
+      "control": [
+        3760.0,
+        3790.0
+      ],
+      "end": [
+        2660.0,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R197": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX / Valor",
+      "start": [
+        5722.179104477612,
+        2094.5
+      ],
+      "control": [
+        3935.5354562544217,
+        3801.2097414993104
+      ],
+      "end": [
+        2725.582089552239,
+        5955.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R198": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX.AI",
+      "start": [
+        5681.785915492957,
+        2094.5
+      ],
+      "control": [
+        4434.702525318695,
+        5092.636441630216
+      ],
+      "end": [
+        1211.3971830985915,
+        5485.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "financing"
+    },
+    "R199": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX.AI",
+      "start": [
+        5681.785915492957,
+        2094.5
+      ],
+      "control": [
+        4392.398079862056,
+        5036.866074098647
+      ],
+      "end": [
+        1211.3971830985915,
+        5485.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "financing"
+    },
+    "R200": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "SpaceX / Valor",
+      "start": [
+        5722.179104477612,
+        2094.5
+      ],
+      "control": [
+        3880.236388163366,
+        3758.2910617868497
+      ],
+      "end": [
+        2725.582089552239,
+        5955.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "financing"
+    },
+    "R201": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "CoreWeave",
+      "start": [
+        5732.107142857143,
+        2094.5
+      ],
+      "control": [
+        4979.692657920245,
+        3662.5128821324024
+      ],
+      "end": [
+        3865.5714285714284,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R202": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "CoreWeave",
+      "start": [
+        5732.107142857143,
+        2094.5
+      ],
+      "control": [
+        5105.869429226728,
+        3743.626520829427
+      ],
+      "end": [
+        3865.5714285714284,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R203": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Nebius",
+      "start": [
+        5790.159090909091,
+        2094.5
+      ],
+      "control": [
+        5245.002373966776,
+        3647.584903549985
+      ],
+      "end": [
+        6186.090909090909,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R204": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Nscale",
+      "start": [
+        5747.261971830986,
+        2094.5
+      ],
+      "control": [
+        5002.197183098591,
+        3790.0
+      ],
+      "end": [
+        4257.132394366197,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "financing"
+    },
+    "R205": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Amazon",
+      "start": [
+        5845.018181818182,
+        2094.5
+      ],
+      "control": [
+        6728.0,
+        3106.25
+      ],
+      "end": [
+        7610.981818181818,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R206": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Fluidstack",
+      "start": [
+        5780.0,
+        2094.5
+      ],
+      "control": [
+        5380.0,
+        3907.5
+      ],
+      "end": [
+        5780.0,
+        5720.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R207": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Lambda",
+      "start": [
+        5714.523943661972,
+        2094.5
+      ],
+      "control": [
+        4224.394366197183,
+        3790.0
+      ],
+      "end": [
+        2734.264788732394,
+        5485.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "financing"
+    },
+    "R208": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Crusoe",
+      "start": [
+        5841.410832232496,
+        2094.5
+      ],
+      "control": [
+        8184.677971010393,
+        3207.829075157207
+      ],
+      "end": [
+        8830.34610303831,
+        5720.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R209": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Applied Digital",
+      "start": [
+        5810.705416116249,
+        2094.5
+      ],
+      "control": [
+        7251.352917115054,
+        3621.7073062235486
+      ],
+      "end": [
+        7305.173051519155,
+        5720.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "financing"
+    },
+    "R210": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "OpenAI",
+      "start": [
+        5676.727586206896,
+        2094.5
+      ],
+      "control": [
+        5437.613716057052,
+        3623.348121497399
+      ],
+      "end": [
+        3911.3931034482757,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R211": {
+      "from": "公司债权/融资来源（汇总）",
+      "to": "Anthropic",
+      "start": [
+        5803.120689655172,
+        2094.5
+      ],
+      "control": [
+        6000.732758620689,
+        2731.25
+      ],
+      "end": [
+        6198.3448275862065,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "financing"
+    },
+    "R023": {
+      "from": "Anthropic",
+      "to": "SpaceX.AI",
+      "start": [
+        5980.828571428571,
+        3572.0
+      ],
+      "control": [
+        3711.8168427144196,
+        4695.3329300595105
+      ],
+      "end": [
+        1306.4214285714286,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R041": {
+      "from": "Lambda",
+      "to": "NVIDIA",
+      "start": [
+        2724.198051948052,
+        5485.5
+      ],
+      "control": [
+        4169.726163693768,
+        4301.90418989013
+      ],
+      "end": [
+        4922.506493506494,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R043": {
+      "from": "Nscale",
+      "to": "NVIDIA",
+      "start": [
+        4241.399350649351,
+        5485.5
+      ],
+      "control": [
+        4467.2214658370485,
+        4003.1529715726647
+      ],
+      "end": [
+        4974.168831168831,
+        2592.0
+      ],
+      "obstacle_samples": 1,
+      "layer": "commercial"
+    },
+    "R045": {
+      "from": "Firmus",
+      "to": "NVIDIA",
+      "start": [
+        5758.600649350649,
+        5485.5
+      ],
+      "control": [
+        5426.144818591057,
+        4030.1576138278847
+      ],
+      "end": [
+        5025.831168831169,
+        2592.0
+      ],
+      "obstacle_samples": 1,
+      "layer": "commercial"
+    },
+    "R047": {
+      "from": "IREN",
+      "to": "NVIDIA",
+      "start": [
+        7275.801948051948,
+        5485.5
+      ],
+      "control": [
+        5886.012163588196,
+        4259.557538643442
+      ],
+      "end": [
+        5077.493506493506,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R048": {
+      "from": "Anthropic",
+      "to": "Nscale",
+      "start": [
+        6132.371428571429,
+        3572.0
+      ],
+      "control": [
+        5530.876693981262,
+        4829.533764239208
+      ],
+      "end": [
+        4300.878571428571,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R049": {
+      "from": "Anthropic",
+      "to": "Nscale",
+      "start": [
+        6132.371428571429,
+        3572.0
+      ],
+      "control": [
+        5733.153646428971,
+        5023.141704439157
+      ],
+      "end": [
+        4300.878571428571,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R182": {
+      "from": "Google",
+      "to": "AI XPV",
+      "start": [
+        4941.284132841329,
+        4552.0
+      ],
+      "control": [
+        4448.96351501947,
+        5046.449501109231
+      ],
+      "end": [
+        4268.642066420664,
+        5720.5
+      ],
+      "obstacle_samples": 6,
+      "layer": "commercial"
+    },
+    "R191": {
+      "from": "新Broadcom-Anthropic SPV",
+      "to": "Broadcom",
+      "start": [
+        1134.463746223565,
+        5955.5
+      ],
+      "control": [
+        257.50713301952214,
+        3776.2884944366824
+      ],
+      "end": [
+        2408.3987915407856,
+        2832.0
+      ],
+      "obstacle_samples": 3,
+      "layer": "commercial"
+    },
+    "R002": {
+      "from": "OpenAI",
+      "to": "Microsoft",
+      "start": [
+        3570.08,
+        3572.0
+      ],
+      "control": [
+        3019.0935380409246,
+        3813.823334560212
+      ],
+      "end": [
+        2499.92,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R004": {
+      "from": "OpenAI",
+      "to": "Amazon",
+      "start": [
+        4304.48,
+        3572.0
+      ],
+      "control": [
+        5749.679017051918,
+        3883.432985762454
+      ],
+      "end": [
+        7208.0,
+        4126.106870229008
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R007": {
+      "from": "OpenAI",
+      "to": "NVIDIA",
+      "start": [
+        3898.0204081632655,
+        3368.0
+      ],
+      "control": [
+        4406.810002798063,
+        3007.3737790220584
+      ],
+      "end": [
+        4871.9795918367345,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R009": {
+      "from": "OpenAI",
+      "to": "AMD",
+      "start": [
+        4291.027027027027,
+        3368.0
+      ],
+      "control": [
+        5681.237724807408,
+        3131.506728389705
+      ],
+      "end": [
+        7058.0,
+        2826.3174603174602
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R010": {
+      "from": "OpenAI",
+      "to": "Broadcom",
+      "start": [
+        3588.054054054054,
+        3368.0
+      ],
+      "control": [
+        3110.0,
+        3100.0
+      ],
+      "end": [
+        2631.945945945946,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R011": {
+      "from": "OpenAI",
+      "to": "Oracle",
+      "start": [
+        3643.7482517482517,
+        3572.0
+      ],
+      "control": [
+        2998.1190911068416,
+        4325.014539342034
+      ],
+      "end": [
+        2126.2517482517483,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R012": {
+      "from": "OpenAI",
+      "to": "CoreWeave",
+      "start": [
+        3771.877300613497,
+        3572.0
+      ],
+      "control": [
+        3819.9940735444484,
+        4284.355937296728
+      ],
+      "end": [
+        3798.122699386503,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R014": {
+      "from": "OpenAI",
+      "to": "Google",
+      "start": [
+        3898.0204081632655,
+        3572.0
+      ],
+      "control": [
+        4385.0,
+        3960.0
+      ],
+      "end": [
+        4871.9795918367345,
+        4348.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R020": {
+      "from": "Anthropic",
+      "to": "Amazon",
+      "start": [
+        6429.92,
+        3572.0
+      ],
+      "control": [
+        6933.187076081849,
+        3907.3533308795763
+      ],
+      "end": [
+        7500.08,
+        4118.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R021": {
+      "from": "Anthropic",
+      "to": "Google",
+      "start": [
+        6101.9795918367345,
+        3572.0
+      ],
+      "control": [
+        5593.189997201937,
+        3932.6262209779416
+      ],
+      "end": [
+        5128.0204081632655,
+        4348.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R022": {
+      "from": "Anthropic",
+      "to": "Microsoft",
+      "start": [
+        5695.52,
+        3572.0
+      ],
+      "control": [
+        4237.199017051918,
+        3814.673884466554
+      ],
+      "end": [
+        2792.0,
+        4126.106870229008
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R024": {
+      "from": "Anthropic",
+      "to": "Broadcom",
+      "start": [
+        5708.972972972973,
+        3368.0
+      ],
+      "control": [
+        4318.762275192592,
+        3131.506728389705
+      ],
+      "end": [
+        2942.0,
+        2826.3174603174602
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R028": {
+      "from": "Meta",
+      "to": "AMD",
+      "start": [
+        7978.847926267281,
+        4798.0
+      ],
+      "control": [
+        8852.08447501728,
+        3591.641468314389
+      ],
+      "end": [
+        7571.152073732719,
+        2832.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R029": {
+      "from": "Meta",
+      "to": "NVIDIA",
+      "start": [
+        7873.029045643154,
+        4798.0
+      ],
+      "control": [
+        5833.0135962875365,
+        4525.273531592278
+      ],
+      "end": [
+        5126.970954356846,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R031": {
+      "from": "Meta",
+      "to": "CoreWeave",
+      "start": [
+        7508.0,
+        4923.428571428572
+      ],
+      "control": [
+        5891.438273105219,
+        4820.203735209601
+      ],
+      "end": [
+        4292.0,
+        5076.571428571428
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R032": {
+      "from": "Meta",
+      "to": "Nebius",
+      "start": [
+        7508.0,
+        4954.666666666667
+      ],
+      "control": [
+        7100.0,
+        5000.0
+      ],
+      "end": [
+        6692.0,
+        5045.333333333333
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R033": {
+      "from": "Microsoft",
+      "to": "Nebius",
+      "start": [
+        2752.0454545454545,
+        4322.0
+      ],
+      "control": [
+        4250.0,
+        4660.0
+      ],
+      "end": [
+        5747.954545454546,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R035": {
+      "from": "NVIDIA",
+      "to": "CoreWeave",
+      "start": [
+        4953.103448275862,
+        2592.0
+      ],
+      "control": [
+        4400.0,
+        3795.0
+      ],
+      "end": [
+        3846.896551724138,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R036": {
+      "from": "CoreWeave",
+      "to": "NVIDIA",
+      "start": [
+        3846.896551724138,
+        4998.0
+      ],
+      "control": [
+        4463.599881470884,
+        3824.2413248141993
+      ],
+      "end": [
+        4953.103448275862,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R038": {
+      "from": "Nebius",
+      "to": "NVIDIA",
+      "start": [
+        6153.103448275862,
+        4998.0
+      ],
+      "control": [
+        5631.799940735442,
+        3780.3793375929004
+      ],
+      "end": [
+        5046.896551724138,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R039": {
+      "from": "Google",
+      "to": "CoreWeave",
+      "start": [
+        4811.692307692308,
+        4552.0
+      ],
+      "control": [
+        4400.0,
+        4775.0
+      ],
+      "end": [
+        3988.3076923076924,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R212": {
+      "from": "Anthropic",
+      "to": "CoreWeave",
+      "start": [
+        6077.938650306748,
+        3572.0
+      ],
+      "control": [
+        4597.2020271541105,
+        3662.1478073524468
+      ],
+      "end": [
+        3952.0613496932515,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R213": {
+      "from": "Microsoft",
+      "to": "CoreWeave",
+      "start": [
+        2473.8636363636365,
+        4322.0
+      ],
+      "control": [
+        3050.0,
+        4660.0
+      ],
+      "end": [
+        3626.1363636363635,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "commercial"
+    },
+    "R046": {
+      "from": "IREN",
+      "to": "NVIDIA",
+      "start": [
+        7275.801948051948,
+        5485.5
+      ],
+      "control": [
+        5830.273836306232,
+        4301.90418989013
+      ],
+      "end": [
+        5077.493506493506,
+        2592.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "warrant"
+    },
+    "R054": {
+      "from": "Google",
+      "to": "TeraWulf",
+      "start": [
+        4706.420664206642,
+        4552.0
+      ],
+      "control": [
+        2790.1583563736217,
+        4460.853060555496
+      ],
+      "end": [
+        1343.210332103321,
+        5720.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "support"
+    },
+    "R055": {
+      "from": "TeraWulf",
+      "to": "Google",
+      "start": [
+        1343.210332103321,
+        5720.5
+      ],
+      "control": [
+        2790.1583563736217,
+        4460.853060555496
+      ],
+      "end": [
+        4706.420664206642,
+        4552.0
+      ],
+      "obstacle_samples": 4,
+      "layer": "warrant"
+    },
+    "R056": {
+      "from": "Google",
+      "to": "Cipher",
+      "start": [
+        4823.852398523985,
+        4552.0
+      ],
+      "control": [
+        3030.653464989809,
+        3781.923910455025
+      ],
+      "end": [
+        2805.9261992619927,
+        5720.5
+      ],
+      "obstacle_samples": 2,
+      "layer": "support"
+    },
+    "R057": {
+      "from": "Cipher",
+      "to": "Google",
+      "start": [
+        2805.9261992619927,
+        5720.5
+      ],
+      "control": [
+        3030.653464989809,
+        3781.923910455025
+      ],
+      "end": [
+        4823.852398523985,
+        4552.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "warrant"
+    },
+    "R181": {
+      "from": "Broadcom",
+      "to": "AI XPV",
+      "start": [
+        2508.712195121951,
+        2832.0
+      ],
+      "control": [
+        3686.707724941701,
+        4076.7027099026827
+      ],
+      "end": [
+        4171.360975609756,
+        5720.5
+      ],
+      "obstacle_samples": 5,
+      "layer": "support"
+    },
+    "R192": {
+      "from": "Broadcom",
+      "to": "新Broadcom-Anthropic SPV",
+      "start": [
+        2408.3987915407856,
+        2832.0
+      ],
+      "control": [
+        257.50713301952214,
+        3776.2884944366824
+      ],
+      "end": [
+        1134.463746223565,
+        5955.5
+      ],
+      "obstacle_samples": 3,
+      "layer": "support"
+    },
+    "R008": {
+      "from": "AMD",
+      "to": "OpenAI",
+      "start": [
+        7058.0,
+        2826.3174603174602
+      ],
+      "control": [
+        5681.237724807408,
+        3131.506728389705
+      ],
+      "end": [
+        4291.027027027027,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "warrant"
+    },
+    "R030": {
+      "from": "AMD",
+      "to": "Meta",
+      "start": [
+        7571.152073732719,
+        2832.0
+      ],
+      "control": [
+        8783.542735697998,
+        3605.855193058019
+      ],
+      "end": [
+        7978.847926267281,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "warrant"
+    },
+    "R005": {
+      "from": "SoftBank",
+      "to": "OpenAI",
+      "start": [
+        1217.7011834319526,
+        1854.5
+      ],
+      "control": [
+        1824.9678129968995,
+        3540.708304125937
+      ],
+      "end": [
+        3608.852071005917,
+        3368.0
+      ],
+      "obstacle_samples": 2,
+      "layer": "capital"
+    },
+    "R040": {
+      "from": "NVIDIA",
+      "to": "Lambda",
+      "start": [
+        4922.506493506494,
+        2592.0
+      ],
+      "control": [
+        4169.726163693768,
+        4301.90418989013
+      ],
+      "end": [
+        2724.198051948052,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R042": {
+      "from": "NVIDIA",
+      "to": "Nscale",
+      "start": [
+        4974.168831168831,
+        2592.0
+      ],
+      "control": [
+        4467.2214658370485,
+        4003.1529715726647
+      ],
+      "end": [
+        4241.399350649351,
+        5485.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "capital"
+    },
+    "R044": {
+      "from": "NVIDIA",
+      "to": "Firmus",
+      "start": [
+        5025.831168831169,
+        2592.0
+      ],
+      "control": [
+        5426.144818591057,
+        4030.1576138278847
+      ],
+      "end": [
+        5758.600649350649,
+        5485.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "capital"
+    },
+    "R050": {
+      "from": "SoftBank",
+      "to": "Stargate",
+      "start": [
+        1253.324538258575,
+        1854.5
+      ],
+      "control": [
+        4989.709762532982,
+        3670.0
+      ],
+      "end": [
+        8726.094986807388,
+        5485.5
+      ],
+      "obstacle_samples": 4,
+      "layer": "capital"
+    },
+    "R051": {
+      "from": "OpenAI",
+      "to": "Stargate",
+      "start": [
+        4019.1714285714284,
+        3572.0
+      ],
+      "control": [
+        6288.183157285581,
+        4695.3329300595105
+      ],
+      "end": [
+        8693.578571428572,
+        5485.5
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R052": {
+      "from": "Oracle",
+      "to": "Stargate",
+      "start": [
+        2492.0,
+        4947.773913043478
+      ],
+      "control": [
+        5458.811580511242,
+        4130.682003430622
+      ],
+      "end": [
+        8213.0,
+        5503.291304347826
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R053": {
+      "from": "MGX",
+      "to": "Stargate",
+      "start": [
+        2782.65963060686,
+        1854.5
+      ],
+      "control": [
+        5200.734602312524,
+        4610.170769428628
+      ],
+      "end": [
+        8760.87598944591,
+        5485.5
+      ],
+      "obstacle_samples": 1,
+      "layer": "capital"
+    },
+    "R196": {
+      "from": "发行投资者（汇总）",
+      "to": "Meta",
+      "start": [
+        4317.78125,
+        2094.5
+      ],
+      "control": [
+        5122.28398057943,
+        4718.940752051998
+      ],
+      "end": [
+        7866.125,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R001": {
+      "from": "Microsoft",
+      "to": "OpenAI",
+      "start": [
+        2499.92,
+        4118.0
+      ],
+      "control": [
+        3019.0935380409246,
+        3813.823334560212
+      ],
+      "end": [
+        3570.08,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R003": {
+      "from": "Amazon",
+      "to": "OpenAI",
+      "start": [
+        7208.0,
+        4126.106870229008
+      ],
+      "control": [
+        5749.679017051918,
+        3883.432985762454
+      ],
+      "end": [
+        4304.48,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R006": {
+      "from": "NVIDIA",
+      "to": "OpenAI",
+      "start": [
+        4871.9795918367345,
+        2592.0
+      ],
+      "control": [
+        4406.810002798063,
+        3007.3737790220584
+      ],
+      "end": [
+        3898.0204081632655,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R013": {
+      "from": "OpenAI",
+      "to": "CoreWeave",
+      "start": [
+        3771.877300613497,
+        3572.0
+      ],
+      "control": [
+        3750.0059264555516,
+        4285.644062703272
+      ],
+      "end": [
+        3798.122699386503,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R015": {
+      "from": "Amazon",
+      "to": "Anthropic",
+      "start": [
+        7500.08,
+        4118.0
+      ],
+      "control": [
+        6933.187076081849,
+        3907.3533308795763
+      ],
+      "end": [
+        6429.92,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R016": {
+      "from": "Amazon",
+      "to": "Anthropic",
+      "start": [
+        7500.08,
+        4118.0
+      ],
+      "control": [
+        6965.0,
+        3845.0
+      ],
+      "end": [
+        6429.92,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R017": {
+      "from": "Google",
+      "to": "Anthropic",
+      "start": [
+        5128.0204081632655,
+        4348.0
+      ],
+      "control": [
+        5593.189997201937,
+        3932.6262209779416
+      ],
+      "end": [
+        6101.9795918367345,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R018": {
+      "from": "Microsoft",
+      "to": "Anthropic",
+      "start": [
+        2792.0,
+        4126.106870229008
+      ],
+      "control": [
+        4237.199017051918,
+        3814.673884466554
+      ],
+      "end": [
+        5695.52,
+        3572.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R019": {
+      "from": "NVIDIA",
+      "to": "Anthropic",
+      "start": [
+        5128.0204081632655,
+        2592.0
+      ],
+      "control": [
+        5615.0,
+        2980.0
+      ],
+      "end": [
+        6101.9795918367345,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R025": {
+      "from": "Broadcom",
+      "to": "Anthropic",
+      "start": [
+        2942.0,
+        2826.3174603174602
+      ],
+      "control": [
+        4318.762275192592,
+        3131.506728389705
+      ],
+      "end": [
+        5708.972972972973,
+        3368.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R026": {
+      "from": "AMD",
+      "to": "Meta",
+      "start": [
+        7571.152073732719,
+        2832.0
+      ],
+      "control": [
+        8920.62621433656,
+        3577.4277435707595
+      ],
+      "end": [
+        7978.847926267281,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R027": {
+      "from": "NVIDIA",
+      "to": "Meta",
+      "start": [
+        5126.970954356846,
+        2592.0
+      ],
+      "control": [
+        5833.0135962875365,
+        4525.273531592278
+      ],
+      "end": [
+        7873.029045643154,
+        4798.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R034": {
+      "from": "NVIDIA",
+      "to": "CoreWeave",
+      "start": [
+        4953.103448275862,
+        2592.0
+      ],
+      "control": [
+        4463.599881470884,
+        3824.2413248141993
+      ],
+      "end": [
+        3846.896551724138,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    },
+    "R037": {
+      "from": "NVIDIA",
+      "to": "Nebius",
+      "start": [
+        5046.896551724138,
+        2592.0
+      ],
+      "control": [
+        5631.799940735442,
+        3780.3793375929004
+      ],
+      "end": [
+        6153.103448275862,
+        4998.0
+      ],
+      "obstacle_samples": 0,
+      "layer": "capital"
+    }
+  },
+  "omissions": [
+    {
+      "id": "B02 Vantage Frontier / Texas",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "建设贷款资金方（汇总）",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Vantage",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "B04 Blue Owl / Project Jupiter New Mexico",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Blue Owl管理平台",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "B03 Vantage Wisconsin",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A06 Related/Blackstone RD Michigan",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "项目债券持有人（汇总）",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Related / Blackstone平台",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "B01 Crusoe/Blue Owl Abilene phase2",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Crusoe / Blue Owl平台",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C01 CoreWeave DDTL3.0",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "设备融资资金方（汇总）",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C15 AI XPV / Apollo–Blackstone Anthropic TPU设备融资",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "B06 Nexus Hubbard bank commitment - interim deduplicated project amount",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Nexus",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A04 Hut8 River Bend",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Hut 8",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "B05 TeraWulf Justified桥贷",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A15 Meridian Arc HoldCo / Indiana",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Meridian Arc",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Anthropic（最终归因待证）",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A07 TeraWulf Lake Mariner",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A09 Cipher Barber Lake 原发行",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A10 Cipher Barber Lake 增发",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A08 TeraWulf/Fluidstack Abernathy",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Abernathy项目",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A01 Beignet / Meta Hyperion",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Hyperion JV",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A02 Sopaipilla / Meta El Paso",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "El Paso结构",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A05 QTS Fayetteville DC1-2",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "QTS / Blackstone平台",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C05 IREN Microsoft GPU financing",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C10 Nscale Narvik园区",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A11 Cipher Black Pearl",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A12 Applied Digital Polaris Forge1 B2/B3",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A14 Applied Digital Polaris Forge1 B4",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C16 Mistral Paris GPU debt",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Mistral",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C02 CoreWeave DDTL4.0",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "未具名/多客户（汇总）",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C03 CoreWeave DDTL5.0",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C04 CoreWeave DDTL5.5",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C11 Firmus Project Southgate",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A03 Hut8 Beacon Point",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "A13 Applied Digital Polaris Forge2",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C07 Nscale欧洲GPU DDTL",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C08 Nscale Ward County",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C09 Nscale Madison",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C06 IREN其他GPU部署",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C12 Lambda投资级客户GPU SPV",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C13 Nebius已运营合同资产融资",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "C14 Crusoe Upper90 GPU credit",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    },
+    {
+      "id": "Blue Owl管理基金",
+      "reason": "Individual project/site, project-only platform or disconnected after project removal"
+    }
+  ],
+  "coordinate_system": {
+    "width": 10000,
+    "height": 8000,
+    "origin": "top-left",
+    "node_box_format": "center_x,center_y,width,height"
+  },
+  "note": "Reference geometry only; rebuild responsive interactive routing."
+}
