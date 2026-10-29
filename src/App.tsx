@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Graph from './Graph';
+import Mechanisms from './Mechanisms';
 import { loadRelease } from './lib/data';
 import type { GraphEdge, Layer, Release } from './lib/types';
 import { LAYERS } from './lib/types';
@@ -85,8 +86,12 @@ export default function App() {
       <header className="masthead">
         <div className="kicker"><span>THE AI CAPITAL NETWORK</span><span>OCTOBER 2026 · INTRA-MONTH PREVIEW</span></div>
         <h1>{f.view === 'full-network' ? 'Who funds the AI boom — and who buys the capacity?' : 'The companies and capital behind the AI build-out'}</h1>
-        <p className="dek">Investors are also suppliers. Customers hold equity. Credit support connects the technology giants to a web of projects.</p>
-        <p className="meta"><strong>{view.node_ids.length} nodes · {view.edge_ids.length} directed relationship records in this view</strong> ({m.counts.nodes} nodes / {m.counts.relationships} records in release) · showing {visible.length} after filters</p>
+        <p className="dek">{f.view === 'full-network'
+          ? 'Investors are also suppliers. Customers hold equity. Credit support connects the technology giants to a web of projects.'
+          : 'Equity, procurement and credit support link the major AI companies to financial providers and financing vehicles.'}</p>
+        <p className="meta"><strong>{view.node_ids.length} {f.view === 'companies-network' ? 'company / financing-channel nodes' : 'nodes'} · {view.edge_ids.length} directed relationships</strong>
+          {f.view === 'companies-network' ? ' · Individual sites and project facilities excluded' : ' · project sites in the side columns'}
+          {' '}({m.counts.nodes} nodes / {m.counts.relationships} records in release) · showing {visible.length} after filters</p>
         <p className="cutoff" data-testid="cutoff">Intra-month October preview — research cutoff <b>2026-10-28 17:04:34 UTC</b> (2026-10-29 01:04 Asia/Taipei). Not a month-end release. Release <code>{m.release_id}</code>{release.hashVerified ? ' · hashes verified' : ' · hashes not verified (no WebCrypto)'}</p>
       </header>
 
@@ -123,7 +128,7 @@ export default function App() {
 
       <main className="main">
         <div className="graph-col"><Graph release={release} filters={f} onNode={focusNode} onEdge={(id) => { selectEdge(id); if (id) setMobileTab('list'); }} /></div>
-        <aside className="detail" aria-live="polite">
+        <aside className={`detail${selNode || selEdge ? ' open' : ''}`} aria-live="polite">
           {!selNode && !selEdge && <div className="hint"><h2>Explore</h2><p>Click or search an entity to see its incoming and outgoing relationships. Click a line or a table row for the exact record and sources. <kbd>Esc</kbd> clears.</p><p className="small">{release.graph.data_quality_notice}</p></div>}
           {selEdge && <EdgeDetail e={selEdge} release={release} name={name} onClose={() => selectEdge(null)} nodesMap={nodes} />}
           {selNode && <div className="node-detail">
@@ -138,6 +143,8 @@ export default function App() {
           </div>}
         </aside>
       </main>
+
+      <Mechanisms release={release} />
 
       <section className="table-sec">
         <h2>Relationship records <span className="count" data-testid="row-count">{rows.length}</span>{selNode && <> involving {selNode.label_en}</>}</h2>

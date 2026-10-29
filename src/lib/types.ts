@@ -12,10 +12,16 @@ export interface Graph {
   historical_amount_policy: string; data_quality_notice: string;
 }
 export interface Source { published_at: string; quote: string; access: string; date_precision: string; sha256?: string; urls: string[]; archive_included: boolean }
+/** Quadratic route in the view's coordinate system. Start and end lie on the node boxes. */
+export interface ViewEdgeRoute {
+  from: string; to: string;
+  start: [number, number]; control: [number, number]; end: [number, number];
+  obstacle_samples?: number; layer?: string;
+}
 export interface ViewManifest {
   release_id: string; view_id: string; node_ids: string[]; edge_ids: string[];
   nodes: Record<string, { label: string; box: [number, number, number, number] }>;
-  edges: Record<string, unknown>; omissions: { id: string; reason: string }[];
+  edges: Record<string, ViewEdgeRoute>; omissions: { id: string; reason: string }[];
   coordinate_system: { width: number; height: number; origin: string; node_box_format: string }; note: string;
 }
 export interface Manifest {
