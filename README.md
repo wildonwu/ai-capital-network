@@ -45,6 +45,27 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
 - ≤760 px: List/Graph tabs, list+detail first.
 - CSV/JSON export of the filtered table, carrying release id, cutoff, scope and raw status/amount fields; null amounts export empty/null.
 
+## Company data panel (market, credit, balance sheet)
+
+Selecting a company that has a file in `data/companies/` shows a panel above the records table.
+It is deliberately **outside** the hashed release: market data changes daily, the release does not.
+
+| Block | Source | Refresh |
+|---|---|---|
+| Equity price, 1-year history, distance to reference prices | Yahoo Finance chart endpoint (unofficial) | daily, automatic |
+| Cash, debt principal, RPO, revenue, OCF, capex, FCF, interest, maturities | SEC XBRL `companyfacts` | daily check, changes after each 10-Q/10-K |
+| CDS, bond yields, active/contracted power, undrawn facilities, events | hand-recorded in `data/companies/<company>.json`, each point dated with an https source | manual |
+
+- `scripts/fetch-market.mjs` writes `public/data/market/companies.json`; pure logic lives in `scripts/market-core.mjs`.
+  A source that fails keeps its last values, marked `stale`; nothing is zeroed. Unchanged data is not rewritten.
+- 10-Q cash flows are year-to-date; quarters are derived by differencing. Debt maturities are placed by calendar
+  year (CoreWeave tags its first full year as `NextTwelveMonths`) and the tail is derived as total minus listed years.
+- `.github/workflows/market-refresh.yml` runs weekdays after the US close, validates (`vitest`, `tsc`) and commits the
+  snapshot to `main` only when it changed. It needs a repository secret `SEC_USER_AGENT` (SEC requires a
+  descriptive User-Agent with a contact address); without it the financial block stays at its last values, marked stale.
+- Local refresh: `SEC_USER_AGENT="<name> <contact>" node scripts/fetch-market.mjs`.
+- To add a company: create `data/companies/<name>.json` with the release `node_id`, `sec_cik` and `yahoo_symbol`.
+
 ## Known data gaps / limitations
 
 - 159/213 edges have no `deal_id`; 115 have unknown amounts (shown as “not disclosed”, never 0).

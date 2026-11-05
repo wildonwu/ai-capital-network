@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Graph from './Graph';
 import Mechanisms from './Mechanisms';
+import CompanyPanel from './CompanyPanel';
+import { loadMarket, type MarketSnapshot } from './lib/market';
 import { loadRelease } from './lib/data';
 import type { GraphEdge, Layer, Release } from './lib/types';
 import { LAYERS } from './lib/types';
@@ -28,10 +30,13 @@ export default function App() {
   const [f, setF] = useState<Filters>(DEFAULT_FILTERS);
   const [q, setQ] = useState('');
   const [mobileTab, setMobileTab] = useState<'list' | 'graph'>('list');
+  const [market, setMarket] = useState<MarketSnapshot | null>(null);
+  const [today] = useState(() => new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
     loadRelease().then((r) => { setRelease(r); setF(queryToFilters(location.search, r)); }).catch((e) => setError(String(e.message ?? e)));
   }, []);
+  useEffect(() => { loadMarket().then(setMarket); }, []);
 
   useEffect(() => {
     if (!release) return;
@@ -145,6 +150,8 @@ export default function App() {
       </main>
 
       <Mechanisms release={release} />
+
+      {selNode && market?.companies[selNode.id] && <CompanyPanel c={market.companies[selNode.id]} today={today} />}
 
       <section className="table-sec">
         <h2>Relationship records <span className="count" data-testid="row-count">{rows.length}</span>{selNode && <> involving {selNode.label_en}</>}</h2>

@@ -1,0 +1,43 @@
+name: Refresh company market data
+
+# Weekdays after the US close. GitHub may start scheduled runs late; daily granularity tolerates that.
+on:
+  schedule:
+    - cron: "17 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Fetch SEC filings and daily closes
+        env:
+          # SEC asks for a descriptive User-Agent with a contact address. Set it as a repository secret.
+          SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
+        run: node scripts/fetch-market.mjs
+      - name: Validate before publishing
+        run: npx vitest run && npx tsc -b
+      - name: Commit snapshot if it changed
+        run: |
+          if git diff --quiet -- public/data/market; then
+            echo "No change in market data."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/market
+          git commit -m "Refresh company market data ($(date -u +%Y-%m-%d))"
+          git push origin HEAD:main

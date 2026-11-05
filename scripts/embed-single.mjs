@@ -10,6 +10,9 @@ const m = JSON.parse(mText);
 const dir = latest.manifest.replace(/manifest\.json$/, '');
 const embed = { 'latest.json': latestText, [latest.manifest]: mText };
 for (const f of Object.keys(m.files)) embed[dir + f] = fs.readFileSync(path.join(data, dir, f), 'utf8');
+// Optional company market snapshot (not part of the hashed release).
+const marketFile = path.join(data, 'market/companies.json');
+if (fs.existsSync(marketFile)) embed['market/companies.json'] = fs.readFileSync(marketFile, 'utf8');
 const json = JSON.stringify(embed).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 const out = path.join(root, 'dist-single/index.html');
 let html = fs.readFileSync(out, 'utf8');

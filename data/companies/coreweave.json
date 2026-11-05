@@ -1,0 +1,71 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "CoreWeave",
+  "name": "CoreWeave, Inc.",
+  "ticker": "CRWV",
+  "sec_cik": "0001769628",
+  "yahoo_symbol": "CRWV",
+  "curated_at": "2026-11-05",
+  "reference_prices": [
+    { "label": "2033 convertible notes conversion price", "value": 97.85, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000432/crwv-20260917.htm" },
+    { "label": "2031 convertible notes conversion price", "value": 107.80, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000105/crwv-20251208.htm" },
+    { "label": "2032 convertible notes conversion price", "value": 119.60, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000164/crwv-20260409.htm" },
+    { "label": "NVIDIA private placement (Jan 2026)", "value": 87.20, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm" },
+    { "label": "Jane Street private placement (Apr 2026)", "value": 109.00, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm" }
+  ],
+  "manual_series": {
+    "cds_5y_bp": {
+      "label": "5-year CDS spread",
+      "unit": "bp",
+      "note": "No free automated feed. Values are hand-recorded from news reports that cite Markit or ICE data; they are secondary and may not be closing levels. 1,000 bp is commonly read as a credit-stress threshold.",
+      "points": [
+        { "date": "2026-06-30", "precision": "month", "value": 452, "note": "June 2026 reference level", "source": "https://www.tikr.com/zh/blog/coreweave-stock-fell-25-last-week-on-bond-distress-is-it-a-buy-now" },
+        { "date": "2026-10-15", "precision": "day", "value": 1194.5, "note": "Intraday record, ICE data as reported", "source": "https://www.tikr.com/zh/blog/coreweave-stock-fell-25-last-week-on-bond-distress-is-it-a-buy-now" },
+        { "date": "2026-10-27", "precision": "day", "value": 1041.4, "note": "Markit data as reported", "source": "https://www.roic.ai/news/coreweave-cds-narrows-to-lowest-in-over-a-week-but-credit-stress-persists-10-27-2026" }
+      ]
+    },
+    "bond_2032_9625_yield_pct": {
+      "label": "9.625% notes due Jul 2032 — yield",
+      "unit": "%",
+      "note": "Hand-recorded from news reports; no free TRACE feed. Issued at 9.625% in June 2026.",
+      "points": [
+        { "date": "2026-06-18", "precision": "day", "value": 9.625, "note": "Coupon at issue (priced at par)", "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000291/crwv-20260618.htm" },
+        { "date": "2026-10-14", "precision": "day", "value": 15.0, "note": "About 79.5 cents on the dollar, as reported", "source": "https://www.tikr.com/zh/blog/coreweave-stock-fell-25-last-week-on-bond-distress-is-it-a-buy-now" }
+      ]
+    },
+    "active_power_mw": {
+      "label": "Active power",
+      "unit": "MW",
+      "note": "Company-reported in quarterly earnings releases; definition (IT vs facility power) not stated.",
+      "points": [
+        { "date": "2025-09-30", "precision": "quarter", "value": 590, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000059/coreweave3q25earningspress.htm" },
+        { "date": "2025-12-31", "precision": "quarter", "value": 850, "note": "More than 850 MW", "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000094/coreweave4q25earningspress.htm" },
+        { "date": "2026-03-31", "precision": "quarter", "value": 1000, "note": "Surpassed 1 GW", "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000220/coreweave1q26earningspress.htm" },
+        { "date": "2026-06-30", "precision": "quarter", "value": 1500, "note": "About 1.5 GW", "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm" }
+      ]
+    },
+    "contracted_power_mw": {
+      "label": "Contracted power",
+      "unit": "MW",
+      "note": "Company-reported in quarterly earnings releases.",
+      "points": [
+        { "date": "2025-09-30", "precision": "quarter", "value": 2900, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000059/coreweave3q25earningspress.htm" },
+        { "date": "2025-12-31", "precision": "quarter", "value": 3100, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000094/coreweave4q25earningspress.htm" },
+        { "date": "2026-03-31", "precision": "quarter", "value": 3500, "note": "Over 3.5 GW", "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000220/coreweave1q26earningspress.htm" },
+        { "date": "2026-06-30", "precision": "quarter", "value": 3700, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm" }
+      ]
+    },
+    "undrawn_facilities_usd_bn": {
+      "label": "Undrawn committed facilities",
+      "unit": "USD bn",
+      "note": "Revolver plus DDTL availability per 10-Q. DDTL amounts can only fund the specific financed contracts; only the revolver (about $2.0bn at 2026-06-30) is general purpose.",
+      "points": [
+        { "date": "2025-12-31", "precision": "quarter", "value": 3.701, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm" },
+        { "date": "2026-06-30", "precision": "quarter", "value": 10.014, "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm" }
+      ]
+    }
+  },
+  "events": [
+    { "date": "2026-11-10", "label": "Q3 2026 results and conference call (5:00 pm ET)", "source": "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Announces-Date-of-Third-Quarter-2026-Financial-Results-and-Conference-Call/default.aspx" }
+  ]
+}
