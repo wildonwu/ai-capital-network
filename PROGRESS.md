@@ -23,8 +23,8 @@ quantify.
 - [x] Panel UI above the records table, responsive to 390 px (`src/CompanyPanel.tsx`)
 - [x] Tests (`tests/market.test.ts`) — 34/34 passing with existing suite
 - [x] Daily workflow (`.github/workflows/market-refresh.yml`)
-- [ ] Repository secret `SEC_USER_AGENT` set (blocked: needs the owner's chosen contact string)
-- [ ] Feature pushed to `main` and verified on the live site
+- [x] Repository secret `SEC_USER_AGENT` set (2026-11-05)
+- [x] Feature pushed to `main` and verified on the live site (Vercel success; manual workflow run fetched both sources)
 - [ ] Phase retrospective presented to the user
 
 ### Backlog
@@ -36,8 +36,7 @@ quantify.
       $3.7bn; R075 links DDTL 3.0 to Oracle although its source says OpenAI; R213 "67% of 2025 revenue" needs a source
 
 ## Blockers / next steps
-1. Owner to supply the SEC contact string for the `SEC_USER_AGENT` secret.
-2. After the Q3 2026 filing (results 2026-11-10), confirm the fetcher picks up the new 10-Q and update manual series
+1. After the Q3 2026 filing (results 2026-11-10), confirm the fetcher picks up the new 10-Q and update manual series
    (power MW, undrawn facilities, CDS/bond marks).
 
 ## Verification
