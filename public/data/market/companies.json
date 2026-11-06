@@ -1,6 +1,6 @@
 {
  "schema": "acn-market-1",
- "generated_at": "2026-11-05T06:24:51.109Z",
+ "generated_at": "2026-11-06T02:29:27.096Z",
  "companies": {
   "CoreWeave": {
    "node_id": "CoreWeave",
@@ -9,22 +9,18 @@
    "curated_at": "2026-11-05",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-05T06:24:51.109Z",
+    "fetched_at": "2026-11-06T02:29:27.096Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-04",
-     "close": 48.42
+     "date": "2026-11-05",
+     "close": 43.66
     },
-    "prev_close": 53.74,
-    "change_pct": -9.9,
+    "prev_close": 48.42,
+    "change_pct": -9.83,
     "high_52w": 137.98,
-    "low_52w": 48.42,
+    "low_52w": 43.66,
     "history": [
-     {
-      "date": "2025-11-05",
-      "close": 114.42
-     },
      {
       "date": "2025-11-06",
       "close": 106.93
@@ -1024,12 +1020,16 @@
      {
       "date": "2026-11-04",
       "close": 48.42
+     },
+     {
+      "date": "2026-11-05",
+      "close": 43.66
      }
     ]
    },
    "financials": {
     "status": "ok",
-    "fetched_at": "2026-11-05T06:24:51.109Z",
+    "fetched_at": "2026-11-06T02:29:27.096Z",
     "source": "SEC XBRL companyfacts (data.sec.gov)",
     "latest_filing": {
      "form": "10-Q",
