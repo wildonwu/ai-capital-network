@@ -52,8 +52,20 @@ seven categories; detailed data backfill deferred.
 - [x] Fixed vs concentric re-layout, both available for comparison
 - [x] Credit monitor section with the CDS chart above the network
 - [x] Tests (`tests/selection.test.ts`), 62/62 passing
-- [ ] Owner compares layouts on the preview and picks one
+- [x] Four layouts built for comparison; "Bands by category" kept as default for now (owner still deciding)
 - [ ] Merge to main
+
+### Phase 3b — 5Y CDS for every bond issuer in the network (2026-11-08)
+Decision: track the 5Y CDS of every network company with bonds and DTCC single-name trades, not only CoreWeave.
+- [x] Company files for ORCL, NVDA, AVGO, AMZN, META, GOOGL, AMD, MSFT, BAC, C, MS (entity patterns on DTCC names)
+- [x] One DTCC download per file shared by all companies; package legs and identical cross-name prints dropped
+- [x] Sign of the undirected upfront chosen per tenor by least total movement (Viterbi); spread quotes pin the path;
+      the 1/8-point grid is only a small bonus for 5% names (most prints miss it, so lone hits were misleading)
+- [x] Spread quotes reported ×100 too small rescaled; zero upfronts and pre-window lifecycle trades ignored
+- [x] Day-level spike filter; outlier guard anchored on the chosen readings, not on sparse "certain" ones
+- [x] Credit monitor: sortable 5Y table (1W/1M/3M change, curve status), log-scale comparison, per-company detail
+- [x] 74/74 tests passing
+Excluded: SoftBank (JPY contracts, needs a JPY curve); NBIS, IREN, WULF, CIFR, APLD, HUT and private firms (no trades).
 
 ### Backlog
 - [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor

@@ -1,0 +1,16 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "BofA",
+  "name": "Bank of America Corporation",
+  "ticker": "BAC",
+  "yahoo_symbol": "BAC",
+  "curated_at": "2026-11-08",
+  "cds": {
+    "source": "dtcc-sec",
+    "entity_pattern": "^bank of america corp",
+    "label": "Bank of America Corporation (senior)"
+  },
+  "reference_prices": [],
+  "manual_series": {},
+  "events": []
+}

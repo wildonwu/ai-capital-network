@@ -1,0 +1,16 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "AMD",
+  "name": "Advanced Micro Devices, Inc.",
+  "ticker": "AMD",
+  "yahoo_symbol": "AMD",
+  "curated_at": "2026-11-08",
+  "cds": {
+    "source": "dtcc-sec",
+    "entity_pattern": "advanced micro devices",
+    "label": "Advanced Micro Devices, Inc. (senior)"
+  },
+  "reference_prices": [],
+  "manual_series": {},
+  "events": []
+}

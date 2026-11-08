@@ -12,7 +12,7 @@ export interface ManualSeries { label: string; unit: string; note?: string; poin
 export interface ReferencePrice { label: string; value: number; source: string }
 export interface MaturityBucket { year: string; value: number; derived: boolean }
 
-export interface CdsPoint { date: string; spread_bp: number; points_pct: number; status?: 'observed' | 'inferred' | 'carried'; priced: number; inferred?: number; observed_on?: string; trades?: number; capped?: number }
+export interface CdsPoint { date: string; spread_bp: number; points_pct: number | null; status?: 'observed' | 'inferred' | 'carried'; priced: number; inferred?: number; observed_on?: string; trades?: number; capped?: number }
 export interface InversionAlert { active: boolean; as_of?: string; since?: string; five_bp?: number; five_days?: number; short?: { tenor: string; spread_bp: number; days: number }[] }
 export interface CdsBlock {
   status: BlockStatus; fetched_at?: string; source?: string; method?: string; reference_entity?: string; latest_file?: string | null;

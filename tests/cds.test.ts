@@ -125,16 +125,19 @@ describe('tenor curve, capped-notional inference and inversion', () => {
   });
   it('carries the last value forward and marks inferred days', () => {
     const store = {
-      a: { ...base, id: 'a', trade: '2026-11-04', ts: '2026-11-04T15:00:00Z', maturity: '2031-12-20', notional: 2e6, upfront: 370000 },
+      // 19.125 quoted points minus 44 days (9/21 to the 11/04 step-in) of 5% accrued: only the + reading is on the 1/8 grid, so it anchors the series.
+      // (A trade on 11/04 would not do: 45 days of 5% accrued is 0.625 points, itself a grid multiple, so both readings fit.)
+      a: { ...base, id: 'a', trade: '2026-11-03', ts: '2026-11-03T15:00:00Z', maturity: '2031-12-20', notional: 2e6, upfront: 2e6 * (0.19125 - 0.05 * 44 / 360) },
       b: { ...base, id: 'b', trade: '2026-11-06', ts: '2026-11-06T15:00:00Z', maturity: '2031-12-20', notional: null, capped: true, upfront: 1042361.11 },
     };
-    const { tenors, inferredCount } = cds.curveSeries(store, { '2026-11-04': PAR }, '2026-11-09');
+    const { tenors, inferredCount } = cds.curveSeries(store, { '2026-11-03': PAR }, '2026-11-09');
     expect(inferredCount).toBe(1);
     expect(tenors['5Y'].map((p: { date: string; status: string }) => [p.date, p.status])).toEqual([
-      ['2026-11-04', 'observed'], ['2026-11-05', 'carried'], ['2026-11-06', 'inferred'], ['2026-11-09', 'carried'],
+      ['2026-11-03', 'observed'], ['2026-11-04', 'carried'], ['2026-11-05', 'carried'], ['2026-11-06', 'inferred'], ['2026-11-09', 'carried'],
     ]);
     expect(tenors['5Y'][1].spread_bp).toBe(tenors['5Y'][0].spread_bp);
-    expect(tenors['5Y'][2].points_pct).toBeCloseTo(21.5, 2);
+    expect(tenors['5Y'][3].points_pct).toBeCloseTo(21.5, 2);
+    expect(tenors['5Y'][0].points_pct).toBeCloseTo(19.13, 2);
   });
   it('needs the short tenor on at least two days before calling an inversion', () => {
     const day = (date: string, v: number, status = 'observed') => ({ date, spread_bp: v, points_pct: 0, status, priced: 1 });
@@ -147,5 +150,42 @@ describe('tenor curve, capped-notional inference and inversion', () => {
     // On 11-04 the window holds only one 3Y day, so the inversion starts on 11-05.
     expect(cds.inversionAlert(h)).toMatchObject({ active: true, since: '2026-11-05', five_bp: 1100 });
     expect(cds.inversionPeriods(h)).toEqual([{ from: '2026-11-05', to: '2026-11-06' }]);
+  });
+});
+
+describe('direction, scale and package handling', () => {
+  const PARX = PAR;
+  const tb = cds.priceTable({ trade: '2026-11-04', maturity: '2031-12-20', df: cds.discountCurve(PARX) });
+  it('fast table matches the full model within half a basis point', () => {
+    const g = cds.grid({ trade: '2026-11-04', maturity: '2031-12-20', df });
+    for (const p of [-0.05, 0, 0.08, 0.2]) {
+      const slow = cds.conventionalSpread({ trade: '2026-11-04', maturity: '2031-12-20', coupon: 0.05, points: p, df, g }).spread;
+      expect(Math.abs(cds.spreadFromPoints(tb, p, 0.05) - slow) * 1e4).toBeLessThan(0.5);
+    }
+  });
+  it('reads a negative upfront when only that reading is on the grid', () => {
+    // 5% coupon name trading tighter than its coupon: quoted −3.25 points.
+    const acc = 0.05 * 44 / 360, cash = 0.0325 + acc; // reported amount is positive
+    const t = { id: 'n', trade: '2026-11-03', ts: '2026-11-03T15:00:00Z', maturity: '2031-12-20', coupon: 0.05, notional: 2e6, upfront: 2e6 * cash, upfrontType: 'UFRO' };
+    const { tenors } = cds.curveSeries({ n: t }, { '2026-11-03': PARX }, '2026-11-03');
+    expect(tenors['5Y'][0].points_pct).toBeCloseTo(-3.25, 2);
+    expect(tenors['5Y'][0].spread_bp).toBeLessThan(500);
+  });
+  it('lets a later spread quote decide the sign of earlier ambiguous 1% prints', () => {
+    // 1% coupon, cash 1.9% of notional: +reading ≈ 2.1 points (~145bp) or −reading ≈ −1.7 points (~65bp).
+    const up = (id: string, d: string) => ({ id, trade: d, ts: `${d}T15:00:00Z`, maturity: '2031-12-20', coupon: 0.01, notional: 2e6, upfront: 2e6 * 0.019, upfrontType: 'UFRO' });
+    const sq = { id: 'q', trade: '2026-11-05', ts: '2026-11-05T15:00:00Z', maturity: '2031-12-20', coupon: 0.01, notional: null, upfront: null, upfrontType: null, spread: 0.0065 };
+    const { tenors } = cds.curveSeries({ a: up('a', '2026-11-03'), b: up('b', '2026-11-04'), q: sq }, { '2026-11-03': PARX }, '2026-11-05');
+    expect(tenors['5Y'][0].spread_bp).toBeLessThan(90); // the − reading, which a tie would not pick
+  });
+  it('rescales spread quotes reported per hundred', () => {
+    const mk = (id: string, s: number) => ({ id, trade: '2026-11-04', ts: `2026-11-04T1${id}:00:00Z`, maturity: '2031-12-20', coupon: 0.01, notional: null, upfront: null, upfrontType: null, spread: s });
+    const { tenors } = cds.curveSeries({ a: mk('1', 0.0042), b: mk('2', 0.000043) }, { '2026-11-04': PARX }, '2026-11-04');
+    expect(tenors['5Y'][0].spread_bp).toBeCloseTo(42.5, 0);
+  });
+  it('drops prints that appear identically under several names', () => {
+    const t = { id: 'x', ts: '2026-10-07T19:25:18Z', notional: 2e6, upfront: 36573 };
+    const drop = cds.crossNameDuplicates({ A: { x: t }, B: { y: { ...t, id: 'y', ts: '2026-10-07T19:25:20Z' } }, C: { z: { ...t, id: 'z', upfront: 1 } } });
+    expect([...drop.A]).toEqual(['x']); expect([...drop.B]).toEqual(['y']); expect([...drop.C]).toEqual([]);
   });
 });

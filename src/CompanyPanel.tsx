@@ -64,7 +64,7 @@ function CdsRow({ cds, today, reported }: { cds: CdsBlock; today: string; report
       </div>
       {l && <p className="cp-note">
         {cds.status !== 'ok' && <b>{cds.status}. </b>}
-        Upfront {l.points_pct.toFixed(2)} points on a 5% coupon{l.status === 'carried' ? `, carried from ${l.observed_on} (no 5Y trade since)` : l.status === 'inferred' ? `, includes ${l.inferred} trade${l.inferred === 1 ? '' : 's'} above the $5m cap with an inferred notional` : `, ${l.priced} trade${l.priced === 1 ? '' : 's'}`}. ISDA standard model (40% recovery, Treasury curve).
+        {l.points_pct != null ? `Upfront ${l.points_pct.toFixed(2)} points` : 'Spread-quoted'}{l.status === 'carried' ? `, carried from ${l.observed_on} (no 5Y trade since)` : l.status === 'inferred' ? `, includes ${l.inferred} trade${l.inferred === 1 ? '' : 's'} above the $5m cap with an inferred notional` : `, ${l.priced} trade${l.priced === 1 ? '' : 's'}`}. ISDA standard model (40% recovery, Treasury curve).
         {checks.map(({ p, d }) => <> Check {p.date}: {d!.spread_bp.toFixed(0)} vs {p.value.toLocaleString('en-US')} bp reported ({((d!.spread_bp / p.value - 1) * 100).toFixed(1)}%).</>)}
       </p>}
     </>

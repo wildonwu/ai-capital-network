@@ -179,7 +179,7 @@
   ],
   "cds": {
     "source": "dtcc-sec",
-    "entity_pattern": "coreweave",
+    "entity_pattern": "^coreweave",
     "label": "CoreWeave, Inc. (senior)"
   },
   "chart_events": [

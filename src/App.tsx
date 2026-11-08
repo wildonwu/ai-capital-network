@@ -3,7 +3,7 @@ import Graph from './Graph';
 import Mechanisms from './Mechanisms';
 import CompanyPanel from './CompanyPanel';
 import CompanyList from './CompanyList';
-import CdsChart from './CdsChart';
+import CreditMonitor from './CreditMonitor';
 import { loadRelease } from './lib/data';
 import { loadMarket, type MarketSnapshot } from './lib/market';
 import type { GraphEdge, Layer, Release } from './lib/types';
@@ -93,10 +93,7 @@ export default function App() {
 
       {cdsCompanies.length > 0 && <section id="credit-monitor" className="credit-monitor" aria-label="Credit monitor">
         <h2>Credit monitor <small>single-name CDS from public DTCC trade reports</small></h2>
-        {cdsCompanies.map((c) => <div key={c.node_id} className="cm-company">
-          <div className="cm-name"><b>{c.name}</b> <button className="link" onClick={() => setS((p) => ({ ...p, selected: p.selected.includes(c.node_id) ? p.selected : [...p.selected, c.node_id] }))}>Show in network</button></div>
-          <CdsChart cds={c.cds!} price={c.price.history ?? []} alertPeriods={c.cds!.inversion?.periods ?? []} />
-        </div>)}
+        <CreditMonitor companies={cdsCompanies} tickerOf={name} />
       </section>}
 
       <section className="controls" aria-label="Controls">

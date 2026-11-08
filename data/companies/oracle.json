@@ -1,0 +1,16 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "Oracle",
+  "name": "Oracle Corporation",
+  "ticker": "ORCL",
+  "yahoo_symbol": "ORCL",
+  "curated_at": "2026-11-08",
+  "cds": {
+    "source": "dtcc-sec",
+    "entity_pattern": "oracle",
+    "label": "Oracle Corporation (senior)"
+  },
+  "reference_prices": [],
+  "manual_series": {},
+  "events": []
+}

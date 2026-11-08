@@ -131,7 +131,7 @@ export default function CdsChart({ cds, price, alertPeriods }: { cds: CdsBlock; 
           <strong>{hd}{gran === 'W' ? ' (week)' : ''}</strong>
           {vis.map((k) => { const p = byTenor[k].get(hd); return <span key={k}><i style={{ background: COLORS[k] }} />{k}<b>{p ? `${Math.round(p.spread_bp).toLocaleString('en-US')} bp` : '—'}</b>{p && p.status !== 'observed' && <em>{p.status === 'carried' ? `carried from ${p.observed_on}` : `${p.inferred} inferred`}</em>}</span>; })}
           {show.price && <span><i className="cc-key-line" />Price<b>{priceOn(hd) !== undefined ? `$${priceOn(hd)!.toFixed(2)}` : '—'}</b></span>}
-          {byTenor['5Y'].get(hd) && <span className="cc-tip-sub">5Y upfront {byTenor['5Y'].get(hd)!.points_pct.toFixed(2)} pts</span>}
+          {byTenor['5Y'].get(hd)?.points_pct != null && <span className="cc-tip-sub">5Y upfront {byTenor['5Y'].get(hd)!.points_pct!.toFixed(2)} pts</span>}
         </div>}
         <svg ref={navRef} className="cc-nav" viewBox={`0 0 ${W} ${NAV_H + 16}`} role="group" aria-label="Window selector: drag to select a period, drag the window or its handles to adjust"
           onPointerMove={onNavMove} onPointerUp={endDrag} onPointerCancel={endDrag}>

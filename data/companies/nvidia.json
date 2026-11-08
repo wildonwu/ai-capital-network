@@ -1,0 +1,16 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "NVIDIA",
+  "name": "NVIDIA Corporation",
+  "ticker": "NVDA",
+  "yahoo_symbol": "NVDA",
+  "curated_at": "2026-11-08",
+  "cds": {
+    "source": "dtcc-sec",
+    "entity_pattern": "nvidia",
+    "label": "NVIDIA Corporation (senior)"
+  },
+  "reference_prices": [],
+  "manual_series": {},
+  "events": []
+}

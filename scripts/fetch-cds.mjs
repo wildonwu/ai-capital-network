@@ -1,11 +1,13 @@
 // Daily CDS refresh from DTCC SEC public dissemination (end-of-day cumulative credit files).
-// Trade state is committed to data/derived/cds/<node_id>.json so each run only downloads new files.
+// Trade state per company is committed to data/derived/cds/<node_id>.json; each file is downloaded once per run
+// and handed to every company that has not processed it yet (a newly added company backfills a year).
 import fs from 'node:fs';
 import path from 'node:path';
-import { applyLifecycle, compactTrade, curveSeries, inversionAlert, inversionHistory, inversionPeriods, parseCsv, parseTreasuryCsv, selectTrades, unzip, RECOVERY } from './cds-core.mjs';
+import { applyLifecycle, compactTrade, crossNameDuplicates, curveSeries, inversionAlert, inversionHistory, inversionPeriods, parseCsv, parseTreasuryCsv, selectTrades, unzip, RECOVERY } from './cds-core.mjs';
 
 const UA = { 'User-Agent': 'Mozilla/5.0 (ai-capital-network research)' };
 const BACKFILL_DAYS = 370;
+const fileDate = (name) => name.replace(/^SEC_CUMULATIVE_CREDITS_/, '').replace('.zip', '');
 
 async function get(url, as = 'text') {
   const r = await fetch(url, { headers: UA, signal: AbortSignal.timeout(60000) });
@@ -22,11 +24,18 @@ async function treasuryCurves(years) {
   return curves;
 }
 
-/** Returns { block, log } where block is the snapshot's `cds` entry (or null on failure). */
-export async function refreshCds({ nodeId, cds }, root, now) {
-  const stateFile = path.join(root, 'data/derived/cds', `${nodeId}.json`);
-  const state = fs.existsSync(stateFile) ? JSON.parse(fs.readFileSync(stateFile, 'utf8')) : { entity_pattern: cds.entity_pattern, processed: [], trades: {} };
+/**
+ * companies: [{ nodeId, cds: { entity_pattern, label } }]. Returns { blocks: { nodeId: block }, log }.
+ * A company whose processing fails is left out of `blocks` (the caller keeps its previous values, marked stale).
+ */
+export async function refreshAllCds(companies, root, now) {
   const log = [];
+  const states = new Map(companies.map(({ nodeId, cds }) => {
+    const f = path.join(root, 'data/derived/cds', `${nodeId}.json`);
+    const st = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : { entity_pattern: cds.entity_pattern, processed: [], trades: {} };
+    if (st.entity_pattern !== cds.entity_pattern) Object.assign(st, { entity_pattern: cds.entity_pattern, processed: [], trades: {} }); // pattern changed: rebuild
+    return [nodeId, { file: f, st, done: new Set(st.processed) }];
+  }));
 
   // The dashboard API names its S3 bucket; fall back to the last known name when that API is unavailable.
   let bucket = 'kgc0418-tdw-data-0';
@@ -36,40 +45,52 @@ export async function refreshCds({ nodeId, cds }, root, now) {
   } catch (e) { log.push(`bucket lookup failed (${e.message}); using ${bucket}`); }
   const list = JSON.parse(await get(`https://${bucket}.s3.amazonaws.com/dashboard/Cumulative.json`)).SEC_CR ?? [];
   const cutoff = new Date(Date.parse(now) - BACKFILL_DAYS * 86400000).toISOString().slice(0, 10).replace(/-/g, '_');
-  const done = new Set(state.processed);
-  const todo = list.filter((f) => !done.has(f.fileName) && f.fileName.replace(/^SEC_CUMULATIVE_CREDITS_/, '').replace('.zip', '') >= cutoff)
-    .sort((a, b) => a.fileName.localeCompare(b.fileName));
+  const files = list.filter((f) => fileDate(f.fileName) >= cutoff).sort((a, b) => a.fileName.localeCompare(b.fileName));
 
-  for (const f of todo) {
-    const buf = await get(f.fullFilePath, 'buffer');
-    let rows = [];
-    for (const csv of Object.values(unzip(buf))) rows = rows.concat(selectTrades(parseCsv(csv.toString('utf8')), cds.entity_pattern));
-    applyLifecycle(state.trades, rows);
-    state.processed.push(f.fileName);
-    log.push(`${f.fileName}: ${rows.length} rows`);
+  let downloaded = 0;
+  for (const f of files) {
+    const need = [...states].filter(([, s]) => !s.done.has(f.fileName));
+    if (!need.length) continue;
+    const records = Object.values(unzip(await get(f.fullFilePath, 'buffer'))).flatMap((csv) => parseCsv(csv.toString('utf8')));
+    downloaded++;
+    for (const [, s] of need) { applyLifecycle(s.st.trades, selectTrades(records, s.st.entity_pattern)); s.st.processed.push(f.fileName); s.done.add(f.fileName); }
   }
-  for (const [id, t] of Object.entries(state.trades)) state.trades[id] = compactTrade(t);
-  state.processed = state.processed.filter((n) => n.replace(/^SEC_CUMULATIVE_CREDITS_/, '').replace('.zip', '') >= cutoff).sort();
-  fs.mkdirSync(path.dirname(stateFile), { recursive: true });
-  fs.writeFileSync(stateFile, JSON.stringify(state, null, 0) + '\n');
+  log.push(`${downloaded} DTCC file(s) downloaded`);
 
-  const years = [...new Set(Object.values(state.trades).map((t) => t.trade?.slice(0, 4)).filter(Boolean))].sort();
-  const lastFile = state.processed.at(-1);
-  const lastDate = lastFile ? lastFile.replace(/^SEC_CUMULATIVE_CREDITS_/, '').replace('.zip', '').replace(/_/g, '-') : now.slice(0, 10);
-  const { tenors, inferredCount, cappedSkipped } = curveSeries(state.trades, await treasuryCurves(years), lastDate);
-  const history = inversionHistory(tenors);
-  return {
-    log,
-    block: {
-      status: 'ok', fetched_at: now,
-      source: 'DTCC SEC public dissemination, end-of-day cumulative credit files',
-      method: `Senior single-name trades bucketed by tenor (5Y = on-the-run contract). Quoted points = cash upfront / notional + accrued. Trades above the $5m disclosure cap get a notional only when exactly one $5m–$100m ($1m step) candidate puts the points on the 1/8 grid within ±5 points of the tenor's last level. ISDA standard model, flat hazard, ${RECOVERY * 100}% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.`,
-      reference_entity: cds.label ?? nodeId,
-      latest_file: lastFile ?? null,
-      inferred_trades: inferredCount, capped_unresolved: cappedSkipped,
-      series: tenors['5Y'] ?? [],
-      tenors,
-      inversion: { rule: 'Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days', alert: inversionAlert(history), periods: inversionPeriods(history) },
-    },
-  };
+  const lastFile = files.at(-1)?.fileName;
+  const lastDate = lastFile ? fileDate(lastFile).replace(/_/g, '-') : now.slice(0, 10);
+  const years = new Set();
+  for (const [, s] of states) for (const t of Object.values(s.st.trades)) if (t.trade) years.add(t.trade.slice(0, 4));
+  const curves = await treasuryCurves([...years].sort());
+
+  const drop = crossNameDuplicates(Object.fromEntries([...states].map(([id, s]) => [id, s.st.trades])));
+  const blocks = {};
+  for (const { nodeId, cds } of companies) {
+    const s = states.get(nodeId);
+    for (const [id, t] of Object.entries(s.st.trades)) s.st.trades[id] = compactTrade(t);
+    s.st.processed = s.st.processed.filter((n) => fileDate(n) >= cutoff).sort();
+    fs.mkdirSync(path.dirname(s.file), { recursive: true });
+    fs.writeFileSync(s.file, JSON.stringify(s.st, null, 0) + '\n');
+    try {
+      // Lifecycle events on old contracts carry their original trade date (Oracle back to 2022); price only trades
+      // executed inside the backfill window, so the series does not open with a years-old print.
+      const since = cutoff.replace(/_/g, '-');
+      const priced = Object.fromEntries(Object.entries(s.st.trades).filter(([id, t]) => !drop[nodeId].has(id) && t.trade >= since));
+      const { tenors, inferredCount, cappedSkipped, ambiguous, outliers } = curveSeries(priced, curves, lastDate);
+      if (!tenors['5Y']?.length) { log.push(`${nodeId}: no priced 5Y trades`); continue; }
+      const history = inversionHistory(tenors);
+      blocks[nodeId] = {
+        status: 'ok', fetched_at: now,
+        source: 'DTCC SEC public dissemination, end-of-day cumulative credit files',
+        method: `Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, ${RECOVERY * 100}% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.`,
+        reference_entity: cds.label ?? nodeId,
+        latest_file: lastFile ?? null,
+        inferred_trades: inferredCount, capped_unresolved: cappedSkipped, ambiguous_skipped: ambiguous, outliers_dropped: outliers, package_legs_dropped: drop[nodeId].size,
+        series: tenors['5Y'],
+        tenors,
+        inversion: { rule: 'Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days', alert: inversionAlert(history), periods: inversionPeriods(history) },
+      };
+    } catch (e) { log.push(`${nodeId}: ${e.message}`); }
+  }
+  return { blocks, log };
 }

@@ -1,0 +1,16 @@
+{
+  "schema": "acn-company-1",
+  "node_id": "Meta",
+  "name": "Meta Platforms, Inc.",
+  "ticker": "META",
+  "yahoo_symbol": "META",
+  "curated_at": "2026-11-08",
+  "cds": {
+    "source": "dtcc-sec",
+    "entity_pattern": "meta platforms",
+    "label": "Meta Platforms, Inc. (senior)"
+  },
+  "reference_prices": [],
+  "manual_series": {},
+  "events": []
+}

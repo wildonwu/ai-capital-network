@@ -87,14 +87,16 @@ It is deliberately **outside** the hashed release: market data changes daily, th
   descriptive User-Agent with a contact address); without it the financial block stays at its last values, marked stale.
 - Local refresh: `SEC_USER_AGENT="<name> <contact>" node scripts/fetch-market.mjs`.
 - CDS: `scripts/fetch-cds.mjs` downloads new `SEC_CUMULATIVE_CREDITS_*.zip` end-of-day files (one-year backfill),
-  applies DTCC corrections/cancellations, and keeps trade state in `data/derived/cds/<node>.json`. Only on-the-run
-  5Y senior trades with a disclosed notional (≤ $5m) are priced. DTCC's upfront amount is the cash settlement amount,
-  so accrued premium is added back to recover quoted points (73% of CoreWeave trades then sit on the 1/8-point grid,
-  versus 7% without). Points convert to a conventional spread with the ISDA standard model: flat hazard, 40% recovery,
-  ACT/360 quarterly IMM premiums with accrual on default, discounting on the US Treasury par curve of the trade date
-  (the ISDA curve uses SOFR swaps; the difference is small for this purpose). Checked against a news-reported Markit
-  level: 1,036 vs 1,041.4 bp on 2026-10-27 (−0.5%). Weekend-only business-day adjustment; days with no priced trade
-  are omitted rather than filled.
+  applies DTCC corrections/cancellations, and keeps trade state in `data/derived/cds/<node>.json` for every company
+  file with a `cds.entity_pattern` (12 names; one download per file is shared). Senior USD single-name trades inside
+  the backfill window are priced; package legs and prints identical across names are dropped. DTCC's upfront is the
+  cash amount without direction, so quoted points are +(cash + accrued) or −(cash − accrued). Per tenor the sign
+  sequence with the least total day-to-day movement is chosen (Viterbi); spread-quoted trades (rescaled when
+  reported ×100 too small) pin it, and for 5% names a reading on the 1/8-point grid gets a small bonus. Points convert
+  to a conventional spread with the ISDA standard model: flat hazard, 40% recovery, ACT/360 quarterly IMM premiums
+  with accrual on default, discounting on the US Treasury par curve of the trade date. Checked against a
+  news-reported Markit level: 1,036 vs 1,041.4 bp for CoreWeave on 2026-10-27 (−0.5%). Prints >2.5x from the
+  ±14-day median and one-day excursions contradicted by both neighbours are dropped.
 - CDS curve: trades are bucketed 1Y–4Y by remaining years and 5Y = the on-the-run contract. A trade above the $5m
   disclosure cap gets a notional only when exactly one $5m–$100m ($1m step) candidate puts its quoted points on the
   1/8 grid and within ±5 points of that tenor's last level; otherwise it is left out. Days without a priced trade

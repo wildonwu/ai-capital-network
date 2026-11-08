@@ -147,6 +147,48 @@ export function conventionalSpread({ trade, maturity, coupon, points, df, g = gr
   return { spread: prot / (rpv - accrued), hazard: h };
 }
 
+// ---------- tabulated pricer (fast path for many trades) ----------
+/**
+ * For one trade date and maturity, tabulate the coupon-independent legs over a log-spaced hazard lattice.
+ * Points for any coupon and the conventional spread follow by interpolation, so thousands of trades that share
+ * a date and maturity cost one table. Weekly integration steps keep a table cheap; error is well under 1 bp.
+ */
+export function priceTable({ trade, maturity, df }) {
+  const stepIn = addDays(trade, 1), start = accrualStart(trade), end = addDays(maturity, 1);
+  const t = (d) => yearFrac(trade, d);
+  const prot = []; for (let d = stepIn; d < end;) { const n = addDays(d, 7) < end ? addDays(d, 7) : end; prot.push([t(d), t(n), df((t(d) + t(n)) / 2)]); d = n; }
+  const coupons = [], aod = [];
+  for (const p of schedule(start, maturity)) {
+    coupons.push([(utc(p.e) - utc(p.s)) / DAY / 360, t(addDays(p.e, -1)), df(t(p.pay))]);
+    const from = p.s > stepIn ? p.s : stepIn;
+    for (let d = from; d < p.e;) { const n = addDays(d, 7) < p.e ? addDays(d, 7) : p.e; aod.push([((utc(d) + utc(n)) / 2 - utc(p.s)) / DAY / 360, t(d), t(n), df((t(d) + t(n)) / 2)]); d = n; }
+  }
+  const g = { prot, coupons, aod, accrued: (utc(stepIn) - utc(start)) / DAY / 360, dfSettle: df(t(adjustFollowing(addDays(trade, 3)))) };
+  const H = []; for (let k = 0; k <= 320; k++) H.push(1e-5 * Math.pow(5 / 1e-5, k / 320));
+  const rows = H.map((h) => ({ h, ...legs(g, h) }));
+  return { rows, accrued: g.accrued, dfSettle: g.dfSettle };
+}
+const pointsAt = (row, tb, c) => (row.prot - c * row.rpv) / tb.dfSettle + c * tb.accrued;
+const spreadAt = (row, tb) => row.prot / (row.rpv - tb.accrued);
+/** Conventional spread for quoted points (fraction) and coupon, or null if outside the lattice. */
+export function spreadFromPoints(tb, points, coupon) {
+  const r = tb.rows;
+  for (let k = 1; k < r.length; k++) {
+    const a = pointsAt(r[k - 1], tb, coupon), b = pointsAt(r[k], tb, coupon);
+    if ((a - points) * (b - points) <= 0 && a !== b) { const w = (points - a) / (b - a); return spreadAt(r[k - 1], tb) + w * (spreadAt(r[k], tb) - spreadAt(r[k - 1], tb)); }
+  }
+  return null;
+}
+/** Quoted points for a conventional spread and coupon (used to show points for spread-quoted trades). */
+export function pointsFromSpread(tb, spread, coupon) {
+  const r = tb.rows;
+  for (let k = 1; k < r.length; k++) {
+    const a = spreadAt(r[k - 1], tb), b = spreadAt(r[k], tb);
+    if ((a - spread) * (b - spread) <= 0 && a !== b) { const w = (spread - a) / (b - a); return pointsAt(r[k - 1], tb, coupon) + w * (pointsAt(r[k], tb, coupon) - pointsAt(r[k - 1], tb, coupon)); }
+  }
+  return null;
+}
+
 // ---------- DTCC files ----------
 /** Minimal ZIP reader (stored / deflate) — DTCC files hold a single CSV. */
 export function unzip(buf) {
@@ -185,17 +227,22 @@ export function parseCsv(text) {
 
 const nyDate = (ts) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(ts));
 
-/** Keep senior single-name CDS rows on the reference entity; normalise the fields we use. */
+/** Keep senior single-name USD CDS rows on the reference entity; normalise the fields we use. */
 export function selectTrades(records, entityPattern) {
   const re = new RegExp(entityPattern, 'i');
-  return records.filter((r) => r['UPI FISN'] === 'NA/CDS Corp SN Sr' && re.test(r['Underlying Asset Name'] || '')).map((r) => {
+  // Package legs (e.g. several names traded together) report a shared upfront, not this name's price: leave them out.
+  return records.filter((r) => r['UPI FISN'] === 'NA/CDS Corp SN Sr' && re.test(r['Underlying Asset Name'] || '') && (r['Notional currency-Leg 1'] || 'USD') === 'USD' && r['Package indicator'] !== 'TRUE').map((r) => {
     const raw = (r['Notional amount-Leg 1'] || '').replace(/,/g, '');
+    // Some trades are quoted directly in spread (decimal notation, e.g. 0.0293 = 293 bp) instead of points.
+    const sp = parseFloat(r['Spread-Leg 1']);
+    const spread = r['Spread notation-Leg 1'] === '3' && sp > 0 && sp < 0.5 ? sp : null;
     return {
       id: r['Dissemination Identifier'], orig: r['Original Dissemination Identifier'] || null, action: r['Action type'],
       ts: r['Execution Timestamp'], trade: r['Execution Timestamp'] ? nyDate(r['Execution Timestamp']) : null,
       maturity: r['Expiration Date'], coupon: parseFloat(r['Fixed rate-Leg 1']),
       notional: raw.endsWith('+') ? null : parseFloat(raw), capped: raw.endsWith('+'),
       upfront: r['Other payment amount'] ? parseFloat(r['Other payment amount']) : null, upfrontType: r['Other payment type'] || null,
+      ...(spread !== null ? { spread } : {}),
     };
   });
 }
@@ -249,8 +296,8 @@ export function dailySeries(store, curves, { minTrades = 1, upfrontIsCash = true
 
 /** Fields kept in the committed trade store (keeps the file small and stable). */
 export function compactTrade(t) {
-  const { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, corrected, modified } = t;
-  return { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, ...(corrected ? { corrected } : {}), ...(modified ? { modified } : {}) };
+  const { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, spread, corrected, modified } = t;
+  return { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, ...(spread ? { spread } : {}), ...(corrected ? { corrected } : {}), ...(modified ? { modified } : {}) };
 }
 
 // ---------- tenors, capped-notional inference, daily curve, inversion ----------
@@ -295,34 +342,140 @@ export function businessDays(from, to) {
 
 const median = (xs) => { const s = [...xs].sort((a, b) => a - b); const n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
 
+/** Both readings of an upfront trade: +(cash + accrued) and −(cash − accrued), with spreads and grid flags. */
+export function readings(t, notional, tb, coupon) {
+  const cash = t.upfront / notional, acc = accruedFrac(t);
+  return [cash + acc, -(cash - acc)].map((p) => ({ p, s: spreadFromPoints(tb, p, coupon), grid: onEighthGrid(p) })).filter((c) => c.s !== null && c.s > 0);
+}
+
+const tableCache = new Map();
+/** Shared across companies: tables depend only on trade date, maturity and the day's curve. */
+export function tableFor(trade, maturity, curveDate, curves) {
+  const k = `${trade}|${maturity}|${curveDate}`;
+  if (!tableCache.has(k)) tableCache.set(k, priceTable({ trade, maturity, df: discountCurve(curves[curveDate]) }));
+  return tableCache.get(k);
+}
+
 /**
- * Price every trade (disclosed notional, or a uniquely inferred one), then build one value per business day and tenor.
+ * Price every trade, then build one value per business day and tenor.
+ * - A trade quoted in spread is used as is.
+ * - DTCC reports the upfront amount without its direction, so points can be +(cash + accrued) or −(cash − accrued).
+ *   The reading that lands on the 1/8-point quoting grid wins; otherwise the one nearer the tenor's last level;
+ *   with no reference yet the trade is skipped.
+ * - Trades above the $5m cap get a notional only for 5% coupons (points-quoted names), see inferNotional.
  * Days without a priced trade carry the previous value forward and are marked `carried`.
  */
 export function curveSeries(store, curves, lastDate) {
   const curveDates = Object.keys(curves).sort();
   const curveOn = (d) => { let best = null; for (const c of curveDates) { if (c <= d) best = c; else break; } return best; };
-  const dfCache = new Map();
-  const ref = {};
-  const obs = Object.fromEntries(CDS_TENORS.map((k) => [k, new Map()]));
-  const trades = Object.values(store).filter((t) => t.trade && Number.isFinite(t.coupon) && t.upfrontType === 'UFRO' && t.upfront !== null).sort((a, b) => (a.ts ?? '').localeCompare(b.ts ?? ''));
-  let inferredCount = 0, cappedSkipped = 0;
+  const trades = Object.values(store).filter((t) => t.trade && t.maturity).sort((a, b) => (a.ts ?? '').localeCompare(b.ts ?? ''));
+  let inferredCount = 0, cappedSkipped = 0, ambiguous = 0, outliers = 0;
+
+  // Candidate readings for every trade. `certain` = one unambiguous reading (spread quote on the normal scale, or a
+  // disclosed-notional upfront with exactly one reading on the 1/8 grid). Capped trades wait for pass 2.
+  const priced = [];
   for (const t of trades) {
     const k = tenorOf(t); if (!k) continue;
-    let points = null, inferred = false;
-    if (t.notional) points = quotedPoints(t, t.notional);
-    else { const r = inferNotional(t, ref[k]); if (r) { points = r.points; inferred = true; inferredCount++; } else cappedSkipped++; }
-    if (points === null) continue;
     const cd = curveOn(t.trade); if (!cd) continue;
-    if (!dfCache.has(cd)) dfCache.set(cd, discountCurve(curves[cd]));
-    const r = conventionalSpread({ trade: t.trade, maturity: t.maturity, coupon: t.coupon, points, df: dfCache.get(cd) });
-    if (!r) continue;
-    ref[k] = points;
-    const day = obs[k].get(t.trade) ?? { spreads: [], points: [], inferred: 0, disclosed: 0 };
-    day.spreads.push(r.spread); day.points.push(points); if (inferred) day.inferred++; else day.disclosed++;
-    obs[k].set(t.trade, day);
+    const tb = tableFor(t.trade, t.maturity, cd, curves);
+    const coupon = Number.isFinite(t.coupon) ? t.coupon : null;
+    if (t.spread) {
+      const cands = [t.spread, t.spread * 100].filter((s) => s >= 0.0005 && s <= 0.5).map((s) => ({ s, p: coupon !== null ? pointsFromSpread(tb, s, coupon) : null }));
+      // One candidate in range, or a value already on the normal scale (>= 10bp), is unambiguous.
+      if (cands.length) priced.push({ t, k, cands, certain: cands.length === 1 || t.spread >= 0.001 ? cands[0] : null });
+      continue;
+    }
+    // A zero upfront is a missing amount, not a trade at the coupon.
+    if (coupon === null || t.upfrontType !== 'UFRO' || !t.upfront) continue;
+    if (!t.notional) { if (coupon === 0.05) priced.push({ t, k, tb, coupon, capped: true }); else cappedSkipped++; continue; }
+    const cands = readings(t, t.notional, tb, coupon);
+    // Even for 5% names most prints miss the grid, so a lone grid hit is weak evidence: a bonus in the branch choice
+    // below, not a certainty. Only a single valid reading (the other sign gives no spread) is certain.
+    if (cands.length) priced.push({ t, k, cands, certain: cands.length === 1 ? cands[0] : null });
   }
-  const first = trades[0]?.trade; if (!first) return { tenors: {}, inferredCount, cappedSkipped };
+
+  // Branch choice: near the coupon both sign readings form a smooth path, so pick per tenor the sequence of readings
+  // with the least total day-to-day movement (Viterbi over the trades in time order). Single-reading trades (spread
+  // quotes, or readings where the other sign is impossible) pin the path; for 5% names a reading on the 1/8 grid gets a
+  // small bonus (1% names are quoted in spread, so their grid hits are chance).
+  // Later unambiguous prints therefore also decide earlier ambiguous ones, which a running anchor cannot do.
+  const branch = new Map();
+  for (const k of CDS_TENORS) {
+    const seq = priced.filter((x) => x.k === k && !x.capped);
+    if (!seq.length) continue;
+    const opts = seq.map((x) => (x.certain ? [x.certain] : x.cands));
+    const own = (c, i) => (seq[i].t.coupon === 0.05 && c.grid && opts[i].length > 1 && !opts[i].every((o) => o.grid) ? -0.1 : 0);
+    let cost = opts[0].map((c) => own(c, 0)); const back = [];
+    for (let i = 1; i < seq.length; i++) {
+      const prev = opts[i - 1], cur = opts[i];
+      const step = cur.map((c) => {
+        let best = Infinity, arg = 0;
+        prev.forEach((q, j) => { const v = cost[j] + Math.abs(Math.log(c.s / q.s)); if (v < best) { best = v; arg = j; } });
+        return [best + own(c, i), arg];
+      });
+      cost = step.map(([v]) => v); back.push(step.map(([, a]) => a));
+    }
+    let j = cost.indexOf(Math.min(...cost));
+    for (let i = seq.length - 1; i >= 0; i--) { branch.set(seq[i], opts[i][j]); if (i > 0) j = back[i - 1][j]; }
+  }
+
+  // Outlier anchor per tenor = median of the branch-chosen readings within ±14 days (widening to ±60), 5Y as fallback.
+  // A window of many prints, so a single bad print (a mis-scaled spread quote, say) is itself the outlier.
+  const pickedBy = Object.fromEntries(CDS_TENORS.map((k) => [k, []]));
+  for (const [x, c] of branch) pickedBy[x.k].push([utc(x.t.trade), c.s]);
+  const anchorAt = (k, d) => {
+    const at = utc(d);
+    for (const kk of [k, '5Y']) for (const w of [14, 60]) {
+      const v = pickedBy[kk].filter(([day]) => Math.abs(day - at) <= w * DAY).map(([, s]) => s);
+      if (v.length) return median(v);
+    }
+    return null;
+  };
+
+  // Pass 2, in time order: resolve each trade against the anchor; capped 5% trades get an inferred notional using
+  // the tenor's last decided points; prints more than 2.5x from the anchor are dropped.
+  const obs = Object.fromEntries(CDS_TENORS.map((k) => [k, new Map()]));
+  const refPts = {}, lastS = {};
+  for (const x of priced) {
+    // No certain reading nearby: stay on the branch the tenor was last on.
+    const anchor = anchorAt(x.k, x.t.trade) ?? lastS[x.k] ?? null;
+    let pick = x.certain ?? null, inferred = false;
+    if (x.capped) {
+      const r = inferNotional(x.t, refPts[x.k] ?? null);
+      if (!r) { cappedSkipped++; continue; }
+      const c = readings(x.t, r.notional, x.tb, x.coupon).find((c) => Math.abs(c.p - r.points) < 1e-9);
+      if (!c) { cappedSkipped++; continue; }
+      pick = c; inferred = true; inferredCount++;
+    }
+    if (!pick) pick = branch.get(x) ?? null;
+    if (!pick) { ambiguous++; continue; }
+    if (anchor !== null && Math.abs(Math.log(pick.s / anchor)) > Math.log(2.5)) { outliers++; continue; }
+    if (pick.p !== null && pick.p !== undefined) refPts[x.k] = pick.p;
+    lastS[x.k] = pick.s;
+    const day = obs[x.k].get(x.t.trade) ?? { spreads: [], points: [], inferred: 0, disclosed: 0 };
+    day.spreads.push(pick.s); if (pick.p !== null && pick.p !== undefined) day.points.push(pick.p);
+    if (inferred) day.inferred++; else day.disclosed++;
+    obs[x.k].set(x.t.trade, day);
+  }
+  // A one-day excursion that both neighbouring observed days contradict is a spike: drop it
+  // (the day then carries the previous value).
+  let spikes = 0;
+  for (const k of CDS_TENORS) {
+    const days = [...obs[k].keys()].sort();
+    const val = (d) => median(obs[k].get(d).spreads);
+    const drop = days.filter((d, i) => {
+      if (i === 0 || i === days.length - 1) return false;
+      const o = obs[k].get(d), v = val(d), a = val(days[i - 1]), b = val(days[i + 1]);
+      const off = (x) => Math.abs(Math.log(v / x));
+      // Single print >25% off both neighbours; or any day >35% off both neighbours that agree with each other within 25%.
+      return (o.spreads.length === 1 && off(a) > Math.log(1.25) && off(b) > Math.log(1.25))
+        || (off(a) > Math.log(1.35) && off(b) > Math.log(1.35) && Math.abs(Math.log(a / b)) < Math.log(1.25));
+    });
+    for (const d of drop) obs[k].delete(d);
+    spikes += drop.length;
+  }
+  outliers += spikes;
+  const first = trades[0]?.trade; if (!first) return { tenors: {}, inferredCount, cappedSkipped, ambiguous, outliers };
   const days = businessDays(first, lastDate);
   const tenors = {};
   for (const k of CDS_TENORS) {
@@ -330,13 +483,13 @@ export function curveSeries(store, curves, lastDate) {
     for (const d of days) {
       const o = obs[k].get(d);
       if (o) {
-        prev = { date: d, spread_bp: Math.round(median(o.spreads) * 1e5) / 10, points_pct: Math.round(median(o.points) * 1e4) / 100, status: o.inferred ? 'inferred' : 'observed', priced: o.disclosed, inferred: o.inferred, observed_on: d };
+        prev = { date: d, spread_bp: Math.round(median(o.spreads) * 1e5) / 10, points_pct: o.points.length ? Math.round(median(o.points) * 1e4) / 100 : null, status: o.inferred ? 'inferred' : 'observed', priced: o.disclosed, inferred: o.inferred, observed_on: d };
         out.push(prev);
       } else if (prev) out.push({ ...prev, date: d, status: 'carried', priced: 0, inferred: 0 });
     }
     tenors[k] = out;
   }
-  return { tenors, inferredCount, cappedSkipped };
+  return { tenors, inferredCount, cappedSkipped, ambiguous, outliers };
 }
 
 /**
@@ -371,4 +524,21 @@ export function inversionPeriods(history) {
   for (const h of history) { if (h.inverted) { if (!cur) cur = { from: h.date, to: h.date }; else cur.to = h.date; } else if (cur) { out.push(cur); cur = null; } }
   if (cur) out.push(cur);
   return out;
+}
+
+/**
+ * Prints that appear identically (same minute, notional and upfront) under several reference entities are
+ * package legs reported with one shared amount. Returns the trade ids to drop, per company.
+ */
+export function crossNameDuplicates(stores) {
+  const seen = new Map();
+  for (const [name, store] of Object.entries(stores)) for (const t of Object.values(store)) {
+    if (!t.ts || t.upfront === null) continue;
+    const k = `${t.ts.slice(0, 16)}|${t.notional ?? 'cap'}|${t.upfront}`;
+    if (!seen.has(k)) seen.set(k, []);
+    seen.get(k).push([name, t.id]);
+  }
+  const drop = Object.fromEntries(Object.keys(stores).map((n) => [n, new Set()]));
+  for (const hits of seen.values()) if (new Set(hits.map(([n]) => n)).size > 1) for (const [n, id] of hits) drop[n].add(id);
+  return drop;
 }
