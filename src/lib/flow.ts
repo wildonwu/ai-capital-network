@@ -30,7 +30,28 @@ export const payerOf = (e: Pick<GraphEdge, 'from' | 'to' | 'layer'>) => (e.layer
 export const lineWidth = (e: Pick<GraphEdge, 'amount' | 'unit'>) => { const a = usdBn(e); return a ? Math.max(1.6, Math.min(16, Math.sqrt(a) * 1.15)) : 1.1; };
 
 export interface FNode { id: string; tick: string | null; name: string; cat: CategoryId; core: boolean; selected: boolean; x: number; y: number; w: number; h: number }
-export interface FEdge { e: GraphEdge; flow: Flow; d: string; width: number; opacity: number; arrow: boolean; label: string | null; lx: number; ly: number; between: boolean }
+export interface FHead { points: string }
+export interface FEdge { e: GraphEdge; flow: Flow; d: string; width: number; opacity: number; arrow: boolean; head: FHead | null; label: string | null; lx: number; ly: number; between: boolean }
+
+/** Arrowhead sized to the line: never narrower than the stroke, so a thick line cannot hide its own arrow. */
+export const headSize = (width: number) => ({ len: Math.max(9, width * 1.25 + 6), half: Math.max(4.5, width * 0.85 + 2.5) });
+/**
+ * Path for a cubic [x0,y0, c1x,c1y, c2x,c2y, x1,y1] ending at the box edge. With an arrow, the line stops at the
+ * arrowhead's base and the head is a separate triangle whose tip touches the box.
+ */
+function finish(c: number[], width: number, arrow: boolean): { d: string; head: FHead | null } {
+  if (!arrow) return { d: `M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`, head: null };
+  let tx = c[6] - c[4], ty = c[7] - c[5];
+  if (Math.hypot(tx, ty) < 1e-6) { tx = c[6] - c[2]; ty = c[7] - c[3]; }
+  if (Math.hypot(tx, ty) < 1e-6) { tx = c[6] - c[0]; ty = c[7] - c[1]; }
+  const n = Math.hypot(tx, ty) || 1; tx /= n; ty /= n;
+  const { len, half } = headSize(width);
+  const bx = c[6] - tx * len, by = c[7] - ty * len, px = -ty * half, py = tx * half;
+  const r = (v: number) => +v.toFixed(1);
+  // pull the last control point back with the end so the curve still meets the head head-on
+  return { d: `M${c[0]},${c[1]} C${c[2]},${c[3]} ${r(c[4] - tx * len)},${r(c[5] - ty * len)} ${r(bx + tx * 0.5)},${r(by + ty * 0.5)}`,
+    head: { points: `${r(c[6])},${r(c[7])} ${r(bx + px)},${r(by + py)} ${r(bx - px)},${r(by - py)}` } };
+}
 export interface FText { x: number; y: number; text: string; sub?: string; tone?: 'all' | 'some' | 'one' }
 export interface FlowLayout { width: number; height: number; nodes: FNode[]; edges: FEdge[]; headers: FText[]; captions: FText[]; groups: Map<string, string[]> }
 
@@ -72,7 +93,7 @@ export function flowLayout(r: Release, vis: VisibleGraph, selected: string[], wi
   const colKeys = cols.map((c) => keyOf(c[0]));
 
   const PADX = 24, TOP = SEL ? 82 : 64;
-  const BW = SEL ? Math.max(104, Math.min(170, (width - PADX * 2) / 3.6)) : 142;
+  const BW = SEL ? Math.max(104, Math.min(170, (width - PADX * 2) / 3.6)) : Math.max(124, Math.min(142, (width - PADX * 2) / 7.6));
   const BH = SEL ? 50 : 44, GAPY = SEL ? 20 : 16, GAPG = 34;
   const span = width - PADX * 2 - BW;
   const cx = (i: number) => PADX + (span * i) / Math.max(1, cols.length - 1);
@@ -135,14 +156,14 @@ export function flowLayout(r: Release, vis: VisibleGraph, selected: string[], wi
   const out: FEdge[] = geo.map(({ e, a, b, sa, sb, oa, ob }) => {
     const x1 = sa === 'R' ? a.x + BW : a.x, y1 = a.y + BH * oa, x2 = sb === 'R' ? b.x + BW : b.x, y2 = b.y + BH * ob;
     let c: number[];
-    if (a.col === b.col) { const bulge = 46 + Math.abs(y2 - y1) * 0.12; c = [x1, y1, x1 + bulge, y1, x2 + bulge, y2, x2 + 4, y2]; }
-    else { const dx = (x2 - x1) / 2; c = [x1, y1, x1 + dx, y1, x2 - dx, y2, x2 + (sb === 'L' ? -3 : 3), y2]; }
+    if (a.col === b.col) { const bulge = 46 + Math.abs(y2 - y1) * 0.12; c = [x1, y1, x1 + bulge, y1, x2 + bulge, y2, x2, y2]; }
+    else { const dx = (x2 - x1) / 2; c = [x1, y1, x1 + dx, y1, x2 - dx, y2, x2, y2]; }
     // label on the curve; in a selection near the counterparty end, where lines have spread apart
     const t = !SEL ? 0.5 : isSel(e.from) ? 0.78 : 0.22;
     const bz = (p0: number, p1: number, p2: number, p3: number) => (1 - t) ** 3 * p0 + 3 * (1 - t) ** 2 * t * p1 + 3 * (1 - t) * t ** 2 * p2 + t ** 3 * p3;
     const amt = usdBn(e);
     return {
-      e, flow: FLOW_OF[e.layer], d: `M${c[0]},${c[1]} C${c[2]},${c[3]} ${c[4]},${c[5]} ${c[6]},${c[7]}`, width: lineWidth(e),
+      e, flow: FLOW_OF[e.layer], ...finish(c, lineWidth(e), SEL || !!amt), width: lineWidth(e),
       opacity: SEL ? (amt ? 0.8 : 0.45) : amt ? 0.55 : 0.2, arrow: SEL || !!amt, label: labelled.has(e.id) && amt ? fmtBn(amt) : null,
       lx: bz(c[0], c[2], c[4], c[6]), ly: bz(c[1], c[3], c[5], c[7]), between: false,
     };
@@ -154,14 +175,14 @@ export function flowLayout(r: Release, vis: VisibleGraph, selected: string[], wi
     const common = { e, flow: FLOW_OF[e.layer], width: lineWidth(e), opacity: 0.9, arrow: true, label: amt ? fmtBn(amt) : null, between: true };
     if (Math.abs(sel.indexOf(e.from) - sel.indexOf(e.to)) > 1) { // skips the box in between: bow out to the left
       const ya = a.y + BH / 2, yb = b.y + BH / 2, xo = a.x - 70;
-      out.push({ ...common, d: `M${a.x},${ya} C${xo},${ya} ${xo},${yb} ${b.x - 3},${yb}`, lx: a.x - 52, ly: (ya + yb) / 2 });
+      out.push({ ...common, ...finish([a.x, ya, xo, ya, xo, yb, b.x, yb], common.width, true), lx: a.x - 52, ly: (ya + yb) / 2 });
       continue;
     }
     const pair = near.filter((x) => (x.from === e.from && x.to === e.to) || (x.from === e.to && x.to === e.from));
     const i = pair.indexOf(e), down = a.y < b.y;
     const x = a.x + BW / 2 + (i - (pair.length - 1) / 2) * 34;
-    const y1 = down ? a.y + BH : a.y, y2 = down ? b.y - 3 : b.y + BH + 3;
-    out.push({ ...common, d: `M${x},${y1} L${x},${y2}`, lx: x + 8 + (common.label ? common.label.length * 3.3 + 6 : 0), ly: (y1 + y2) / 2 });
+    const y1 = down ? a.y + BH : a.y, y2 = down ? b.y : b.y + BH;
+    out.push({ ...common, ...finish([x, y1, x, y1 + (y2 - y1) / 3, x, y1 + (2 * (y2 - y1)) / 3, x, y2], common.width, true), lx: x + 8 + (common.label ? common.label.length * 3.3 + 6 : 0), ly: (y1 + y2) / 2 });
   }
   // keep labels from sitting on each other
   const placed: [number, number, number][] = [];

@@ -51,7 +51,7 @@ h1 { font: 600 38px/1.12 var(--serif); margin: 0 0 10px; letter-spacing: -.01em;
 /* network stage */
 .stage { position: relative; background: var(--card); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; }
 .stage-scroll { overflow-x: auto; }
-.stage.with-drawer .stage-scroll { margin-right: 360px; }
+.stage.with-drawer .stage-scroll { margin-right: 320px; }
 .flow { display: block; }
 .swipe { margin: 0; padding: 10px 16px 0; font-size: 12px; color: var(--muted); position: sticky; left: 0; }
 .fg-head { font: 600 11px var(--sans); letter-spacing: .1em; text-transform: uppercase; fill: var(--muted); }
@@ -68,7 +68,7 @@ h1 { font: 600 38px/1.12 var(--serif); margin: 0 0 10px; letter-spacing: -.01em;
 .fg-edge { cursor: pointer; }
 .fg-label { cursor: pointer; } .fg-label text { font: 600 11px var(--sans); }
 .empty { padding: 60px 20px; text-align: center; color: var(--muted); }
-.drawer { position: absolute; top: 0; right: 0; bottom: 0; width: 360px; background: #fff; border-left: 1px solid var(--rule); padding: 22px; overflow: auto; box-shadow: -12px 0 30px rgba(60, 40, 20, .05); }
+.drawer { position: absolute; top: 0; right: 0; bottom: 0; width: 320px; background: #fff; border-left: 1px solid var(--rule); padding: 22px; overflow: auto; box-shadow: -12px 0 30px rgba(60, 40, 20, .05); }
 .drawer.record { width: min(420px, 100%); z-index: 2; }
 .drawer h3, .edge-detail h3 { font: 600 24px/1.15 var(--serif); margin: 0; padding-right: 24px; }
 .drawer .sub { color: var(--muted); font-size: 13px; margin: 4px 0 8px; }
@@ -307,3 +307,29 @@ td.lbl { max-width: 340px; }
 .mech-id { margin: 0; color: var(--muted); font-size: 11px; letter-spacing: .03em; }
 .mech-line { border-top: 1px solid #EAD9CA; margin-top: 8px; padding-top: 6px; }
 .mech-who { font-weight: 650; font-size: 13px; }
+
+/* company list beside the network */
+.netgrid { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 12px; align-items: start; }
+.company-list { position: sticky; top: 64px; background: var(--card); border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; max-height: calc(100vh - 80px); }
+.cl-head { padding: 10px 10px 8px; border-bottom: 1px solid var(--rule); }
+.cl-head input { width: 100%; font: inherit; font-size: 13px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--rule); background: #fff; }
+.cl-count { display: block; font-size: 11.5px; color: var(--muted); margin-top: 6px; } .cl-count .link { padding: 0; font-size: 11.5px; }
+.cl-body { overflow: auto; padding: 4px 0 8px; }
+.cl-title { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; background: none; padding: 9px 12px 5px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink2); text-align: left; }
+.cl-title i { width: 3.5px; height: 12px; border-radius: 2px; flex: none; }
+.cl-title span { flex: 1; } .cl-title small { color: var(--muted); font-weight: 500; letter-spacing: 0; } .cl-title b { color: var(--muted); font-weight: 400; width: 10px; text-align: center; }
+.cl-group ul { list-style: none; margin: 0 0 4px; padding: 0; }
+.cl-item { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 6px; align-items: center; width: 100%; border: 0; background: none; padding: 4px 12px; text-align: left; font-size: 13px; }
+.cl-item:hover { background: #FBF4EA; }
+.cl-item.on { background: #F4EADC; box-shadow: inset 3px 0 0 var(--ink); }
+.cl-item.shared:not(.on) { box-shadow: inset 3px 0 0 #E2C48E; background: #FFF8EA; }
+.cl-item.full:not(.on) { opacity: .5; }
+.cl-check { font-weight: 700; color: var(--ink); font-size: 12px; }
+.cl-name { min-width: 0; display: flex; flex-direction: column; line-height: 1.25; }
+.cl-name b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-name small { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-deg { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.cl-fold { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; margin-bottom: 10px; }
+.cl-fold > summary { padding: 10px 14px; font-weight: 600; font-size: 14px; cursor: pointer; }
+.cl-fold .company-list { position: static; border: 0; border-top: 1px solid var(--rule); border-radius: 0 0 12px 12px; max-height: 60vh; }
+@media (max-width: 900px) { .netgrid { grid-template-columns: 1fr; } }

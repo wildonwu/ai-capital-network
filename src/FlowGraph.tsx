@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CAT_COLOR, FLOW_COLOR, type Flow, type FlowLayout } from './lib/flow';
+import { CAT_COLOR, FLOW_COLOR, type FlowLayout } from './lib/flow';
 import type { CategoryId } from './lib/categories';
 
 const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
@@ -24,9 +24,6 @@ export default function FlowGraph({ f, focusCat, activeEdge, onNode, onEdge }: {
   const chars = Math.floor((f.nodes[0]?.w ?? 140) / 7.2) - 2;
   return (
     <svg className="flow" width={f.width} height={f.height} viewBox={`0 0 ${f.width} ${f.height}`} role="img" aria-label="Network of relationships">
-      <defs>{(Object.keys(FLOW_COLOR) as Flow[]).map((k) => (
-        <marker key={k} id={`fm-${k}`} viewBox="0 0 8 8" refX="7" refY="4" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill={FLOW_COLOR[k]} /></marker>))}
-      </defs>
       {f.headers.map((h, i) => h.text && <g key={i}><text className="fg-head" x={h.x} y={h.y}>{h.text}</text><text className="fg-sub" x={h.x} y={h.y + 16}>{h.sub}</text></g>)}
       {f.captions.map((c, i) => <text key={i} className="fg-cap" x={c.x} y={c.y} fill={TONE[c.tone ?? 'one']}>{c.text}</text>)}
       {f.edges.map((x) => {
@@ -34,7 +31,8 @@ export default function FlowGraph({ f, focusCat, activeEdge, onNode, onEdge }: {
         return <g key={x.e.id} className="fg-edge" onClick={() => onEdge(x.e.id)}>
           <path d={x.d} fill="none" stroke="transparent" strokeWidth={Math.max(10, x.width + 6)} />
           <path d={x.d} fill="none" stroke={FLOW_COLOR[x.flow]} strokeWidth={x.width} strokeOpacity={act ? 1 : on ? (hover || focusCat ? Math.max(0.75, x.opacity) : x.opacity) : 0.05}
-            strokeDasharray={x.flow === 'guar' ? '6 5' : x.flow === 'other' ? '2 5' : undefined} strokeLinecap="round" markerEnd={x.arrow && on ? `url(#fm-${x.flow})` : undefined} />
+            strokeDasharray={x.flow === 'guar' ? '6 5' : x.flow === 'other' ? '2 5' : undefined} strokeLinecap={x.head ? 'butt' : 'round'} />
+          {x.head && on && <polygon points={x.head.points} fill={FLOW_COLOR[x.flow]} fillOpacity={act ? 1 : Math.min(1, (hover || focusCat ? Math.max(0.75, x.opacity) : x.opacity) + 0.2)} />}
           <title>{`${x.e.from} → ${x.e.to} · ${x.e.layer}${x.label ? ' · ' + x.label : ''} (${x.e.id})`}</title>
         </g>;
       })}

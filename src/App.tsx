@@ -3,6 +3,7 @@ import FlowGraph from './FlowGraph';
 import Mechanisms from './Mechanisms';
 import CompanyPanel from './CompanyPanel';
 import CreditCards from './CreditCards';
+import CompanyList from './CompanyList';
 import { loadRelease } from './lib/data';
 import { loadMarket, type MarketSnapshot } from './lib/market';
 import type { GraphEdge, Layer, Release } from './lib/types';
@@ -42,6 +43,13 @@ function useWidth<T extends HTMLElement>() {
   return [ref, w] as const;
 }
 
+/** True while the viewport matches the media query. */
+function useMedia(q: string) {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.matchMedia(q).matches);
+  useEffect(() => { const mq = window.matchMedia(q); const h = () => setM(mq.matches); mq.addEventListener('change', h); return () => mq.removeEventListener('change', h); }, [q]);
+  return m;
+}
+
 export default function App() {
   const [release, setRelease] = useState<Release | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +59,6 @@ export default function App() {
   const [focusCat, setFocusCat] = useState<CategoryId | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [tab, setTab] = useState<string>('between');
-  const [query, setQuery] = useState('');
   const [stageRef, stageW] = useWidth<HTMLDivElement>();
   // On a narrow screen a selection opens scrolled to the selected companies in the middle.
   const selKey = s.selected.join('|');
@@ -74,10 +81,11 @@ export default function App() {
 
   const nodes = useMemo(() => (release ? nodeMap(release) : new Map()), [release]);
   const vis = useMemo(() => (release ? visibleGraph(release, s) : null), [release, s]);
-  const narrow = stageW < 900;
+  const phone = useMedia('(max-width: 900px)');
+  const narrow = phone || stageW < 700;
   const single = s.selected.length === 1;
   // Phones keep the drawing at full size and scroll sideways rather than shrinking text below legibility.
-  const graphW = s.selected.length ? Math.max(narrow ? 780 : 640, stageW - (single && !narrow ? 360 : 0)) : Math.max(1180, stageW);
+  const graphW = s.selected.length ? Math.max(narrow ? 780 : 640, stageW - (single && !narrow ? 320 : 0)) : Math.max(narrow ? 1180 : 980, stageW);
   const flow = useMemo(() => (release && vis ? flowLayout(release, vis, s.selected, graphW) : null), [release, vis, s.selected, graphW]);
 
   if (error) return <div className="fatal"><h1>Release could not be loaded</h1><pre>{error}</pre><p>No partial or unvalidated data is displayed.</p></div>;
@@ -103,8 +111,6 @@ export default function App() {
   const panels = market ? s.selected.map((id) => market.companies[id]).filter(Boolean) : [];
   const overviewIds = release.views['companies-network'].node_ids;
   const catCount = (c: CategoryId) => overviewIds.filter((id) => categoryOf(nodes.get(id)!) === c).length;
-  const pickable = release.graph.nodes.filter((n) => n.kind !== 'project').map((n) => ({ id: n.id, label: `${name(n.id)}${name(n.id) !== n.label_en.replace(/\n.*/s, '') ? ' — ' + n.label_en.replace(/\n.*/s, '') : ''}` }));
-  const pick = (v: string) => { const hit = pickable.find((p) => p.label === v || name(p.id).toLowerCase() === v.toLowerCase()); if (hit) { toggleNode(hit.id); setQuery(''); } else setQuery(v); };
   const relsOf = (id: string) => rows.filter((e) => e.from === id || e.to === id).sort((p, q) => (usdBn(q) ?? -1) - (usdBn(p) ?? -1));
   const RelRow = ({ e, me }: { e: GraphEdge; me: string }) => (
     <button className={`rel${s.edge === e.id ? ' on' : ''}`} onClick={() => setS((p) => ({ ...p, edge: e.id }))}>
@@ -127,7 +133,7 @@ export default function App() {
         <section className="hero">
           <div>
             <h1>Who funds the AI boom — and who is exposed if it slows?</h1>
-            <p className="lede">Money, compute and guarantees between the companies at the centre of AI capex. Line width is the disclosed amount. Click a company to trace its links; add up to {MAX_SELECTED} to see where they meet.</p>
+            <p className="lede">Money, compute and guarantees between the companies at the centre of AI capex. Line width is the disclosed amount. Click a company in the list or on the map to trace its links; add up to {MAX_SELECTED} to see where they meet.</p>
           </div>
           <div className="kpis">
             <div><b>{overviewIds.length}</b><span>companies</span></div>
@@ -140,8 +146,6 @@ export default function App() {
           {s.selected.length > 0 && <span className="chip on sel">{s.selected.map((id, i) => <span key={id}>{i > 0 && ' + '}<button className="chip-x" onClick={() => toggleNode(id)} aria-label={`Remove ${name(id)}`}>{name(id)} ×</button></span>)}</span>}
           <button className={`chip${!s.selected.length && !focusCat ? ' on' : ''}`} onClick={() => { clearSel(); setFocusCat(null); setS((p) => ({ ...p, showAll: true })); }}>All {overviewIds.length}</button>
           {CATEGORIES.map((c) => <button key={c.id} className={`chip${focusCat === c.id ? ' on' : ''}`} title={c.hint} onClick={() => { if (s.selected.length) clearSel(); setFocusCat((f) => (f === c.id ? null : c.id)); }}>{CAT_SHORT[c.id]} <span className="n">{catCount(c.id)}</span></button>)}
-          <input className="search" list="acn-companies" placeholder="Search company or ticker…" value={query} onChange={(e) => pick(e.target.value)} aria-label="Search company or ticker" />
-          <datalist id="acn-companies">{pickable.map((p) => <option key={p.id} value={p.label} />)}</datalist>
         </section>
         {notice && <p className="notice" role="status">{notice}</p>}
         <div className="legend">
@@ -149,6 +153,9 @@ export default function App() {
           <span className="note">Thicker = larger disclosed amount · thin = not disclosed · click a line for its record</span>
         </div>
 
+        <div className="netgrid">
+        {phone ? <details className="cl-fold"><summary>Companies by category{s.selected.length ? ` · ${s.selected.length} selected` : ''}</summary><CompanyList release={release} selected={s.selected} shared={vis.shared} max={MAX_SELECTED} onToggle={toggleNode} onClear={clearSel} /></details>
+          : <CompanyList release={release} selected={s.selected} shared={vis.shared} max={MAX_SELECTED} onToggle={toggleNode} onClear={clearSel} />}
         <div className={`stage${single && !narrow ? ' with-drawer' : ''}`} ref={stageRef}>
           {!s.selected.length && !s.showAll ? <p className="empty">Pick a company above, or click All to see the whole network.</p>
             : <div className="stage-scroll" ref={centre}>{narrow && <p className="swipe">{s.selected.length ? 'Swipe sideways for both sides' : 'Swipe sideways to see the whole network · tap a company to focus on it'}</p>}<FlowGraph f={flow} focusCat={s.selected.length ? null : focusCat} activeEdge={s.edge} onNode={toggleNode} onEdge={(id) => setS((p) => ({ ...p, edge: id }))} /></div>}
@@ -163,6 +170,7 @@ export default function App() {
                 <p className="small">Amounts are per record and are not added up: one contract can appear in several records.</p>
               </>; })()}
           </aside>}
+        </div>
         </div>
 
         {(s.selected.length > 1 || (single && narrow)) && <section className="panel" aria-label="Selection details">

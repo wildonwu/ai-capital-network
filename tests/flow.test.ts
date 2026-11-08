@@ -4,7 +4,7 @@ import path from 'node:path';
 import { loadRelease } from '../src/lib/data';
 import type { Release } from '../src/lib/types';
 import { DEFAULT_SELECTION, visibleGraph } from '../src/lib/selection';
-import { flowLayout, payerOf, usdBn, OVERVIEW_COLUMNS } from '../src/lib/flow';
+import { flowLayout, headSize, payerOf, usdBn, OVERVIEW_COLUMNS } from '../src/lib/flow';
 
 const base = path.resolve(__dirname, '../public/data');
 let r: Release;
@@ -79,5 +79,26 @@ describe('two or three companies selected', () => {
     const f = layout(['OpenAI', 'CoreWeave'], 380);
     for (const n of f.nodes) expect(n.x + n.w).toBeLessThanOrEqual(380);
     for (let i = 0; i < f.nodes.length; i++) for (let j = i + 1; j < f.nodes.length; j++) expect(overlap(f.nodes[i], f.nodes[j])).toBe(false);
+  });
+});
+
+describe('arrowheads', () => {
+  it('grow with the line so a thick line never covers its arrow', () => {
+    const f = layout(['OpenAI']);
+    const thick = f.edges.find((e) => e.e.from === 'OpenAI' && e.e.to === 'Oracle')!; // $300bn, the widest
+    const thin = f.edges.find((e) => !usdBn(e.e) && e.head)!;
+    const span = (h: { points: string }) => { const p = h.points.split(' ').map((q) => q.split(',').map(Number)); return Math.hypot(p[1][0] - p[2][0], p[1][1] - p[2][1]); };
+    expect(span(thick.head!)).toBeGreaterThan(thick.width * 1.5);
+    expect(span(thick.head!)).toBeGreaterThan(span(thin.head!));
+    expect(headSize(16).half * 2).toBeGreaterThan(16);
+  });
+  it('ends the line at the head base, with the tip on the target box edge', () => {
+    const f = layout(['OpenAI']);
+    const e = f.edges.find((x) => x.e.from === 'OpenAI' && x.e.to === 'Oracle')!;
+    const tip = e.head!.points.split(' ')[0].split(',').map(Number);
+    const box = f.nodes.find((n) => n.id === 'Oracle')!;
+    expect(tip[0]).toBeCloseTo(box.x, 0);
+    const end = e.d.trim().split(' ').at(-1)!.split(',').map(Number);
+    expect(box.x - end[0]).toBeGreaterThan(headSize(e.width).len - 1);
   });
 });
