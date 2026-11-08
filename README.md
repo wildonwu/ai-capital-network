@@ -55,9 +55,13 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
   own relationships in). Counterparties linked to two or more selected companies are highlighted, edges
   between selected companies are emphasised, and pairs with neither are flagged as having no recorded
   contractual link (coverage is partial; market contagion is not modelled).
-- Two layouts: **Auto layout** (default; concentric, selected companies in the middle, shared counterparties on the
-  inner ring, boxes sized to ticker labels so the fit fills the panel) and **Fixed positions** (full-network
-  coordinates, nodes never move). Listed companies are shown by ticker (`src/lib/tickers.ts`).
+- Four layouts for a selection, to compare (`src/lib/layouts.ts`): **Bands by category** (default; one row per
+  category, top to bottom in risk-transmission order), **Layered around selection** (selected and shared in the
+  centre, counterparties pointing in on the left, pointed to on the right), **Bubbles** (force layout, ellipses)
+  and **Fixed positions** (editorial coordinates). The overview with nothing selected always uses the editorial
+  positions. Project-level nodes of one parent merge into a box (`src/lib/display.ts`) until clicked; parallel
+  edges merge with a count; amounts are printed on the lines. Listed companies are shown by ticker
+  (`src/lib/tickers.ts`).
 - One predicate (`visibleGraph` in `src/lib/selection.ts`) drives the graph, table, layer counts and exports.
   URL state: `sel=A|B`, `all=0`, `layout=fixed`; old `node=` links still work.
 - The CDS chart now sits in a **Credit monitor** section above the network for every company with CDS data.

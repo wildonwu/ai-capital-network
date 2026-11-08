@@ -58,7 +58,9 @@ describe('URL state', () => {
   it('round-trips selection, layout and blank mode', () => {
     const s = { ...DEFAULT_SELECTION, selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' as const };
     expect(queryToSelection(selectionToQuery(s, 'x'), r)).toMatchObject({ selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' });
-    expect(queryToSelection('?', r).layout).toBe('relayout');
+    expect(queryToSelection('?', r).layout).toBe('tiers');
+    expect(queryToSelection('?layout=bubble', r).layout).toBe('bubble');
+    expect(queryToSelection('?layout=nope', r).layout).toBe('tiers');
   });
   it('keeps old single-node links working and drops unknown ids', () => {
     expect(queryToSelection('?node=CoreWeave', r).selected).toEqual(['CoreWeave']);

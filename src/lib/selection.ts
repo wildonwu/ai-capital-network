@@ -1,4 +1,5 @@
 import type { GraphEdge, Layer, Release } from './types';
+import type { LayoutMode } from './layouts';
 import { LAYERS } from './types';
 
 /** What the graph, table, counts and exports show. One predicate for all of them. */
@@ -8,9 +9,9 @@ export interface Selection {
   layers: Layer[];
   octOnly: boolean;
   edge: string | null;
-  layout: 'fixed' | 'relayout';
+  layout: LayoutMode;
 }
-export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null, layout: 'relayout' };
+export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null, layout: 'tiers' };
 
 export const OVERVIEW_VIEW = 'companies-network';
 export const POSITION_VIEW = 'full-network';
@@ -93,6 +94,6 @@ export function queryToSelection(q: string, r: Release): Selection {
   const edge = p.get('edge');
   return {
     selected: [...new Set(selected)], showAll: p.get('all') !== '0', layers, octOnly: p.get('oct') === '1',
-    edge: edge && eids.has(edge) ? edge : null, layout: p.get('layout') === 'fixed' ? 'fixed' : 'relayout',
+    edge: edge && eids.has(edge) ? edge : null, layout: (['tiers', 'ego', 'bubble', 'fixed'] as LayoutMode[]).find((l) => l === p.get('layout')) ?? DEFAULT_SELECTION.layout,
   };
 }

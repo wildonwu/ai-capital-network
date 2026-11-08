@@ -32,6 +32,7 @@ export default function App() {
   const [mobileTab, setMobileTab] = useState<'list' | 'graph'>('graph');
   const [market, setMarket] = useState<MarketSnapshot | null>(null);
   const [today] = useState(() => new Date().toISOString().slice(0, 10));
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     loadRelease().then((r) => { setRelease(r); setS(queryToSelection(location.search, r)); }).catch((e) => setError(String(e.message ?? e)));
@@ -100,9 +101,9 @@ export default function App() {
 
       <section className="controls" aria-label="Controls">
         <label className="oct-toggle show-all"><input type="checkbox" checked={s.showAll} onChange={(e) => setS((p) => ({ ...p, showAll: e.target.checked }))} /> Show all</label>
-        <div className="seg" role="group" aria-label="Layout">
-          <button className={s.layout === 'relayout' ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: 'relayout' }))}>Auto layout</button>
-          <button className={s.layout === 'fixed' ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: 'fixed' }))}>Fixed positions</button>
+        <div className="seg" role="group" aria-label="Layout for selected companies">
+          {([['tiers', 'Bands by category'], ['ego', 'Layered around selection'], ['bubble', 'Bubbles'], ['fixed', 'Fixed positions']] as const).map(([k, label]) => (
+            <button key={k} className={s.layout === k ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: k }))}>{label}</button>))}
         </div>
         <label className="oct-toggle"><input type="checkbox" checked={s.octOnly} onChange={(e) => setS((p) => ({ ...p, octOnly: e.target.checked }))} /> October-change records only</label>
         <div className="exports">
@@ -131,9 +132,16 @@ export default function App() {
           {s.selected.length > 0 && <div className="sel-bar">
             {s.selected.map((id) => <button key={id} className="sel-chip" onClick={() => toggleNode(id)} title="Remove">{name(id)} ×</button>)}
             {vis.unlinkedPairs.map(([a, b]) => <span key={a + b} className="unlinked">No recorded contractual link between {name(a)} and {name(b)} in this dataset (coverage is partial; market contagion is not modelled).</span>)}
+            {expanded.size > 0 && <button className="link" onClick={() => setExpanded(new Set())}>Collapse project boxes</button>}
             {vis.shared.length > 0 && <span className="shared-note">Shared counterparties: {vis.shared.map(name).join(', ')}</span>}
           </div>}
-          <Graph release={release} vis={vis} layout={s.layout} selected={s.selected} edge={s.edge} onNode={toggleNode} onEdge={(id) => setS((p) => ({ ...p, edge: id }))} />
+          <Graph release={release} vis={vis} layout={s.layout} selected={s.selected} edge={s.edge} expanded={expanded} labelOf={name}
+            onNode={(id) => {
+              // A merged project box expands (or collapses) instead of being selected.
+              if (id.startsWith('combo:')) { const parent = id.slice(6); setExpanded((x) => { const n = new Set(x); if (n.has(parent)) n.delete(parent); else n.add(parent); return n; }); }
+              else toggleNode(id);
+            }}
+            onEdge={(id) => setS((p) => ({ ...p, edge: id }))} />
         </div>
         <aside className={`detail${focus || selEdge ? ' open' : ''}`} aria-live="polite">
           {!focus && !selEdge && <div className="hint"><h2>Explore</h2><p>Click companies in the list (or on the graph) to add them. Click a line or a table row for the exact record and sources. Clicking a selected company again removes it. <kbd>Esc</kbd> closes a record.</p><p className="small">{release.graph.data_quality_notice}</p></div>}
