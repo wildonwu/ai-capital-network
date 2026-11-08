@@ -9,10 +9,20 @@ const W = 1000, H = 300, L = 54, R = 936, T = 16, B = 270;
 /** Value `n` sessions before the last (carried values included, so every company has a daily series). */
 const back = (s: CdsPoint[], n: number) => (s.length > n ? s[s.length - 1 - n].spread_bp : null);
 
-function Change({ now, then }: { now: number; then: number | null }) {
-  if (then === null) return <td className="cm-num">—</td>;
+function Change({ now, then, wide }: { now: number; then: number | null; wide?: boolean }) {
+  const w = wide ? ' cm-wide' : '';
+  if (then === null) return <td className={`cm-num${w}`}>—</td>;
   const d = now - then;
-  return <td className={`cm-num ${d > 0 ? 'neg' : d < 0 ? 'pos' : ''}`}>{d > 0 ? '+' : ''}{Math.round(d)}</td>;
+  return <td className={`cm-num${w} ${d > 0 ? 'neg' : d < 0 ? 'pos' : ''}`}>{d > 0 ? '+' : ''}{Math.round(d)}</td>;
+}
+
+/** Last close and its 1-month (21-session) change, so CDS and share-price moves read side by side. */
+function PriceCells({ h }: { h: { date: string; close: number }[] }) {
+  if (!h.length) return <><td className="cm-num">—</td><td className="cm-num">—</td></>;
+  const now = h[h.length - 1].close, then = h.length > 21 ? h[h.length - 22].close : null;
+  const pct = then ? (now / then - 1) * 100 : null;
+  return <><td className="cm-num">${now.toLocaleString('en-US', { maximumFractionDigits: 2 })}</td>
+    <td className={`cm-num ${pct === null ? '' : pct < 0 ? 'neg' : 'pos'}`}>{pct === null ? '—' : `${pct > 0 ? '+' : ''}${pct.toFixed(1)}%`}</td></>;
 }
 
 /** Multi-company 5Y comparison on a log scale, with a summary table that opens one company's detail chart. */
@@ -45,19 +55,20 @@ export default function CreditMonitor({ companies, tickerOf }: { companies: Comp
   return (
     <div className="cm">
       <div className="cm-top">
-        <table className="cm-table">
-          <thead><tr><th></th><th>5Y CDS</th><th>1W</th><th>1M</th><th>3M</th><th>Last traded</th><th>Curve</th></tr></thead>
+        <div className="cm-scroll"><table className="cm-table">
+          <thead><tr><th></th><th>5Y CDS bp</th><th className="cm-wide">1W</th><th>1M</th><th className="cm-wide">3M</th><th>Price</th><th>Price 1M</th><th className="cm-wide">Last trade</th><th>Curve</th></tr></thead>
           <tbody>{rows.map(({ c, s }) => {
             const last = s[s.length - 1]; const inv = c.cds?.inversion?.alert.active;
             return <tr key={c.node_id} className={detail === c.node_id ? 'on' : ''} onClick={() => setDetail(c.node_id)} tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') setDetail(c.node_id); }}>
               <td><label className="cm-tick" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={!!on[c.node_id]} onChange={(e) => setOn((o) => ({ ...o, [c.node_id]: e.target.checked }))} /><i style={{ background: color[c.node_id] }} /><b>{tickerOf(c.node_id)}</b></label></td>
-              <td className="cm-num"><b>{Math.round(last.spread_bp).toLocaleString('en-US')}</b> bp</td>
-              <Change now={last.spread_bp} then={back(s, 5)} /><Change now={last.spread_bp} then={back(s, 21)} /><Change now={last.spread_bp} then={back(s, 63)} />
-              <td className="cm-date">{last.observed_on}</td>
+              <td className="cm-num"><b>{Math.round(last.spread_bp).toLocaleString('en-US')}</b></td>
+              <Change now={last.spread_bp} then={back(s, 5)} wide /><Change now={last.spread_bp} then={back(s, 21)} /><Change now={last.spread_bp} then={back(s, 63)} wide />
+              <PriceCells h={c.price.history ?? []} />
+              <td className="cm-date cm-wide">{last.observed_on?.slice(5)}</td>
               <td>{inv ? <span className="badge stale">inverted</span> : <span className="small">normal</span>}</td>
             </tr>;
           })}</tbody>
-        </table>
+        </table></div>
         <div className="cm-chart">
           <div className="cm-chart-head">
             <b>5-year CDS, log scale</b>
@@ -80,8 +91,8 @@ export default function CreditMonitor({ companies, tickerOf }: { companies: Comp
           </div>
         </div>
       </div>
-      <p className="small">5-year conventional spreads derived from public DTCC trade reports with the ISDA standard model; not dealer quotes. Days without a trade carry the last value. Changes are in bp. Click a row for that company's tenor curve and share price; untick to hide a line.</p>
-      {det && <div className="cm-detail"><h3>{tickerOf(det.node_id)} · {det.name}</h3><CdsChart key={det.node_id} cds={det.cds!} price={det.price.history ?? []} alertPeriods={det.cds!.inversion?.periods ?? []} /></div>}
+      <p className="small">5-year conventional spreads derived from public DTCC trade reports with the ISDA standard model; not dealer quotes. Days without a trade carry the last value. Changes are in bp. Click a row to compare that company's CDS tenors with its share price below; untick to hide a line.</p>
+      {det && <div className="cm-detail"><h3>{tickerOf(det.node_id)} · {det.name}</h3><CdsChart key={det.node_id} ticker={tickerOf(det.node_id)} cds={det.cds!} price={det.price.history ?? []} alertPeriods={det.cds!.inversion?.periods ?? []} /></div>}
     </div>
   );
 }

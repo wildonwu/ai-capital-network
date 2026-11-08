@@ -13,7 +13,7 @@ function ticks(lo: number, hi: number, n = 5) {
   return out;
 }
 
-export default function CdsChart({ cds, price, alertPeriods }: { cds: CdsBlock; price: PricePoint[]; alertPeriods: { from: string; to: string }[] }) {
+export default function CdsChart({ cds, price, alertPeriods, ticker }: { cds: CdsBlock; price: PricePoint[]; alertPeriods: { from: string; to: string }[]; ticker: string }) {
   const [gran, setGran] = useState<'D' | 'W'>('D');
   const [show, setShow] = useState<Record<string, boolean>>({ '5Y': true, '4Y': false, '3Y': false, '2Y': false, '1Y': false, price: true });
   const allDates = useMemo(() => (cds.tenors?.['5Y'] ?? cds.series ?? []).map((p) => p.date), [cds]);
@@ -116,7 +116,7 @@ export default function CdsChart({ cds, price, alertPeriods }: { cds: CdsBlock; 
           {ticks(lo, hi).map((v) => <g key={v}><line className="cc-grid" x1={L} x2={R} y1={y(v)} y2={y(v)} /><text className="cc-axis" x={L - 6} y={y(v) + 4} textAnchor="end">{v.toLocaleString('en-US')}</text></g>)}
           {show.price && pv.length > 0 && ticks(plo, phi, 4).map((v) => <text key={v} className="cc-axis" x={R + 6} y={yp(v) + 4}>${v}</text>)}
           <text className="cc-axis-title" x={L} y={14}>bp</text>
-          {show.price && <text className="cc-axis-title" x={R} y={14} textAnchor="end">CRWV $</text>}
+          {show.price && <text className="cc-axis-title" x={R} y={14} textAnchor="end">{ticker} $</text>}
           {alertPeriods.filter((p) => p.to >= dates[0] && p.from <= dates[n - 1]).map((p) => <rect key={p.from} className="cc-inv" x={xd(p.from) - 3} y={T} width={Math.max(6, xd(p.to) - xd(p.from) + 6)} height={B - T} />)}
           {pricePath && <path className="cc-price" d={pricePath} />}
           {vis.map((k) => { const { solid, dashed, dots } = linePaths(k); return <g key={k} style={{ ['--c' as string]: COLORS[k] }}>
