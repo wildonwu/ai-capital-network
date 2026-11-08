@@ -31,8 +31,17 @@ quantify.
 - [x] ISDA standard model (`scripts/cds-core.mjs`), DTCC fetch with lifecycle handling (`scripts/fetch-cds.mjs`)
 - [x] Upfront convention resolved (cash amount + accrued); one-year backfill: 144 priced days since 2025-10-02
 - [x] Calibration vs Markit (news): −0.5% on 2026-10-27; panel row with trade counts and on-date checks
-- [ ] Pushed and verified live
+- [x] Pushed and verified live (2026-11-08)
 - Note: FINRA's free API has only market-wide TRACE aggregates; per-bond yields stay hand-recorded
+
+### Phase 2c — CDS curve, chart and inversion alert (2026-11-08)
+- [x] All tenors kept; 5Y on-the-run as the headline; carried values on no-trade days
+- [x] Capped-trade notional inference ($5m–$100m, $1m step, unique 1/8-grid hit within ±5 points): 90 trades resolved
+- [x] Inversion rule with a 2-day minimum on the short tenor; banner at top of site
+- [x] Chart modelled on the Taiwan dashboard flows chart (D/W, ranges, chips, events, navigator, share price)
+- [ ] Owner confirms the draft event list in `data/companies/coreweave.json`
+- [ ] Owner loads `com.wildon.dashboard-dispatch.acn` (launchd) for the 08:40 Taipei refresh + Telegram alert
+- [ ] Pushed and verified live
 
 ### Backlog
 - [ ] Fuse timeline (dated covenant tests, maturities, drawdown deadlines) — mockup approved in principle

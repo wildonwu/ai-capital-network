@@ -104,3 +104,48 @@ describe('committed CDS snapshot', () => {
     expect(Math.abs(d!.spread_bp / 1041.4 - 1)).toBeLessThan(0.03);
   });
 });
+
+describe('tenor curve, capped-notional inference and inversion', () => {
+  const base = { coupon: 0.05, upfrontType: 'UFRO', ts: '2026-11-05T15:00:00Z' };
+  it('buckets tenors with 5Y as the on-the-run contract', () => {
+    expect(cds.tenorOf({ trade: '2026-11-05', maturity: '2031-12-20' })).toBe('5Y');
+    expect(cds.tenorOf({ trade: '2026-11-05', maturity: '2031-06-20' })).toBe('4Y'); // previous 5Y after the roll
+    expect(cds.tenorOf({ trade: '2026-11-05', maturity: '2029-12-20' })).toBe('3Y');
+    expect(cds.tenorOf({ trade: '2026-11-05', maturity: '2027-12-20' })).toBe('1Y');
+  });
+  it('infers a capped notional only when one candidate fits the grid and the recent level', () => {
+    const t = { ...base, trade: '2026-11-05', maturity: '2031-12-20', upfront: 1068055.555 };
+    expect(cds.inferNotional(t, 0.20)).toMatchObject({ notional: 5e6 });
+    expect(cds.inferNotional(t, 0.20)!.points).toBeCloseTo(0.22, 6);
+    expect(cds.inferNotional(t, 0.125)).toBeNull(); // 22 points is too far from a 12.5-point reference
+    expect(cds.inferNotional(t, null)).toBeNull(); // no reference, no guess
+  });
+  it('skips weekends and SIFMA holidays', () => {
+    expect(cds.businessDays('2026-11-06', '2026-11-12')).toEqual(['2026-11-06', '2026-11-09', '2026-11-10', '2026-11-12']);
+  });
+  it('carries the last value forward and marks inferred days', () => {
+    const store = {
+      a: { ...base, id: 'a', trade: '2026-11-04', ts: '2026-11-04T15:00:00Z', maturity: '2031-12-20', notional: 2e6, upfront: 370000 },
+      b: { ...base, id: 'b', trade: '2026-11-06', ts: '2026-11-06T15:00:00Z', maturity: '2031-12-20', notional: null, capped: true, upfront: 1042361.11 },
+    };
+    const { tenors, inferredCount } = cds.curveSeries(store, { '2026-11-04': PAR }, '2026-11-09');
+    expect(inferredCount).toBe(1);
+    expect(tenors['5Y'].map((p: { date: string; status: string }) => [p.date, p.status])).toEqual([
+      ['2026-11-04', 'observed'], ['2026-11-05', 'carried'], ['2026-11-06', 'inferred'], ['2026-11-09', 'carried'],
+    ]);
+    expect(tenors['5Y'][1].spread_bp).toBe(tenors['5Y'][0].spread_bp);
+    expect(tenors['5Y'][2].points_pct).toBeCloseTo(21.5, 2);
+  });
+  it('needs the short tenor on at least two days before calling an inversion', () => {
+    const day = (date: string, v: number, status = 'observed') => ({ date, spread_bp: v, points_pct: 0, status, priced: 1 });
+    const five = ['2026-11-02', '2026-11-03', '2026-11-04', '2026-11-05', '2026-11-06'].map((d) => day(d, 1100));
+    const oneDay = { '5Y': five, '3Y': [day('2026-11-05', 1300), day('2026-11-06', 1300, 'carried')] };
+    expect(cds.inversionHistory(oneDay).at(-1).inverted).toBe(false);
+    const twoDays = { '5Y': five, '3Y': [day('2026-11-04', 1250), day('2026-11-05', 1300)] };
+    const h = cds.inversionHistory(twoDays);
+    expect(h.at(-1)).toMatchObject({ inverted: true, short: [{ tenor: '3Y', days: 2 }] });
+    // On 11-04 the window holds only one 3Y day, so the inversion starts on 11-05.
+    expect(cds.inversionAlert(h)).toMatchObject({ active: true, since: '2026-11-05', five_bp: 1100 });
+    expect(cds.inversionPeriods(h)).toEqual([{ from: '2026-11-05', to: '2026-11-06' }]);
+  });
+});

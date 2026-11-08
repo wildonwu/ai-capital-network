@@ -1,9 +1,10 @@
 name: Refresh company market data
 
-# Weekdays after the US close. GitHub may start scheduled runs late; daily granularity tolerates that.
+# Backup schedule: 00:47 UTC Tue–Sat, after the US close and after DTCC publishes the previous day's
+# credit file (~00:15 UTC). The primary trigger is a launchd job on the owner's Mac (GitHub cron runs late).
 on:
   schedule:
-    - cron: "17 22 * * 1-5"
+    - cron: "47 0 * * 2-6"
   workflow_dispatch:
 
 permissions:

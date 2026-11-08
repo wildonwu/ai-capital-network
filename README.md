@@ -74,6 +74,16 @@ It is deliberately **outside** the hashed release: market data changes daily, th
   (the ISDA curve uses SOFR swaps; the difference is small for this purpose). Checked against a news-reported Markit
   level: 1,036 vs 1,041.4 bp on 2026-10-27 (−0.5%). Weekend-only business-day adjustment; days with no priced trade
   are omitted rather than filled.
+- CDS curve: trades are bucketed 1Y–4Y by remaining years and 5Y = the on-the-run contract. A trade above the $5m
+  disclosure cap gets a notional only when exactly one $5m–$100m ($1m step) candidate puts its quoted points on the
+  1/8 grid and within ±5 points of that tenor's last level; otherwise it is left out. Days without a priced trade
+  carry the previous value (`status: carried`, drawn dashed). Inversion = any of 1Y–3Y above 5Y on medians of
+  observed values over the last 5 sessions, with the short tenor observed on at least 2 of them (single prints on
+  thin tenors produced four false alarms in 2026). An active inversion shows a banner at the top of the site.
+- Chart (`src/CdsChart.tsx`): D/W, YTD/6M/1Y/2Y/All, tenor and share-price chips, events from
+  `chart_events` in the company file plus SEC results dates (8-K item 2.02), and a draggable navigator.
+- Telegram alerts run on the owner's Mac, not in GitHub (the bot token must not leave that host):
+  `~/dashboard-dispatch/acn-refresh.sh` dispatches this workflow and then runs `acn-cds-alert.mjs`.
 - To add a company: create `data/companies/<name>.json` with the release `node_id`, `sec_cik` and `yahoo_symbol`.
 
 ## Known data gaps / limitations

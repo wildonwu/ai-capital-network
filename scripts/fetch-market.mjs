@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { MARKET_SCHEMA, buildCompany, contentKey, financialsFromCompanyFacts, priceFromYahoo, validateMarket } from './market-core.mjs';
+import { MARKET_SCHEMA, buildCompany, contentKey, earningsEvents, financialsFromCompanyFacts, priceFromYahoo, validateMarket } from './market-core.mjs';
 import { refreshCds } from './fetch-cds.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -26,12 +26,14 @@ const problems = [];
 
 for (const file of fs.readdirSync(manualDir).filter((f) => f.endsWith('.json')).sort()) {
   const manual = JSON.parse(fs.readFileSync(path.join(manualDir, file), 'utf8'));
-  let financials = null, price = null, cds = null;
+  let financials = null, price = null, cds = null, earnings = null;
   if (manual.sec_cik) {
     if (!SEC_UA) problems.push(`${manual.node_id}: SEC_USER_AGENT not set, financials kept from previous snapshot`);
     else {
       try { financials = financialsFromCompanyFacts(await getJSON(`https://data.sec.gov/api/xbrl/companyfacts/CIK${manual.sec_cik}.json`, { 'User-Agent': SEC_UA }), now); }
       catch (e) { problems.push(`${manual.node_id}: SEC ${e.message}`); }
+      try { earnings = earningsEvents(await getJSON(`https://data.sec.gov/submissions/CIK${manual.sec_cik}.json`, { 'User-Agent': SEC_UA }), manual.sec_cik); }
+      catch (e) { problems.push(`${manual.node_id}: SEC submissions ${e.message}`); }
     }
   }
   if (manual.yahoo_symbol) {
@@ -42,7 +44,7 @@ for (const file of fs.readdirSync(manualDir).filter((f) => f.endsWith('.json')).
     try { const r = await refreshCds({ nodeId: manual.node_id, cds: manual.cds }, root, now); cds = r.block; for (const l of r.log) console.log(`${manual.node_id} cds ${l}`); }
     catch (e) { problems.push(`${manual.node_id}: CDS ${e.message}`); }
   }
-  companies[manual.node_id] = buildCompany(manual, { financials, price, cds }, previous?.companies?.[manual.node_id]);
+  companies[manual.node_id] = buildCompany(manual, { financials, price, cds, earnings }, previous?.companies?.[manual.node_id]);
 }
 
 const next = { schema: MARKET_SCHEMA, generated_at: now, companies };

@@ -181,5 +181,58 @@
     "source": "dtcc-sec",
     "entity_pattern": "coreweave",
     "label": "CoreWeave, Inc. (senior)"
-  }
+  },
+  "chart_events": [
+    {
+      "date": "2025-10-30",
+      "label": "Core Scientific deal voted down",
+      "kind": "line",
+      "detail": "Core Scientific shareholders rejected the all-stock merger; agreement terminated.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000095010325014006/dp236631_8k.htm"
+    },
+    {
+      "date": "2025-12-31",
+      "label": "DDTL 3.0 amended",
+      "kind": "line",
+      "detail": "OpenAI-backed facility amended for delivery delays: DSCR test moved to Oct 2027, unlimited equity cures until 28 Oct 2026.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000003/crwv-20251231.htm"
+    },
+    {
+      "date": "2026-01-23",
+      "label": "NVIDIA $2bn equity",
+      "kind": "line",
+      "detail": "NVIDIA buys 22.9m shares at $87.20 in a private placement.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm"
+    },
+    {
+      "date": "2026-03-31",
+      "label": "Meta $21bn · DDTL 4.0",
+      "kind": "line",
+      "detail": "New Meta order (~$21bn through 2032) and the $8.5bn investment-grade, non-recourse DDTL 4.0.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000154/crwv-20260331.htm"
+    },
+    {
+      "date": "2026-04-09",
+      "end": "2026-04-21",
+      "label": "$10bn+ notes & converts",
+      "kind": "band",
+      "detail": "9.75% senior notes due 2031 ($2.75bn), 1.75% convertibles due 2032 ($4bn) and a $1bn Jane Street placement.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000164/crwv-20260409.htm"
+    },
+    {
+      "date": "2026-09-17",
+      "label": "$4.2bn 2033 converts",
+      "kind": "line",
+      "detail": "2.875% convertible notes due 2033 priced, conversion price $97.85.",
+      "source": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000432/crwv-20260917.htm"
+    },
+    {
+      "date": "2026-10-13",
+      "end": "2026-10-16",
+      "label": "CDS > 1,000 bp",
+      "kind": "band",
+      "detail": "Stock down ~25% on the week; 9.625% 2032 notes near 79.5 cents; 5Y CDS through 1,000 bp.",
+      "source": "https://www.tikr.com/zh/blog/coreweave-stock-fell-25-last-week-on-bond-distress-is-it-a-buy-now"
+    }
+  ]
 }

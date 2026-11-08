@@ -2,7 +2,7 @@
 // Trade state is committed to data/derived/cds/<node_id>.json so each run only downloads new files.
 import fs from 'node:fs';
 import path from 'node:path';
-import { applyLifecycle, compactTrade, dailySeries, parseCsv, parseTreasuryCsv, selectTrades, unzip, RECOVERY } from './cds-core.mjs';
+import { applyLifecycle, compactTrade, curveSeries, inversionAlert, inversionHistory, inversionPeriods, parseCsv, parseTreasuryCsv, selectTrades, unzip, RECOVERY } from './cds-core.mjs';
 
 const UA = { 'User-Agent': 'Mozilla/5.0 (ai-capital-network research)' };
 const BACKFILL_DAYS = 370;
@@ -54,16 +54,22 @@ export async function refreshCds({ nodeId, cds }, root, now) {
   fs.writeFileSync(stateFile, JSON.stringify(state, null, 0) + '\n');
 
   const years = [...new Set(Object.values(state.trades).map((t) => t.trade?.slice(0, 4)).filter(Boolean))].sort();
-  const series = dailySeries(state.trades, await treasuryCurves(years));
+  const lastFile = state.processed.at(-1);
+  const lastDate = lastFile ? lastFile.replace(/^SEC_CUMULATIVE_CREDITS_/, '').replace('.zip', '').replace(/_/g, '-') : now.slice(0, 10);
+  const { tenors, inferredCount, cappedSkipped } = curveSeries(state.trades, await treasuryCurves(years), lastDate);
+  const history = inversionHistory(tenors);
   return {
     log,
     block: {
       status: 'ok', fetched_at: now,
       source: 'DTCC SEC public dissemination, end-of-day cumulative credit files',
-      method: `On-the-run 5Y senior trades with a disclosed notional; quoted points = cash upfront + accrued; ISDA standard model, flat hazard, ${RECOVERY * 100}% recovery, discounting on the US Treasury par curve of the trade date. Daily median.`,
+      method: `Senior single-name trades bucketed by tenor (5Y = on-the-run contract). Quoted points = cash upfront / notional + accrued. Trades above the $5m disclosure cap get a notional only when exactly one $5m–$100m ($1m step) candidate puts the points on the 1/8 grid within ±5 points of the tenor's last level. ISDA standard model, flat hazard, ${RECOVERY * 100}% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.`,
       reference_entity: cds.label ?? nodeId,
-      latest_file: state.processed.at(-1) ?? null,
-      series: series.slice(-260),
+      latest_file: lastFile ?? null,
+      inferred_trades: inferredCount, capped_unresolved: cappedSkipped,
+      series: tenors['5Y'] ?? [],
+      tenors,
+      inversion: { rule: 'Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days', alert: inversionAlert(history), periods: inversionPeriods(history) },
     },
   };
 }

@@ -1,5 +1,6 @@
 import type { CdsBlock, CompanyMarket, ManualSeries, QPoint } from './lib/market';
 import { daysBetween, latest, manualValue, quarterLabel, usdShort } from './lib/market';
+import CdsChart from './CdsChart';
 
 /** Manual (hand-recorded) values older than this are flagged so a stale number is never read as current. */
 const MANUAL_STALE_DAYS = 14;
@@ -64,7 +65,7 @@ function CdsRow({ cds, today, reported }: { cds: CdsBlock; today: string; report
       </div>
       {l && <p className="cp-note">
         {cds.status !== 'ok' && <b>{cds.status}. </b>}
-        Upfront {l.points_pct.toFixed(2)} points on a 5% coupon; {l.priced} priced trade{l.priced === 1 ? '' : 's'} of {l.trades}{l.capped ? ` (${l.capped} above the $5m disclosure cap)` : ''}. Converted with the ISDA standard model (40% recovery, Treasury curve).
+        Upfront {l.points_pct.toFixed(2)} points on a 5% coupon{l.status === 'carried' ? `, carried from ${l.observed_on} (no 5Y trade since)` : l.status === 'inferred' ? `, includes ${l.inferred} trade${l.inferred === 1 ? '' : 's'} above the $5m cap with an inferred notional` : `, ${l.priced} trade${l.priced === 1 ? '' : 's'}`}. ISDA standard model (40% recovery, Treasury curve).
         {checks.map(({ p, d }) => <> Check {p.date}: {d!.spread_bp.toFixed(0)} vs {p.value.toLocaleString('en-US')} bp reported ({((d!.spread_bp / p.value - 1) * 100).toFixed(1)}%).</>)}
       </p>}
     </>
@@ -128,6 +129,8 @@ export default function CompanyPanel({ c, today }: { c: CompanyMarket; today: st
           </> : <p className="cp-note">No filing data available.</p>}
         </div>
       </div>
+
+      {c.cds?.status !== 'missing' && (c.cds?.tenors || c.cds?.series) && <CdsChart cds={c.cds!} price={p.history ?? []} events={c.chart_events ?? []} alertPeriods={c.cds!.inversion?.periods ?? []} />}
 
       {mat && mat.buckets.length > 0 && <div className="cp-mat">
         <h3>Debt principal due by year <small>as of {mat.as_of} · total {usdShort(mat.total)}</small></h3>

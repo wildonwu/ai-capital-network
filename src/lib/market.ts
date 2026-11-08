@@ -12,8 +12,15 @@ export interface ManualSeries { label: string; unit: string; note?: string; poin
 export interface ReferencePrice { label: string; value: number; source: string }
 export interface MaturityBucket { year: string; value: number; derived: boolean }
 
-export interface CdsPoint { date: string; spread_bp: number; points_pct: number; priced: number; trades: number; capped: number }
-export interface CdsBlock { status: BlockStatus; fetched_at?: string; source?: string; method?: string; reference_entity?: string; latest_file?: string | null; series?: CdsPoint[] }
+export interface CdsPoint { date: string; spread_bp: number; points_pct: number; status?: 'observed' | 'inferred' | 'carried'; priced: number; inferred?: number; observed_on?: string; trades?: number; capped?: number }
+export interface InversionAlert { active: boolean; as_of?: string; since?: string; five_bp?: number; five_days?: number; short?: { tenor: string; spread_bp: number; days: number }[] }
+export interface CdsBlock {
+  status: BlockStatus; fetched_at?: string; source?: string; method?: string; reference_entity?: string; latest_file?: string | null;
+  inferred_trades?: number; capped_unresolved?: number;
+  series?: CdsPoint[]; tenors?: Record<string, CdsPoint[]>;
+  inversion?: { rule: string; alert: InversionAlert; periods: { from: string; to: string }[] };
+}
+export interface ChartEvent { date: string; end?: string; label: string; kind: 'line' | 'band' | 'earnings'; detail?: string; source: string }
 
 export interface CompanyMarket {
   node_id: string; name: string; ticker: string; curated_at: string;
@@ -28,6 +35,7 @@ export interface CompanyMarket {
   reference_prices: ReferencePrice[];
   manual_series: Record<string, ManualSeries>;
   events: { date: string; label: string; source: string }[];
+  chart_events?: ChartEvent[];
 }
 export interface MarketSnapshot { schema: string; generated_at: string; companies: Record<string, CompanyMarket> }
 

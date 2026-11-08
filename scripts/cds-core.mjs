@@ -252,3 +252,123 @@ export function compactTrade(t) {
   const { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, corrected, modified } = t;
   return { id, trade, ts, maturity, coupon, notional, capped, upfront, upfrontType, ...(corrected ? { corrected } : {}), ...(modified ? { modified } : {}) };
 }
+
+// ---------- tenors, capped-notional inference, daily curve, inversion ----------
+export const CDS_TENORS = ['1Y', '2Y', '3Y', '4Y', '5Y'];
+/** 5Y = the on-the-run contract; other buckets by remaining years (old 5Y contracts fall into 4Y after a roll). */
+export function tenorOf(t) {
+  if (t.maturity === onTheRun5y(t.trade)) return '5Y';
+  const y = (utc(t.maturity) - utc(t.trade)) / DAY / 365.25;
+  return y < 1.5 ? '1Y' : y < 2.5 ? '2Y' : y < 3.5 ? '3Y' : y < 5.6 ? '4Y' : null;
+}
+const accruedFrac = (t) => (t.coupon * (utc(addDays(t.trade, 1)) - utc(accrualStart(t.trade))) / DAY) / 360;
+/** Quoted points (fraction) from DTCC's cash upfront: cash / notional + accrued premium. */
+export const quotedPoints = (t, notional) => t.upfront / notional + accruedFrac(t);
+/** On the 1/8-point quoting grid within 0.004 points (a random value lands there ~6% of the time). */
+export const onEighthGrid = (p) => Math.abs(p / 0.00125 - Math.round(p / 0.00125)) * 0.00125 < 0.00004;
+
+/**
+ * Notional of a capped (> $5m) trade: try $5m–$100m in $1m steps; keep candidates whose quoted points sit on the
+ * 1/8 grid and within ±5 points of the tenor's latest known level. Accept only a single surviving candidate.
+ */
+export function inferNotional(t, refPoints) {
+  if (refPoints === null || refPoints === undefined || t.upfront === null) return null;
+  const hits = [];
+  for (let n = 5e6; n <= 1e8; n += 1e6) {
+    const p = quotedPoints(t, n);
+    if (onEighthGrid(p) && Math.abs(p - refPoints) <= 0.05) hits.push({ notional: n, points: p });
+  }
+  return hits.length === 1 ? hits[0] : null;
+}
+
+// SIFMA-recommended full closes for US bond markets (credit derivatives follow them).
+const HOLIDAYS = new Set([
+  '2025-01-01', '2025-01-20', '2025-02-17', '2025-04-18', '2025-05-26', '2025-06-19', '2025-07-04', '2025-09-01', '2025-10-13', '2025-11-11', '2025-11-27', '2025-12-25',
+  '2026-01-01', '2026-01-19', '2026-02-16', '2026-04-03', '2026-05-25', '2026-06-19', '2026-07-03', '2026-09-07', '2026-10-12', '2026-11-11', '2026-11-26', '2026-12-25',
+  '2027-01-01', '2027-01-18', '2027-02-15', '2027-03-26', '2027-05-31', '2027-06-18', '2027-07-05', '2027-09-06', '2027-10-11', '2027-11-11', '2027-11-25', '2027-12-24',
+]);
+export function businessDays(from, to) {
+  const out = [];
+  for (let d = from; d <= to; d = addDays(d, 1)) { const w = new Date(utc(d)).getUTCDay(); if (w && w !== 6 && !HOLIDAYS.has(d)) out.push(d); }
+  return out;
+}
+
+const median = (xs) => { const s = [...xs].sort((a, b) => a - b); const n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
+
+/**
+ * Price every trade (disclosed notional, or a uniquely inferred one), then build one value per business day and tenor.
+ * Days without a priced trade carry the previous value forward and are marked `carried`.
+ */
+export function curveSeries(store, curves, lastDate) {
+  const curveDates = Object.keys(curves).sort();
+  const curveOn = (d) => { let best = null; for (const c of curveDates) { if (c <= d) best = c; else break; } return best; };
+  const dfCache = new Map();
+  const ref = {};
+  const obs = Object.fromEntries(CDS_TENORS.map((k) => [k, new Map()]));
+  const trades = Object.values(store).filter((t) => t.trade && Number.isFinite(t.coupon) && t.upfrontType === 'UFRO' && t.upfront !== null).sort((a, b) => (a.ts ?? '').localeCompare(b.ts ?? ''));
+  let inferredCount = 0, cappedSkipped = 0;
+  for (const t of trades) {
+    const k = tenorOf(t); if (!k) continue;
+    let points = null, inferred = false;
+    if (t.notional) points = quotedPoints(t, t.notional);
+    else { const r = inferNotional(t, ref[k]); if (r) { points = r.points; inferred = true; inferredCount++; } else cappedSkipped++; }
+    if (points === null) continue;
+    const cd = curveOn(t.trade); if (!cd) continue;
+    if (!dfCache.has(cd)) dfCache.set(cd, discountCurve(curves[cd]));
+    const r = conventionalSpread({ trade: t.trade, maturity: t.maturity, coupon: t.coupon, points, df: dfCache.get(cd) });
+    if (!r) continue;
+    ref[k] = points;
+    const day = obs[k].get(t.trade) ?? { spreads: [], points: [], inferred: 0, disclosed: 0 };
+    day.spreads.push(r.spread); day.points.push(points); if (inferred) day.inferred++; else day.disclosed++;
+    obs[k].set(t.trade, day);
+  }
+  const first = trades[0]?.trade; if (!first) return { tenors: {}, inferredCount, cappedSkipped };
+  const days = businessDays(first, lastDate);
+  const tenors = {};
+  for (const k of CDS_TENORS) {
+    let prev = null; const out = [];
+    for (const d of days) {
+      const o = obs[k].get(d);
+      if (o) {
+        prev = { date: d, spread_bp: Math.round(median(o.spreads) * 1e5) / 10, points_pct: Math.round(median(o.points) * 1e4) / 100, status: o.inferred ? 'inferred' : 'observed', priced: o.disclosed, inferred: o.inferred, observed_on: d };
+        out.push(prev);
+      } else if (prev) out.push({ ...prev, date: d, status: 'carried', priced: 0, inferred: 0 });
+    }
+    tenors[k] = out;
+  }
+  return { tenors, inferredCount, cappedSkipped };
+}
+
+/**
+ * Inversion: any of 1Y–3Y above 5Y, comparing medians of each tenor's own observations over the last 5 business days.
+ * Carried values are excluded so a stale print cannot trigger it.
+ */
+export function inversionHistory(tenors, window = 5, minDays = 2) {
+  const five = tenors['5Y'] ?? []; const out = [];
+  for (let i = 0; i < five.length; i++) {
+    const d = five[i].date, from = five[Math.max(0, i - window + 1)].date;
+    const obs = (k) => (tenors[k] ?? []).filter((p) => p.date >= from && p.date <= d && p.status !== 'carried');
+    const f5 = obs('5Y'); if (!f5.length) { out.push({ date: d, inverted: false }); continue; }
+    const f = median(f5.map((p) => p.spread_bp));
+    // A single print on a thin short tenor is not a curve: require observations on at least `minDays` days.
+    const short = ['1Y', '2Y', '3Y'].map((k) => { const o = obs(k); return { tenor: k, days: o.length, spread_bp: o.length ? median(o.map((p) => p.spread_bp)) : null }; })
+      .filter((x) => x.days >= minDays && x.spread_bp > f);
+    out.push({ date: d, inverted: short.length > 0, five_bp: f, five_days: f5.length, short });
+  }
+  return out;
+}
+
+export function inversionAlert(history) {
+  const last = history.at(-1); if (!last) return { active: false };
+  if (!last.inverted) return { active: false, as_of: last.date };
+  let i = history.length - 1; while (i > 0 && history[i - 1].inverted) i--;
+  return { active: true, as_of: last.date, since: history[i].date, five_bp: Math.round(last.five_bp), five_days: last.five_days, short: last.short.map((s) => ({ tenor: s.tenor, spread_bp: Math.round(s.spread_bp), days: s.days })) };
+}
+
+/** Inverted stretches for chart shading. */
+export function inversionPeriods(history) {
+  const out = []; let cur = null;
+  for (const h of history) { if (h.inverted) { if (!cur) cur = { from: h.date, to: h.date }; else cur.to = h.date; } else if (cur) { out.push(cur); cur = null; } }
+  if (cur) out.push(cur);
+  return out;
+}

@@ -88,6 +88,13 @@ export default function App() {
 
   return (
     <div className={`app tab-${mobileTab}`}>
+      {market && Object.values(market.companies).filter((c) => c.cds?.inversion?.alert.active).map((c) => {
+        const al = c.cds!.inversion!.alert;
+        return <div key={c.node_id} className="alert-banner" role="alert">
+          <b>⚠ {c.name}: CDS curve inverted</b> since {al.since} — {al.short!.map((s) => `${s.tenor} ${s.spread_bp.toLocaleString('en-US')} bp (${s.days} trading days)`).join(', ')} above 5Y {al.five_bp!.toLocaleString('en-US')} bp, medians of the last 5 sessions to {al.as_of}. Short tenors trade thinly; check the trades before acting.
+          {selNode?.id !== c.node_id && <button className="link" onClick={() => focusNode(c.node_id)}>Show {c.name.split(',')[0]}</button>}
+        </div>;
+      })}
       <header className="masthead">
         <div className="kicker"><span>THE AI CAPITAL NETWORK</span><span>OCTOBER 2026 · INTRA-MONTH PREVIEW</span></div>
         <h1>{f.view === 'full-network' ? 'Who funds the AI boom — and who buys the capacity?' : 'The companies and capital behind the AI build-out'}</h1>

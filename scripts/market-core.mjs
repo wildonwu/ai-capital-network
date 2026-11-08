@@ -103,6 +103,18 @@ export function financialsFromCompanyFacts(cf, fetchedAt) {
   };
 }
 
+/** Quarterly results dates: 8-K filings that carry Item 2.02 (Results of Operations). */
+export function earningsEvents(submissions, cik) {
+  const r = submissions?.filings?.recent; if (!r) return [];
+  const out = [];
+  for (let i = 0; i < r.form.length; i++) {
+    if (r.form[i] !== '8-K' || !String(r.items?.[i] ?? '').split(',').includes('2.02')) continue;
+    const acc = r.accessionNumber[i];
+    out.push({ date: r.reportDate?.[i] || r.filingDate[i], label: 'Results', kind: 'earnings', source: `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${acc.replace(/-/g, '')}/${r.primaryDocument[i]}` });
+  }
+  return out.sort((a, b) => a.date.localeCompare(b.date));
+}
+
 /** Build the price block from a Yahoo chart response (unofficial endpoint). */
 export function priceFromYahoo(chart, fetchedAt) {
   const r = chart?.chart?.result?.[0];
@@ -129,7 +141,7 @@ export function keepOrStale(fresh, previous) {
   return { status: 'missing' };
 }
 
-export function buildCompany(manual, { financials, price, cds = null }, previous) {
+export function buildCompany(manual, { financials, price, cds = null, earnings = null }, previous) {
   return {
     node_id: manual.node_id, name: manual.name, ticker: manual.ticker, curated_at: manual.curated_at,
     price: keepOrStale(price, previous?.price),
@@ -138,6 +150,7 @@ export function buildCompany(manual, { financials, price, cds = null }, previous
     reference_prices: manual.reference_prices ?? [],
     manual_series: manual.manual_series ?? {},
     events: manual.events ?? [],
+    chart_events: [...(earnings ?? previous?.chart_events?.filter((e) => e.kind === 'earnings') ?? []), ...(manual.chart_events ?? [])].sort((a, b) => a.date.localeCompare(b.date)),
   };
 }
 
@@ -150,7 +163,9 @@ export function validateMarket(m) {
     for (const k of ['price', 'financials']) if (!['ok', 'stale', 'missing'].includes(c[k]?.status)) errs.push(`${id}: ${k} status`);
     if (c.cds) {
       if (!['ok', 'stale', 'missing'].includes(c.cds.status)) errs.push(`${id}: cds status`);
-      for (const p of c.cds.series ?? []) if (!/^\d{4}-\d{2}-\d{2}$/.test(p.date) || !(p.spread_bp > 0 && p.spread_bp < 20000) || !(p.priced >= 1)) errs.push(`${id}: cds point ${p.date}`);
+      const okPoint = (p) => /^\d{4}-\d{2}-\d{2}$/.test(p.date) && p.spread_bp > 0 && p.spread_bp < 20000
+        && (p.status === 'carried' ? !!p.observed_on : p.status === 'inferred' ? p.inferred >= 1 : p.priced >= 1);
+      for (const [k, ser] of Object.entries(c.cds.tenors ?? { '5Y': c.cds.series ?? [] })) for (const p of ser) if (!okPoint(p)) errs.push(`${id}: cds ${k} point ${p.date}`);
     }
     for (const [k, ser] of Object.entries(c.manual_series ?? {})) {
       if (!ser.unit || !Array.isArray(ser.points)) errs.push(`${id}: manual ${k} malformed`);
