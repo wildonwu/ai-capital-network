@@ -213,3 +213,44 @@ kbd { border: 1px solid #b8a89a; padding: 0 4px; font-size: 11px; }
 .cc-handle rect { fill: var(--card); stroke: var(--muted); }
 .cc-handle line { stroke: var(--muted); }
 @media (max-width: 760px) { .cc-head small { display: none; } .cc-chip { font-size: 11px; padding: 3px 7px; } }
+/* Three-column network: company list | graph (detail overlays the graph's right edge) */
+.main.three { display: grid; grid-template-columns: 230px minmax(0, 1fr) 320px; gap: 12px; align-items: start; }
+.main.three .detail { display: block; position: static; width: auto; height: calc(100vh - 292px); min-height: 520px; max-height: none; box-shadow: none; }
+.company-list { border: 1px solid var(--rule); background: var(--card); height: calc(100vh - 292px); min-height: 520px; overflow: auto; font-size: 12.5px; }
+.cl-head { position: sticky; top: 0; z-index: 1; display: flex; gap: 6px; align-items: center; padding: 6px; background: var(--card); border-bottom: 1px solid var(--rule); }
+.cl-head input { flex: 1; min-width: 0; padding: 5px 7px; border: 1px solid #b8a89a; background: #fff; font: inherit; font-size: 12px; }
+.cl-group { border-bottom: 1px solid #EAD9CA; }
+.cl-title { display: flex; justify-content: space-between; width: 100%; border: 0; background: none; padding: 7px 8px 5px; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); text-align: left; }
+.cl-group ul { list-style: none; margin: 0 0 4px; padding: 0; }
+.cl-item { display: grid; grid-template-columns: 14px 1fr auto; gap: 6px; align-items: center; width: 100%; border: 0; background: none; padding: 3px 8px; text-align: left; font-size: 12.5px; }
+.cl-item:hover { background: #F3E6D6; }
+.cl-item.on { background: #FBEBD3; font-weight: 650; box-shadow: inset 3px 0 0 var(--oct); }
+.cl-item.shared:not(.on) { box-shadow: inset 3px 0 0 var(--ink); }
+.cl-check { color: #8a5a12; font-weight: 700; }
+.cl-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-deg { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.cl-foot { padding: 6px 8px 10px; margin: 0; }
+.sel-bar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 6px; font-size: 12px; }
+.sel-chip { border: 1px solid var(--oct); background: #FBEBD3; padding: 2px 8px; font-size: 12px; }
+.unlinked { flex-basis: 100%; color: #7d2a1d; }
+.shared-note { flex-basis: 100%; color: var(--muted); }
+.graph-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; color: var(--muted); font-size: 14px; pointer-events: none; }
+.node-label.shared { font-weight: 700; }
+.sharedswatch { display: inline-block; width: 12px; height: 9px; background: #F6E7CF; border: 2px solid #241F1B; vertical-align: -1px; margin-right: 3px; }
+tr.between td { background: rgba(216, 145, 43, .12); }
+.credit-monitor { margin-top: 10px; border-top: 1px solid var(--rule); padding-top: 8px; }
+.credit-monitor > h2 { font-family: var(--serif); font-weight: 500; font-size: 22px; margin: 0 0 4px; }
+.credit-monitor > h2 small { font-family: Inter, sans-serif; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: .03em; text-transform: uppercase; margin-left: 6px; }
+.cm-name { display: flex; gap: 10px; align-items: baseline; font-size: 14px; }
+.credit-monitor .cds-chart { margin-top: 4px; }
+.alert-banner .link { margin-left: 8px; color: #5b1d12; }
+@media (max-width: 1100px) { .main.three { grid-template-columns: 200px minmax(0, 1fr); } .main.three .detail { grid-column: 1 / -1; height: auto; min-height: 0; } }
+@media (max-width: 760px) {
+  .main.three { display: block; }
+  .company-list { height: auto; max-height: 70vh; min-height: 0; }
+  .tab-list .graph-col, .tab-list .detail { display: none; }
+  .tab-graph .company-list { display: none; }
+  .tab-graph .detail.open { display: block; }
+  .main.three .detail { height: auto; min-height: 0; }
+  .main.three .detail:not(.open) { display: none; }
+}

@@ -140,3 +140,24 @@ export function exportCSV(r: Release, f: Filters): string {
   const head = `# release_id=${r.manifest.release_id}; cutoff_utc=${r.manifest.as_of}; view=${f.view}; layers=${f.layers.join('|')}; october_change_only=${f.octOnly}; node=${f.node ?? ''}; empty amount = not disclosed (not zero)`;
   return [head, cols.join(','), ...rows.map((row) => cols.map((c) => csvCell((row as Record<string, unknown>)[c])).join(','))].join('\n');
 }
+
+// ---------- export of an explicit edge list (selection-driven UI)
+export function exportRowsFor(r: Release, edges: GraphEdge[]) {
+  const nodes = nodeMap(r);
+  return edges.map((e) => ({
+    release_id: r.manifest.release_id, cutoff_utc: r.manifest.as_of, release_type: r.manifest.release_type,
+    edge_id: e.id, deal_id: e.deal_id, layer: e.layer,
+    from_id: e.from, from_label: nodeName(nodes.get(e.from)), to_id: e.to, to_label: nodeName(nodes.get(e.to)),
+    direction: directionWords(e, nodes), amount: e.amount, unit: e.unit, status_raw: e.status, october_change: e.october_change,
+    label_raw: e.label, note_raw: e.note, source_id: e.source, source_urls: safeUrls(r.sources[e.source]?.urls).join(' '),
+  }));
+}
+export function exportJSONFor(r: Release, edges: GraphEdge[], scope: Record<string, unknown>): string {
+  return JSON.stringify({ release_id: r.manifest.release_id, cutoff_utc: r.manifest.as_of, release_type: r.manifest.release_type, scope, notice: r.graph.data_quality_notice, relationships: exportRowsFor(r, edges) }, null, 2);
+}
+export function exportCSVFor(r: Release, edges: GraphEdge[], scope: string): string {
+  const rows = exportRowsFor(r, edges);
+  const cols = Object.keys(rows[0] ?? { release_id: '', cutoff_utc: '' });
+  const head = `# release_id=${r.manifest.release_id}; cutoff_utc=${r.manifest.as_of}; ${scope}; empty amount = not disclosed (not zero)`;
+  return [head, cols.join(','), ...rows.map((row) => cols.map((c) => csvCell((row as Record<string, unknown>)[c])).join(','))].join('\n');
+}

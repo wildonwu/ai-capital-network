@@ -1,6 +1,5 @@
 import type { CdsBlock, CompanyMarket, ManualSeries, QPoint } from './lib/market';
 import { daysBetween, latest, manualValue, quarterLabel, usdShort } from './lib/market';
-import CdsChart from './CdsChart';
 
 /** Manual (hand-recorded) values older than this are flagged so a stale number is never read as current. */
 const MANUAL_STALE_DAYS = 14;
@@ -129,8 +128,6 @@ export default function CompanyPanel({ c, today }: { c: CompanyMarket; today: st
           </> : <p className="cp-note">No filing data available.</p>}
         </div>
       </div>
-
-      {c.cds?.status !== 'missing' && (c.cds?.tenors || c.cds?.series) && <CdsChart cds={c.cds!} price={p.history ?? []} events={c.chart_events ?? []} alertPeriods={c.cds!.inversion?.periods ?? []} />}
 
       {mat && mat.buckets.length > 0 && <div className="cp-mat">
         <h3>Debt principal due by year <small>as of {mat.as_of} · total {usdShort(mat.total)}</small></h3>

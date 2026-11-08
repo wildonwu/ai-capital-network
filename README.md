@@ -45,6 +45,22 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
 - ≤760 px: List/Graph tabs, list+detail first.
 - CSV/JSON export of the filtered table, carrying release id, cutoff, scope and raw status/amount fields; null amounts export empty/null.
 
+## Network v2: company list and selection
+
+- Left: every entity grouped into seven categories (`src/lib/categories.ts`): AI model companies, hyperscalers,
+  chipmakers, neoclouds, data-centre developers & landlords, SPVs & projects, investors/private credit/banks.
+- Right: with nothing selected, **Show all** draws the company-level overview (36 entities / 89 records) and
+  **Blank** draws nothing. Selecting companies draws the union of their direct relationships, including
+  project-level counterparties; edges among counterparties are not added (select a counterparty to bring its
+  own relationships in). Counterparties linked to two or more selected companies are highlighted, edges
+  between selected companies are emphasised, and pairs with neither are flagged as having no recorded
+  contractual link (coverage is partial; market contagion is not modelled).
+- Two layouts to compare: **Fixed positions** (full-network coordinates, nodes never move) and **Re-layout**
+  (concentric: selected companies in the middle, shared counterparties on the inner ring).
+- One predicate (`visibleGraph` in `src/lib/selection.ts`) drives the graph, table, layer counts and exports.
+  URL state: `sel=A|B`, `all=0`, `layout=relayout`; old `node=` links still work.
+- The CDS chart now sits in a **Credit monitor** section above the network for every company with CDS data.
+
 ## Company data panel (market, credit, balance sheet)
 
 Selecting a company that has a file in `data/companies/` shows a panel above the records table.

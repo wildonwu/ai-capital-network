@@ -43,7 +43,22 @@ quantify.
 - [x] launchd `com.wildon.dashboard-dispatch.acn` loaded; end-to-end run sent the first inversion alert (2026-11-08)
 - [x] Pushed and verified live
 
+### Phase 3 — Network v2 (2026-11-08)
+Decisions: risk ranking by impact size (shown later, once obligation fields exist); contractual links only,
+market contagion as a separate indicator later; no automatic indirect paths (the user clicks through);
+seven categories; detailed data backfill deferred.
+- [x] Category list, multi-select union, shared counterparties, unlinked-pair notice
+- [x] Show all (36 companies) / Blank; projects appear when their company is selected
+- [x] Fixed vs concentric re-layout, both available for comparison
+- [x] Credit monitor section with the CDS chart above the network
+- [x] Tests (`tests/selection.test.ts`), 62/62 passing
+- [ ] Owner compares layouts on the preview and picks one
+- [ ] Merge to main
+
 ### Backlog
+- [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor
+      and end-obligor exposure totals, then risk tiers by impact size
+- [ ] Market-contagion indicator (CDS / equity co-movement) kept separate from contractual links
 - [ ] Fuse timeline (dated covenant tests, maturities, drawdown deadlines) — mockup approved in principle
 - [ ] Optional: FINRA 144A market breadth as a high-yield market stress indicator (credential stored)
 - [ ] Data-centre delivery tracking from Epoch AI CSVs (`data_center_timelines.csv`), per-site slip alerts
