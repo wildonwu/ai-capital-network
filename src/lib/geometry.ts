@@ -114,6 +114,7 @@ export function labelFont(lines: string[], boxW: number, boxH: number): number {
   const longest = Math.max(...lines.map((l) => l.length), 1);
   const byW = (Math.max(boxW, 1) - 4) / (longest * 0.54);
   const byH = (Math.max(boxH, 1) - 2) / (lines.length * 1.18);
-  const cap = lines.length > 1 ? 13 : 17;
-  return Math.max(10, Math.min(cap, byW, byH));
+  // Caps sized for ticker labels: short single lines can grow large when the reader zooms or selects few nodes.
+  const cap = lines.length > 1 ? 18 : 26;
+  return Math.max(11, Math.min(cap, byW, byH));
 }

@@ -10,6 +10,7 @@ import type { GraphEdge, Layer, Release } from './lib/types';
 import { LAYERS } from './lib/types';
 import { LAYER_STYLE, directionWords, exportCSVFor, exportJSONFor, formatAmount, humanStatus, nodeMap, safeUrls, shortAmount } from './lib/model';
 import { DEFAULT_SELECTION, queryToSelection, selectionToQuery, toggle, visibleGraph, type Selection } from './lib/selection';
+import { shortName } from './lib/tickers';
 
 function download(name: string, text: string, type: string) {
   const a = document.createElement('a');
@@ -54,7 +55,7 @@ export default function App() {
   if (!release || !vis) return <div className="loading">Loading validated release…</div>;
 
   const m = release.manifest;
-  const name = (id: string) => nodes.get(id)?.label_en?.replace(/\n.*/s, '') ?? id;
+  const name = (id: string) => shortName(nodes.get(id), id);
   const rows = vis.edges;
   const selEdge = s.edge ? release.graph.edges.find((e) => e.id === s.edge) ?? null : null;
   const toggleNode = (id: string) => setS((p) => ({ ...p, selected: toggle(p.selected, id), edge: null }));
@@ -93,18 +94,15 @@ export default function App() {
         <h2>Credit monitor <small>single-name CDS from public DTCC trade reports</small></h2>
         {cdsCompanies.map((c) => <div key={c.node_id} className="cm-company">
           <div className="cm-name"><b>{c.name}</b> <button className="link" onClick={() => setS((p) => ({ ...p, selected: p.selected.includes(c.node_id) ? p.selected : [...p.selected, c.node_id] }))}>Show in network</button></div>
-          <CdsChart cds={c.cds!} price={c.price.history ?? []} events={c.chart_events ?? []} alertPeriods={c.cds!.inversion?.periods ?? []} />
+          <CdsChart cds={c.cds!} price={c.price.history ?? []} alertPeriods={c.cds!.inversion?.periods ?? []} />
         </div>)}
       </section>}
 
       <section className="controls" aria-label="Controls">
-        <div className="seg" role="group" aria-label="With nothing selected">
-          <button className={s.showAll ? 'on' : ''} aria-pressed={s.showAll} onClick={() => setS((p) => ({ ...p, showAll: true }))}>Show all</button>
-          <button className={!s.showAll ? 'on' : ''} aria-pressed={!s.showAll} onClick={() => setS((p) => ({ ...p, showAll: false }))}>Blank</button>
-        </div>
+        <label className="oct-toggle show-all"><input type="checkbox" checked={s.showAll} onChange={(e) => setS((p) => ({ ...p, showAll: e.target.checked }))} /> Show all</label>
         <div className="seg" role="group" aria-label="Layout">
+          <button className={s.layout === 'relayout' ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: 'relayout' }))}>Auto layout</button>
           <button className={s.layout === 'fixed' ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: 'fixed' }))}>Fixed positions</button>
-          <button className={s.layout === 'relayout' ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: 'relayout' }))}>Re-layout</button>
         </div>
         <label className="oct-toggle"><input type="checkbox" checked={s.octOnly} onChange={(e) => setS((p) => ({ ...p, octOnly: e.target.checked }))} /> October-change records only</label>
         <div className="exports">
@@ -146,6 +144,7 @@ export default function App() {
             return <div className="node-detail">
               <div className="eyebrow">{n.kind}{release.graph.core.includes(focus) ? ' · core company' : ''}{s.selected.length > 1 ? ` · last of ${s.selected.length} selected` : ''}</div>
               <h2>{name(focus)}</h2>
+              {name(focus) !== n.label_en && <p className="raw">{n.label_en.replace(/\n.*/s, '')}</p>}
               {n.label_raw !== n.label_en && <p className="raw">Original label: {n.label_raw}</p>}
               {release.graph.coverage[focus] && <p className="small">Coverage note (raw): {release.graph.coverage[focus]}</p>}
               <h3>Outgoing ({out.length})</h3><ul className="rels">{out.map((e) => <EdgeLine key={e.id} e={e} dir="out" who={focus} />)}</ul>

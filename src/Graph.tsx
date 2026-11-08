@@ -6,6 +6,7 @@ import { LAYERS } from './lib/types';
 import { LAYER_STYLE, nodeMap } from './lib/model';
 import { EDGE_WIDTH, bandLabels, labelFont, nodeModel, readableLines, routeEdge, type BandLabel } from './lib/geometry';
 import { POSITION_VIEW, type VisibleGraph } from './lib/selection';
+import { TICKERS, tickerize } from './lib/tickers';
 
 interface Props {
   release: Release; vis: VisibleGraph; layout: 'fixed' | 'relayout'; selected: string[]; edge: string | null;
@@ -14,7 +15,16 @@ interface Props {
 interface DrawnNode { id: string; lines: string[]; kind: string; cls: string; left: number; top: number; w: number; h: number; font: number }
 interface DrawnBand { id: string; title: string; left: number; top: number }
 
-export default function Graph({ release, vis, layout, selected, edge, onNode, onEdge }: Props) {
+/** Box in model units for a label at a fixed model font size (bigger for core companies). */
+function textBox(lines: string[], core: boolean) {
+  const fs = core ? 20 : 15;
+  const longest = Math.max(...lines.map((l) => l.length), 1);
+  return { w: Math.max(56, longest * fs * 0.6 + 22), h: lines.length * fs * 1.25 + 14 };
+}
+
+export default function Graph({ release, vis, layout: chosen, selected, edge, onNode, onEdge }: Props) {
+  // The overview always uses the editorial positions; auto layout is for selections.
+  const layout = selected.length ? chosen : 'fixed';
   const el = useRef<HTMLDivElement>(null);
   const cy = useRef<Core | null>(null);
   const cb = useRef({ onNode, onEdge });
@@ -46,7 +56,12 @@ export default function Graph({ release, vis, layout, selected, edge, onNode, on
     const els: ElementDefinition[] = vis.nodeIds.filter((id) => pos.nodes[id]).map((id) => {
       const m = nodeModel(pos.nodes[id].box);
       const kind = nm.get(id)?.kind ?? 'company';
-      return { group: 'nodes', data: { id, lines: readableLines(pos.nodes[id].label || id), kind, w: m.w, h: m.h }, position: { x: m.x, y: m.y }, classes: core.has(id) ? 'core' : kind };
+      // Listed companies show their ticker; other labels get tickers substituted for listed names.
+      const lines = TICKERS[id] ? [TICKERS[id]] : readableLines(tickerize(pos.nodes[id].label || id));
+      // Fixed layout keeps the manifest boxes (edge routes are computed from them). Re-layout sizes boxes to the
+      // text so the concentric layout can pack them and the fit can zoom in.
+      const size = layout === 'fixed' ? { w: m.w, h: m.h } : textBox(lines, core.has(id));
+      return { group: 'nodes', data: { id, lines, kind, w: size.w, h: size.h }, position: { x: m.x, y: m.y }, classes: core.has(id) ? 'core' : kind };
     });
     for (const e of vis.edges) {
       const route = layout === 'fixed' ? pos.edges[e.id] : undefined;
@@ -58,7 +73,7 @@ export default function Graph({ release, vis, layout, selected, edge, onNode, on
 
     if (!cy.current) {
       cy.current = cytoscape({
-        container: el.current, elements: [], layout: { name: 'preset' }, wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 4,
+        container: el.current, elements: [], layout: { name: 'preset' }, wheelSensitivity: 0.25, minZoom: 0.15, maxZoom: 2.4,
         boxSelectionEnabled: false, autoungrabify: true,
         style: ([
           { selector: 'node', style: { shape: 'round-rectangle', 'corner-radius': 3, width: 'data(w)', height: 'data(h)', 'background-color': '#FFFDFB', 'border-width': 1.25, 'border-color': '#D3C2B2', label: '', 'z-index': 10 } },
@@ -93,10 +108,10 @@ export default function Graph({ release, vis, layout, selected, edge, onNode, on
       const sel = new Set(selected), sh = new Set(vis.shared);
       const deg = new Map<string, number>(); for (const e of vis.edges) { deg.set(e.from, (deg.get(e.from) ?? 0) + 1); deg.set(e.to, (deg.get(e.to) ?? 0) + 1); }
       const level = (id: string) => sel.size ? (sel.has(id) ? 3 : sh.has(id) ? 2 : 1) : Math.min(4, Math.floor((deg.get(id) ?? 0) / 4) + 1);
-      c.layout({ name: 'concentric', animate: false, fit: false, avoidOverlap: true, minNodeSpacing: 18, spacingFactor: 1.05, startAngle: -Math.PI / 2,
+      c.layout({ name: 'concentric', animate: false, fit: false, avoidOverlap: true, minNodeSpacing: 12, spacingFactor: 0.9, startAngle: -Math.PI / 2,
         concentric: (n: cytoscape.NodeSingular) => level(n.id()), levelWidth: () => 1 } as unknown as cytoscape.LayoutOptions).run();
     }
-    if (els.length) c.fit(undefined, 46);
+    if (els.length) c.fit(undefined, layout === 'fixed' ? 40 : 24);
     paint();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [release, key]);
@@ -137,7 +152,7 @@ export default function Graph({ release, vis, layout, selected, edge, onNode, on
           </div>
         ))}
       </div>
-      {!vis.nodeIds.length && <div className="graph-empty">Pick companies in the list to draw their relationships, or turn on <b>Show all</b>.</div>}
+      {!vis.nodeIds.length && <div className="graph-empty">Pick companies in the list to draw their relationships, or tick <b>Show all</b>.</div>}
       <div className="zoom">
         <button onClick={() => cy.current?.zoom({ level: cy.current.zoom() * 1.25, renderedPosition: { x: el.current!.clientWidth / 2, y: el.current!.clientHeight / 2 } })} aria-label="Zoom in">+</button>
         <button onClick={() => cy.current?.zoom({ level: cy.current.zoom() / 1.25, renderedPosition: { x: el.current!.clientWidth / 2, y: el.current!.clientHeight / 2 } })} aria-label="Zoom out">−</button>

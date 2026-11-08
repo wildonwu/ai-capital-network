@@ -10,7 +10,7 @@ export interface Selection {
   edge: string | null;
   layout: 'fixed' | 'relayout';
 }
-export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null, layout: 'fixed' };
+export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null, layout: 'relayout' };
 
 export const OVERVIEW_VIEW = 'companies-network';
 export const POSITION_VIEW = 'full-network';
@@ -78,7 +78,7 @@ export function selectionToQuery(s: Selection, releaseId: string): string {
   if (s.layers.length !== LAYERS.length) p.set('layers', s.layers.join(','));
   if (s.octOnly) p.set('oct', '1');
   if (s.edge) p.set('edge', s.edge);
-  if (s.layout !== 'fixed') p.set('layout', s.layout);
+  if (s.layout !== DEFAULT_SELECTION.layout) p.set('layout', s.layout);
   return p.toString();
 }
 export function queryToSelection(q: string, r: Release): Selection {
@@ -93,6 +93,6 @@ export function queryToSelection(q: string, r: Release): Selection {
   const edge = p.get('edge');
   return {
     selected: [...new Set(selected)], showAll: p.get('all') !== '0', layers, octOnly: p.get('oct') === '1',
-    edge: edge && eids.has(edge) ? edge : null, layout: p.get('layout') === 'relayout' ? 'relayout' : 'fixed',
+    edge: edge && eids.has(edge) ? edge : null, layout: p.get('layout') === 'fixed' ? 'fixed' : 'relayout',
   };
 }

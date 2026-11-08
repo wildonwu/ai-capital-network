@@ -56,8 +56,9 @@ describe('selection-driven graph', () => {
 
 describe('URL state', () => {
   it('round-trips selection, layout and blank mode', () => {
-    const s = { ...DEFAULT_SELECTION, selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'relayout' as const };
-    expect(queryToSelection(selectionToQuery(s, 'x'), r)).toMatchObject({ selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'relayout' });
+    const s = { ...DEFAULT_SELECTION, selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' as const };
+    expect(queryToSelection(selectionToQuery(s, 'x'), r)).toMatchObject({ selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' });
+    expect(queryToSelection('?', r).layout).toBe('relayout');
   });
   it('keeps old single-node links working and drops unknown ids', () => {
     expect(queryToSelection('?node=CoreWeave', r).selected).toEqual(['CoreWeave']);
@@ -75,5 +76,16 @@ describe('company categories', () => {
     expect(categoryOf({ id: 'Oracle', kind: 'core' })).toBe('hyperscalers');
     expect(categoryOf({ id: 'C02 CoreWeave DDTL4.0', kind: 'project' })).toBe('vehicles');
     expect(categoryOf({ id: '设备融资资金方（汇总）', kind: 'funding_category' })).toBe('capital');
+  });
+});
+
+import { shortName, tickerize } from '../src/lib/tickers';
+describe('ticker display names', () => {
+  it('uses tickers for listed companies and substitutes them inside project labels', () => {
+    expect(shortName({ id: 'NVIDIA', label_en: 'NVIDIA' })).toBe('NVDA');
+    expect(shortName({ id: 'OpenAI', label_en: 'OpenAI' })).toBe('OpenAI');
+    expect(shortName({ id: 'C02 CoreWeave DDTL4.0', label_en: 'CoreWeave · DDTL 4.0\n$8.5bn historical principal' })).toBe('CRWV · DDTL 4.0');
+    expect(tickerize('Applied Digital · Polaris 1 B4')).toBe('APLD · Polaris 1 B4');
+    expect(tickerize('Metaverse')).toBe('Metaverse'); // word boundaries only
   });
 });
