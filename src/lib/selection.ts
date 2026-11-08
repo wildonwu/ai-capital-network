@@ -1,5 +1,4 @@
 import type { GraphEdge, Layer, Release } from './types';
-import type { LayoutMode } from './layouts';
 import { LAYERS } from './types';
 
 /** What the graph, table, counts and exports show. One predicate for all of them. */
@@ -9,9 +8,8 @@ export interface Selection {
   layers: Layer[];
   octOnly: boolean;
   edge: string | null;
-  layout: LayoutMode;
 }
-export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null, layout: 'tiers' };
+export const DEFAULT_SELECTION: Selection = { selected: [], showAll: true, layers: [...LAYERS], octOnly: false, edge: null };
 
 export const OVERVIEW_VIEW = 'companies-network';
 export const POSITION_VIEW = 'full-network';
@@ -68,7 +66,8 @@ export function degree(r: Release): Map<string, number> {
   return m;
 }
 
-export function toggle(sel: string[], id: string): string[] { return sel.includes(id) ? sel.filter((x) => x !== id) : [...sel, id]; }
+/** Add or remove a company; at most `max` stay selected (a further pick is ignored, the caller says why). */
+export function toggle(sel: string[], id: string, max = 3): string[] { return sel.includes(id) ? sel.filter((x) => x !== id) : sel.length >= max ? sel : [...sel, id]; }
 
 // ---------- URL state
 export function selectionToQuery(s: Selection, releaseId: string): string {
@@ -79,7 +78,6 @@ export function selectionToQuery(s: Selection, releaseId: string): string {
   if (s.layers.length !== LAYERS.length) p.set('layers', s.layers.join(','));
   if (s.octOnly) p.set('oct', '1');
   if (s.edge) p.set('edge', s.edge);
-  if (s.layout !== DEFAULT_SELECTION.layout) p.set('layout', s.layout);
   return p.toString();
 }
 export function queryToSelection(q: string, r: Release): Selection {
@@ -88,12 +86,12 @@ export function queryToSelection(q: string, r: Release): Selection {
   const eids = new Set(r.graph.edges.map((e) => e.id));
   // `node=` is the pre-multi-select parameter; keep old links working.
   const raw = p.get('sel') ?? p.get('node') ?? '';
-  const selected = raw.split('|').filter((x) => ids.has(x));
+  const selected = raw.split('|').filter((x) => ids.has(x)).slice(0, 3);
   const layersRaw = p.get('layers');
   const layers = layersRaw === null ? [...LAYERS] : (layersRaw.split(',').filter((l) => (LAYERS as string[]).includes(l)) as Layer[]);
   const edge = p.get('edge');
   return {
     selected: [...new Set(selected)], showAll: p.get('all') !== '0', layers, octOnly: p.get('oct') === '1',
-    edge: edge && eids.has(edge) ? edge : null, layout: (['tiers', 'ego', 'bubble', 'fixed'] as LayoutMode[]).find((l) => l === p.get('layout')) ?? DEFAULT_SELECTION.layout,
+    edge: edge && eids.has(edge) ? edge : null,
   };
 }

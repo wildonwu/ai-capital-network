@@ -68,6 +68,22 @@ Decision: track the 5Y CDS of every network company with bonds and DTCC single-n
 - [x] 74/74 tests passing; merged to main and live 2026-11-08
 Excluded: SoftBank (JPY contracts, needs a JPY curve); NBIS, IREN, WULF, CIFR, APLD, HUT and private firms (no trades).
 
+### Phase 4 — Page redesign (2026-11-08)
+Decisions (from static mockups the owner approved): the network is the first screen at full width; company-level
+columns in flow order (capital → AI labs → hyperscalers → neoclouds → developers & SPVs → chips) with crossings
+reduced by barycentre ordering; only three line colours (money, compute, guarantees & options) and width by
+disclosed amount; no amount labels in the overview. Selecting a company redraws it alone in the middle: who pays,
+funds or backs it on the left, whom it pays on the right, every line labelled. Two or three companies: stacked in
+the middle, links between them drawn there, counterparties grouped by exactly which selected companies they link
+to (all, each pair, only X). At most three selected. Credit monitor becomes small-multiple cards (5Y CDS vs share
+price), a card opens the full tenor chart. Mechanisms, records and method fold into collapsible sections. Amounts
+are never summed across records (one contract can create several records).
+- [x] Pure layout module `src/lib/flow.ts` with tests (columns, ego sides, grouping, between-links, cap of 3)
+- [x] SVG network component replacing Cytoscape; record detail on line click; keyboard access
+- [x] Page shell: top bar with alert, hero, category chips + search, legend, drawer / panel, credit cards, folds
+- [x] Phone layout (graph scrolls sideways in overview; selection fits the width)
+- [x] Remove Cytoscape, old layouts, company list; tests, lint, build, screenshots; push to main
+
 ### Backlog
 - [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor
       and end-obligor exposure totals, then risk tiers by impact size

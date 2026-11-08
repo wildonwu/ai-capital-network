@@ -13,12 +13,10 @@
     "build:single": "node scripts/build-release.mjs && vite build --mode single && node scripts/embed-single.mjs"
   },
   "dependencies": {
-    "cytoscape": "^3.34.4",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@types/cytoscape": "^3.21.9",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

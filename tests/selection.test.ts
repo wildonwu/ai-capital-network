@@ -51,16 +51,16 @@ describe('selection-driven graph', () => {
   it('toggles membership in click order', () => {
     expect(toggle(['A'], 'B')).toEqual(['A', 'B']);
     expect(toggle(['A', 'B'], 'A')).toEqual(['B']);
+    expect(toggle(['A', 'B', 'C'], 'D')).toEqual(['A', 'B', 'C']); // fourth pick ignored
+    expect(toggle(['A', 'B', 'C'], 'B')).toEqual(['A', 'C']);
   });
 });
 
 describe('URL state', () => {
-  it('round-trips selection, layout and blank mode', () => {
-    const s = { ...DEFAULT_SELECTION, selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' as const };
-    expect(queryToSelection(selectionToQuery(s, 'x'), r)).toMatchObject({ selected: ['NVIDIA', 'CoreWeave'], showAll: false, layout: 'fixed' });
-    expect(queryToSelection('?', r).layout).toBe('tiers');
-    expect(queryToSelection('?layout=bubble', r).layout).toBe('bubble');
-    expect(queryToSelection('?layout=nope', r).layout).toBe('tiers');
+  it('round-trips selection and blank mode, and caps the selection at three', () => {
+    const s = { ...DEFAULT_SELECTION, selected: ['NVIDIA', 'CoreWeave'], showAll: false };
+    expect(queryToSelection(selectionToQuery(s, 'x'), r)).toMatchObject({ selected: ['NVIDIA', 'CoreWeave'], showAll: false });
+    expect(queryToSelection('?sel=NVIDIA|CoreWeave|OpenAI|Oracle', r).selected).toEqual(['NVIDIA', 'CoreWeave', 'OpenAI']);
   });
   it('keeps old single-node links working and drops unknown ids', () => {
     expect(queryToSelection('?node=CoreWeave', r).selected).toEqual(['CoreWeave']);

@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import Graph from './Graph';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import FlowGraph from './FlowGraph';
 import Mechanisms from './Mechanisms';
 import CompanyPanel from './CompanyPanel';
-import CompanyList from './CompanyList';
-import CreditMonitor from './CreditMonitor';
+import CreditCards from './CreditCards';
 import { loadRelease } from './lib/data';
 import { loadMarket, type MarketSnapshot } from './lib/market';
 import type { GraphEdge, Layer, Release } from './lib/types';
@@ -11,6 +10,11 @@ import { LAYERS } from './lib/types';
 import { LAYER_STYLE, directionWords, exportCSVFor, exportJSONFor, formatAmount, humanStatus, nodeMap, safeUrls, shortAmount } from './lib/model';
 import { DEFAULT_SELECTION, queryToSelection, selectionToQuery, toggle, visibleGraph, type Selection } from './lib/selection';
 import { shortName } from './lib/tickers';
+import { CATEGORIES, categoryOf, type CategoryId } from './lib/categories';
+import { CAT_SHORT, FLOW_COLOR, FLOW_NAME, FLOW_OF, MAX_SELECTED, flowLayout, fmtBn, payerOf, usdBn, type Flow } from './lib/flow';
+
+/** "$300bn" for dollar amounts, the record's own unit otherwise (GW, shares, percent). */
+const amountOf = (e: GraphEdge) => { const a = usdBn(e); return a !== null ? fmtBn(a) : shortAmount(e); };
 
 function download(name: string, text: string, type: string) {
   const a = document.createElement('a');
@@ -19,20 +23,39 @@ function download(name: string, text: string, type: string) {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-function LayerSwatch({ l }: { l: Layer }) {
-  const s = LAYER_STYLE[l];
-  const dash = s.dash === 'dotted' ? '1.5 2.5' : s.pattern ? s.pattern.map((x) => x / 1.5).join(' ') : undefined;
-  return <svg width="28" height="8" aria-hidden="true"><line x1="0" y1="4" x2="28" y2="4" stroke={s.color} strokeWidth="2" strokeDasharray={dash} strokeLinecap={s.dash === 'dotted' ? 'round' : 'butt'} /></svg>;
+function FlowSwatch({ f }: { f: Flow }) {
+  return <svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" stroke={FLOW_COLOR[f]} strokeWidth={f === 'guar' ? 2.5 : 4} strokeDasharray={f === 'guar' ? '5 4' : f === 'other' ? '2 4' : undefined} strokeLinecap="round" /></svg>;
+}
+const Dot = ({ l }: { l: Layer }) => <span className="dot" style={{ background: FLOW_COLOR[FLOW_OF[l]] }} />;
+
+/** Width of an element, kept current on resize (callback ref, so it attaches whenever the element mounts). */
+function useWidth<T extends HTMLElement>() {
+  const [w, setW] = useState(() => (typeof window === 'undefined' ? 1280 : Math.min(1280, window.innerWidth - 32)));
+  const ro = useRef<ResizeObserver | null>(null);
+  const ref = useCallback((el: T | null) => {
+    ro.current?.disconnect();
+    if (!el) return;
+    setW(Math.round(el.getBoundingClientRect().width));
+    ro.current = new ResizeObserver(([e]) => setW(Math.round(e.contentRect.width)));
+    ro.current.observe(el);
+  }, []);
+  return [ref, w] as const;
 }
 
 export default function App() {
   const [release, setRelease] = useState<Release | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [s, setS] = useState<Selection>(DEFAULT_SELECTION);
-  const [mobileTab, setMobileTab] = useState<'list' | 'graph'>('graph');
   const [market, setMarket] = useState<MarketSnapshot | null>(null);
   const [today] = useState(() => new Date().toISOString().slice(0, 10));
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [focusCat, setFocusCat] = useState<CategoryId | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [tab, setTab] = useState<string>('between');
+  const [query, setQuery] = useState('');
+  const [stageRef, stageW] = useWidth<HTMLDivElement>();
+  // On a narrow screen a selection opens scrolled to the selected companies in the middle.
+  const selKey = s.selected.join('|');
+  const centre = useCallback((el: HTMLDivElement | null) => { if (el && selKey) requestAnimationFrame(() => { el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2; }); }, [selKey]);
 
   useEffect(() => {
     loadRelease().then((r) => { setRelease(r); setS(queryToSelection(location.search, r)); }).catch((e) => setError(String(e.message ?? e)));
@@ -40,150 +63,172 @@ export default function App() {
   useEffect(() => { loadMarket().then(setMarket); }, []);
   useEffect(() => {
     if (!release) return;
-    history.replaceState(null, '', `${location.pathname}?${selectionToQuery(s, release.manifest.release_id)}`);
+    history.replaceState(null, '', `${location.pathname}?${selectionToQuery(s, release.manifest.release_id)}${location.hash}`);
   }, [s, release]);
-
   const clearEdge = useCallback(() => setS((p) => ({ ...p, edge: null })), []);
   useEffect(() => {
     const h = (e: KeyboardEvent) => { if (e.key === 'Escape') clearEdge(); };
     window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h);
   }, [clearEdge]);
+  useEffect(() => { if (!notice) return; const t = setTimeout(() => setNotice(null), 4000); return () => clearTimeout(t); }, [notice]);
 
   const nodes = useMemo(() => (release ? nodeMap(release) : new Map()), [release]);
   const vis = useMemo(() => (release ? visibleGraph(release, s) : null), [release, s]);
+  const narrow = stageW < 900;
+  const single = s.selected.length === 1;
+  // Phones keep the drawing at full size and scroll sideways rather than shrinking text below legibility.
+  const graphW = s.selected.length ? Math.max(narrow ? 780 : 640, stageW - (single && !narrow ? 360 : 0)) : Math.max(1180, stageW);
+  const flow = useMemo(() => (release && vis ? flowLayout(release, vis, s.selected, graphW) : null), [release, vis, s.selected, graphW]);
 
   if (error) return <div className="fatal"><h1>Release could not be loaded</h1><pre>{error}</pre><p>No partial or unvalidated data is displayed.</p></div>;
-  if (!release || !vis) return <div className="loading">Loading validated release…</div>;
+  if (!release || !vis || !flow) return <div className="loading">Loading validated release…</div>;
 
   const m = release.manifest;
   const name = (id: string) => shortName(nodes.get(id), id);
   const rows = vis.edges;
   const selEdge = s.edge ? release.graph.edges.find((e) => e.id === s.edge) ?? null : null;
-  const toggleNode = (id: string) => setS((p) => ({ ...p, selected: toggle(p.selected, id), edge: null }));
+  const toggleNode = (id: string) => {
+    if (!s.selected.includes(id) && s.selected.length >= MAX_SELECTED) { setNotice(`Up to ${MAX_SELECTED} companies can be compared at once — remove one first.`); return; }
+    setS((p) => ({ ...p, selected: toggle(p.selected, id, MAX_SELECTED), edge: null }));
+    setTab('between'); setFocusCat(null);
+  };
+  const clearSel = () => setS((p) => ({ ...p, selected: [], edge: null }));
   const toggleLayer = (l: Layer) => setS((p) => ({ ...p, layers: p.layers.includes(l) ? p.layers.filter((x) => x !== l) : LAYERS.filter((x) => p.layers.includes(x) || x === l) }));
   const stamp = m.release_id.replace(/[^\w-]+/g, '_');
   const scope = s.selected.length ? `selected=${s.selected.join('|')}` : s.showAll ? 'overview=companies' : 'blank';
-  const focus = s.selected.at(-1) ?? null;
-  const cdsCompanies = market ? Object.values(market.companies).filter((c) => c.cds && c.cds.status !== 'missing' && (c.cds.tenors || c.cds.series)) : [];
+  const cdsCompanies = market ? Object.values(market.companies).filter((c) => c.cds && c.cds.status !== 'missing' && c.cds.series?.length) : [];
+  const alerts = cdsCompanies.filter((c) => c.cds?.inversion?.alert.active);
+  const widest = [...cdsCompanies].sort((a, b) => b.cds!.series!.at(-1)!.spread_bp - a.cds!.series!.at(-1)!.spread_bp)[0];
+  const dataTo = cdsCompanies.reduce((d, c) => (c.cds!.series!.at(-1)!.date > d ? c.cds!.series!.at(-1)!.date : d), '');
   const panels = market ? s.selected.map((id) => market.companies[id]).filter(Boolean) : [];
-
-  const EdgeLine = ({ e, dir, who }: { e: GraphEdge; dir: 'in' | 'out'; who: string }) => (
-    <li><button className={`rel ${s.edge === e.id ? 'on' : ''}`} onClick={() => setS((p) => ({ ...p, edge: e.id }))}>
-      <LayerSwatch l={e.layer} /> <span className="rel-l">{dir === 'out' ? `${name(who)} → ${name(e.to)}` : `${name(who)} ← ${name(e.from)}`}</span>
-      <span className="rel-a">{shortAmount(e)}</span>{e.october_change && <span className="badge oct">Oct change</span>}
-    </button></li>
+  const overviewIds = release.views['companies-network'].node_ids;
+  const catCount = (c: CategoryId) => overviewIds.filter((id) => categoryOf(nodes.get(id)!) === c).length;
+  const pickable = release.graph.nodes.filter((n) => n.kind !== 'project').map((n) => ({ id: n.id, label: `${name(n.id)}${name(n.id) !== n.label_en.replace(/\n.*/s, '') ? ' — ' + n.label_en.replace(/\n.*/s, '') : ''}` }));
+  const pick = (v: string) => { const hit = pickable.find((p) => p.label === v || name(p.id).toLowerCase() === v.toLowerCase()); if (hit) { toggleNode(hit.id); setQuery(''); } else setQuery(v); };
+  const relsOf = (id: string) => rows.filter((e) => e.from === id || e.to === id).sort((p, q) => (usdBn(q) ?? -1) - (usdBn(p) ?? -1));
+  const RelRow = ({ e, me }: { e: GraphEdge; me: string }) => (
+    <button className={`rel${s.edge === e.id ? ' on' : ''}`} onClick={() => setS((p) => ({ ...p, edge: e.id }))}>
+      <span className="rel-l"><Dot l={e.layer} />{payerOf(e) === me ? '→' : '←'} <b>{name(e.from === me ? e.to : e.from)}</b><small>{LAYER_STYLE[e.layer].name.toLowerCase()} · {humanStatus(e.status)}</small></span>
+      <span className="rel-a">{e.amount === null ? '—' : amountOf(e)}</span>
+    </button>
   );
 
   return (
-    <div className={`app tab-${mobileTab}`}>
-      {cdsCompanies.filter((c) => c.cds?.inversion?.alert.active).map((c) => {
-        const al = c.cds!.inversion!.alert;
-        return <div key={c.node_id} className="alert-banner" role="alert">
-          <b>⚠ {c.name}: CDS curve inverted</b> since {al.since} — {al.short!.map((x) => `${x.tenor} ${x.spread_bp.toLocaleString('en-US')} bp (${x.days} trading days)`).join(', ')} above 5Y {al.five_bp!.toLocaleString('en-US')} bp, medians of the last 5 sessions to {al.as_of}. Short tenors trade thinly; check the trades before acting.
-          <a className="link" href="#credit-monitor">See the curve</a>
-        </div>;
-      })}
-      <header className="masthead">
-        <div className="kicker"><span>THE AI CAPITAL NETWORK</span><span>OCTOBER 2026 · INTRA-MONTH PREVIEW</span></div>
-        <h1>Who funds the AI boom — and who is exposed if it slows?</h1>
-        <p className="dek">Pick companies on the left to draw their direct relationships. Pick several to see where they meet: shared counterparties are highlighted, and companies with no recorded link are flagged.</p>
-        <p className="meta"><strong>{m.counts.nodes} entities · {m.counts.relationships} relationship records</strong> · showing {vis.nodeIds.length} entities / {rows.length} records</p>
-        <p className="cutoff" data-testid="cutoff">Intra-month October preview — research cutoff <b>2026-10-28 17:04:34 UTC</b> (2026-10-29 01:04 Asia/Taipei). Not a month-end release. Release <code>{m.release_id}</code>{release.hashVerified ? ' · hashes verified' : ' · hashes not verified (no WebCrypto)'}</p>
-      </header>
+    <div className="app">
+      <header className="top"><div className="wrap top-in">
+        <span className="brand">AI CAPITAL NETWORK</span>
+        <nav className="nav"><a href="#network">Network</a><a href="#credit">Credit</a><a href="#records">Records</a><a href="#method">Method</a></nav>
+        {alerts.map((c) => { const al = c.cds!.inversion!.alert; return <a key={c.node_id} className="alert-pill" href="#credit" role="alert" title="Short tenors trade thinly; check the trades before acting.">
+          <i />{name(c.node_id)} CDS curve inverted since {al.since} — {al.short!.map((x) => `${x.tenor} ${x.spread_bp.toLocaleString('en-US')} bp`).join(', ')} &gt; 5Y {al.five_bp!.toLocaleString('en-US')} bp</a>; })}
+        {dataTo && <span className="asof">Market data to {dataTo}</span>}
+      </div></header>
 
-      {cdsCompanies.length > 0 && <section id="credit-monitor" className="credit-monitor" aria-label="Credit monitor">
-        <h2>Credit monitor <small>single-name CDS from public DTCC trade reports</small></h2>
-        <CreditMonitor companies={cdsCompanies} tickerOf={name} />
-      </section>}
+      <div className="wrap">
+        <section className="hero">
+          <div>
+            <h1>Who funds the AI boom — and who is exposed if it slows?</h1>
+            <p className="lede">Money, compute and guarantees between the companies at the centre of AI capex. Line width is the disclosed amount. Click a company to trace its links; add up to {MAX_SELECTED} to see where they meet.</p>
+          </div>
+          <div className="kpis">
+            <div><b>{overviewIds.length}</b><span>companies</span></div>
+            <div><b>{m.counts.relationships}</b><span>relationship records</span></div>
+            {widest && <div><b className="hot">{Math.round(widest.cds!.series!.at(-1)!.spread_bp).toLocaleString('en-US')}</b><span>{name(widest.node_id)} 5Y CDS, bp</span></div>}
+          </div>
+        </section>
 
-      <section className="controls" aria-label="Controls">
-        <label className="oct-toggle show-all"><input type="checkbox" checked={s.showAll} onChange={(e) => setS((p) => ({ ...p, showAll: e.target.checked }))} /> Show all</label>
-        <div className="seg" role="group" aria-label="Layout for selected companies">
-          {([['tiers', 'Bands by category'], ['ego', 'Layered around selection'], ['bubble', 'Bubbles'], ['fixed', 'Fixed positions']] as const).map(([k, label]) => (
-            <button key={k} className={s.layout === k ? 'on' : ''} onClick={() => setS((p) => ({ ...p, layout: k }))}>{label}</button>))}
+        <section id="network" className="controls" aria-label="Pick companies">
+          {s.selected.length > 0 && <span className="chip on sel">{s.selected.map((id, i) => <span key={id}>{i > 0 && ' + '}<button className="chip-x" onClick={() => toggleNode(id)} aria-label={`Remove ${name(id)}`}>{name(id)} ×</button></span>)}</span>}
+          <button className={`chip${!s.selected.length && !focusCat ? ' on' : ''}`} onClick={() => { clearSel(); setFocusCat(null); setS((p) => ({ ...p, showAll: true })); }}>All {overviewIds.length}</button>
+          {CATEGORIES.map((c) => <button key={c.id} className={`chip${focusCat === c.id ? ' on' : ''}`} title={c.hint} onClick={() => { if (s.selected.length) clearSel(); setFocusCat((f) => (f === c.id ? null : c.id)); }}>{CAT_SHORT[c.id]} <span className="n">{catCount(c.id)}</span></button>)}
+          <input className="search" list="acn-companies" placeholder="Search company or ticker…" value={query} onChange={(e) => pick(e.target.value)} aria-label="Search company or ticker" />
+          <datalist id="acn-companies">{pickable.map((p) => <option key={p.id} value={p.label} />)}</datalist>
+        </section>
+        {notice && <p className="notice" role="status">{notice}</p>}
+        <div className="legend">
+          {(['money', 'goods', 'guar'] as Flow[]).map((f) => <span key={f}><FlowSwatch f={f} />{FLOW_NAME[f]}</span>)}
+          <span className="note">Thicker = larger disclosed amount · thin = not disclosed · click a line for its record</span>
         </div>
-        <label className="oct-toggle"><input type="checkbox" checked={s.octOnly} onChange={(e) => setS((p) => ({ ...p, octOnly: e.target.checked }))} /> October-change records only</label>
-        <div className="exports">
-          <button onClick={() => download(`acn-${stamp}.csv`, exportCSVFor(release, rows, scope), 'text/csv')}>Export CSV</button>
-          <button onClick={() => download(`acn-${stamp}.json`, exportJSONFor(release, rows, { selection: s.selected, show_all: s.showAll, layers: s.layers, october_change_only: s.octOnly }), 'application/json')}>Export JSON</button>
+
+        <div className={`stage${single && !narrow ? ' with-drawer' : ''}`} ref={stageRef}>
+          {!s.selected.length && !s.showAll ? <p className="empty">Pick a company above, or click All to see the whole network.</p>
+            : <div className="stage-scroll" ref={centre}>{narrow && <p className="swipe">{s.selected.length ? 'Swipe sideways for both sides' : 'Swipe sideways to see the whole network · tap a company to focus on it'}</p>}<FlowGraph f={flow} focusCat={s.selected.length ? null : focusCat} activeEdge={s.edge} onNode={toggleNode} onEdge={(id) => setS((p) => ({ ...p, edge: id }))} /></div>}
+          {(selEdge || (single && !narrow)) && <aside className={`drawer${selEdge ? ' record' : ''}`} aria-live="polite">
+            {selEdge ? <EdgeDetail e={selEdge} release={release} name={name} onClose={clearEdge} nodesMap={nodes} />
+              : (() => { const id = s.selected[0], n = nodes.get(id)!, rels = relsOf(id); return <>
+                <button className="close" onClick={clearSel} aria-label="Clear selection">×</button>
+                <h3>{name(id)}</h3><p className="sub">{n.label_en.replace(/\n.*/s, '') !== name(id) ? n.label_en.replace(/\n.*/s, '') + ' · ' : ''}{CAT_SHORT[categoryOf(n)]} · {rels.length} relationships</p>
+                <div className="sect">Largest links</div>
+                {rels.slice(0, 10).map((e) => <RelRow key={e.id} e={e} me={id} />)}
+                {rels.length > 10 && <p className="small">+ {rels.length - 10} more in the records below</p>}
+                <p className="small">Amounts are per record and are not added up: one contract can appear in several records.</p>
+              </>; })()}
+          </aside>}
         </div>
-      </section>
 
-      <section className="legend" aria-label="Relationship layers (click to filter)">
-        {LAYERS.map((l) => {
-          const n = visibleGraph(release, { ...s, layers: [l] }).edges.length;
-          return <button key={l} className={`lg ${s.layers.includes(l) ? 'on' : 'off'}`} aria-pressed={s.layers.includes(l)} onClick={() => toggleLayer(l)} title={LAYER_STYLE[l].desc}>
-            <LayerSwatch l={l} /> {LAYER_STYLE[l].name} <span className="n">{n}</span></button>;
-        })}
-        <span className="lg-note"><span className="octswatch" /> October-change accent · <span className="sharedswatch" /> shared counterparty · constant line widths</span>
-      </section>
-
-      <div className="mobile-tabs" role="tablist">
-        <button className={mobileTab === 'list' ? 'on' : ''} onClick={() => setMobileTab('list')}>Companies</button>
-        <button className={mobileTab === 'graph' ? 'on' : ''} onClick={() => setMobileTab('graph')}>Graph &amp; details</button>
-      </div>
-
-      <main className="main three">
-        <CompanyList release={release} selected={s.selected} shared={vis.shared} onToggle={(id) => { toggleNode(id); setMobileTab('graph'); }} onClear={() => setS((p) => ({ ...p, selected: [], edge: null }))} />
-        <div className="graph-col">
-          {s.selected.length > 0 && <div className="sel-bar">
-            {s.selected.map((id) => <button key={id} className="sel-chip" onClick={() => toggleNode(id)} title="Remove">{name(id)} ×</button>)}
-            {vis.unlinkedPairs.map(([a, b]) => <span key={a + b} className="unlinked">No recorded contractual link between {name(a)} and {name(b)} in this dataset (coverage is partial; market contagion is not modelled).</span>)}
-            {expanded.size > 0 && <button className="link" onClick={() => setExpanded(new Set())}>Collapse project boxes</button>}
-            {vis.shared.length > 0 && <span className="shared-note">Shared counterparties: {vis.shared.map(name).join(', ')}</span>}
-          </div>}
-          <Graph release={release} vis={vis} layout={s.layout} selected={s.selected} edge={s.edge} expanded={expanded} labelOf={name}
-            onNode={(id) => {
-              // A merged project box expands (or collapses) instead of being selected.
-              if (id.startsWith('combo:')) { const parent = id.slice(6); setExpanded((x) => { const n = new Set(x); if (n.has(parent)) n.delete(parent); else n.add(parent); return n; }); }
-              else toggleNode(id);
-            }}
-            onEdge={(id) => setS((p) => ({ ...p, edge: id }))} />
-        </div>
-        <aside className={`detail${focus || selEdge ? ' open' : ''}`} aria-live="polite">
-          {!focus && !selEdge && <div className="hint"><h2>Explore</h2><p>Click companies in the list (or on the graph) to add them. Click a line or a table row for the exact record and sources. Clicking a selected company again removes it. <kbd>Esc</kbd> closes a record.</p><p className="small">{release.graph.data_quality_notice}</p></div>}
-          {selEdge && <EdgeDetail e={selEdge} release={release} name={name} onClose={clearEdge} nodesMap={nodes} />}
-          {!selEdge && focus && (() => {
-            const out = rows.filter((e) => e.from === focus), inc = rows.filter((e) => e.to === focus);
-            const n = nodes.get(focus)!;
-            return <div className="node-detail">
-              <div className="eyebrow">{n.kind}{release.graph.core.includes(focus) ? ' · core company' : ''}{s.selected.length > 1 ? ` · last of ${s.selected.length} selected` : ''}</div>
-              <h2>{name(focus)}</h2>
-              {name(focus) !== n.label_en && <p className="raw">{n.label_en.replace(/\n.*/s, '')}</p>}
-              {n.label_raw !== n.label_en && <p className="raw">Original label: {n.label_raw}</p>}
-              {release.graph.coverage[focus] && <p className="small">Coverage note (raw): {release.graph.coverage[focus]}</p>}
-              <h3>Outgoing ({out.length})</h3><ul className="rels">{out.map((e) => <EdgeLine key={e.id} e={e} dir="out" who={focus} />)}</ul>
-              <h3>Incoming ({inc.length})</h3><ul className="rels">{inc.map((e) => <EdgeLine key={e.id} e={e} dir="in" who={focus} />)}</ul>
+        {(s.selected.length > 1 || (single && narrow)) && <section className="panel" aria-label="Selection details">
+          <div className="tabs" role="tablist">
+            {s.selected.length > 1 && <button role="tab" aria-selected={tab === 'between'} className={tab === 'between' ? 'on' : ''} onClick={() => setTab('between')}>Between them</button>}
+            {s.selected.map((id) => <button key={id} role="tab" aria-selected={tab === id || (single && true)} className={tab === id || single ? 'on' : ''} onClick={() => setTab(id)}>{name(id)}</button>)}
+            <button className="tabs-x" onClick={clearSel}>Clear selection ×</button>
+          </div>
+          {s.selected.length > 1 && tab === 'between' ? (() => {
+            const between = rows.filter((e) => s.selected.includes(e.from) && s.selected.includes(e.to)).sort((p, q) => (usdBn(q) ?? -1) - (usdBn(p) ?? -1));
+            const shared = vis.shared.map((id) => ({ id, by: flow.groups.get(id) ?? [] })).sort((a, b) => b.by.length - a.by.length);
+            return <div className="pgrid">
+              <div><div className="sect">Direct links</div>
+                {between.map((e) => <button key={e.id} className={`rel${s.edge === e.id ? ' on' : ''}`} onClick={() => setS((p) => ({ ...p, edge: e.id }))}><span className="rel-l"><Dot l={e.layer} /><b>{name(e.from)}</b> → <b>{name(e.to)}</b><small>{LAYER_STYLE[e.layer].name.toLowerCase()} · {humanStatus(e.status)}</small></span><span className="rel-a">{e.amount === null ? '—' : amountOf(e)}</span></button>)}
+                {!between.length && <p className="small">No direct link recorded between them.</p>}
+                {vis.unlinkedPairs.map(([a, b]) => <p key={a + b} className="unlinked">No recorded contractual link between {name(a)} and {name(b)}, directly or through a shared counterparty (coverage is partial; market contagion is not modelled).</p>)}
+              </div>
+              <div><div className="sect">Shared counterparties · {shared.length}</div>
+                {shared.length ? <table className="shtab"><thead><tr><th></th>{s.selected.map((id) => <th key={id}>{name(id)}</th>)}</tr></thead>
+                  <tbody>{shared.map(({ id }) => <tr key={id}><td><b>{name(id)}</b></td>{s.selected.map((me) => {
+                    const es = rows.filter((e) => (e.from === id && e.to === me) || (e.from === me && e.to === id));
+                    return <td key={me}>{es.length ? es.map((e) => <button key={e.id} className="pill" style={{ color: FLOW_COLOR[FLOW_OF[e.layer]] }} onClick={() => setS((p) => ({ ...p, edge: e.id }))}>{payerOf(e) === me ? '→' : '←'} {e.amount !== null ? amountOf(e) : 'n/d'}</button>) : <span className="na">—</span>}</td>;
+                  })}</tr>)}</tbody></table> : <p className="small">None.</p>}
+                <p className="small">→ the selected company pays it · ← it pays, funds or backs the selected company · n/d = amount not disclosed</p>
+              </div>
             </div>;
-          })()}
-        </aside>
-      </main>
+          })() : (() => { const id = single ? s.selected[0] : tab; const rels = relsOf(id); return <div className="plist">{rels.map((e) => <RelRow key={e.id} e={e} me={id} />)}</div>; })()}
+        </section>}
 
-      <Mechanisms release={release} />
+        {panels.map((c) => <CompanyPanel key={c.node_id} c={c} today={today} />)}
 
-      {panels.map((c) => <CompanyPanel key={c.node_id} c={c} today={today} />)}
+        {cdsCompanies.length > 0 && <section id="credit" className="sec" aria-label="Credit stress"><CreditCards companies={cdsCompanies} tickerOf={name} /></section>}
 
-      <section className="table-sec">
-        <h2>Relationship records <span className="count" data-testid="row-count">{rows.length}</span>{s.selected.length > 0 && <> involving {s.selected.map(name).join(' + ')}</>}</h2>
-        {!rows.length && <p className="small">Nothing selected. Pick companies on the left or switch to Show all.</p>}
-        {rows.length > 0 && <div className="table-scroll">
-          <table>
-            <thead><tr><th>ID</th><th>Layer</th><th>From</th><th>To</th><th>Amount</th><th>Status (raw)</th><th>Label (raw)</th><th>Source</th></tr></thead>
-            <tbody>{rows.map((e) => (
-              <tr key={e.id} className={`${s.edge === e.id ? 'on' : ''}${vis.between.includes(e.id) ? ' between' : ''}`} tabIndex={0} onClick={() => setS((p) => ({ ...p, edge: e.id }))} onKeyDown={(ev) => { if (ev.key === 'Enter') setS((p) => ({ ...p, edge: e.id })); }}>
-                <td>{e.id}{e.october_change && <span className="badge oct">Oct</span>}</td>
-                <td><LayerSwatch l={e.layer} /> {e.layer}</td><td>{name(e.from)}</td><td>{name(e.to)}</td>
-                <td className={e.amount === null ? 'unk' : ''}>{e.amount === null ? 'not disclosed' : shortAmount(e)}</td>
-                <td>{humanStatus(e.status)}</td><td className="lbl">{e.label}</td><td>{e.source}</td>
-              </tr>))}</tbody>
-          </table>
-        </div>}
-      </section>
-
-      <footer className="foot">
-        <p><b>Reading the map.</b> Arrows follow the labelled economic role, not always cash. Line pattern and arrowhead distinguish all seven layers. Null amounts mean “not disclosed”, never zero. “Up to” amounts are maxima; contract values are not cash paid. Do not sum amounts across rows — one contract can generate several edges. No line between two companies means no recorded contractual link in this dataset, not that one is immune to the other.</p>
-        <p className="small">{m.coverage_note} Historical illustration inspired by financial-editorial design; not affiliated with any publication.</p>
-      </footer>
+        <section className="folds">
+          <details className="fold"><summary>Three mechanisms behind the network<span>investor → customer · credit support → equity · capital → equipment → lease</span></summary><Mechanisms release={release} /></details>
+          <details className="fold" id="records" open={!!s.edge && false}><summary>Relationship records <span className="count" data-testid="row-count">{rows.length}</span><span>{s.selected.length ? `involving ${s.selected.map(name).join(' + ')}` : 'amounts, status and sources'}</span></summary>
+            <div className="rec-tools">
+              <div className="layer-filter" aria-label="Relationship layers (click to filter)">{LAYERS.map((l) => <button key={l} className={`lg ${s.layers.includes(l) ? 'on' : 'off'}`} aria-pressed={s.layers.includes(l)} onClick={() => toggleLayer(l)} title={LAYER_STYLE[l].desc}><Dot l={l} />{LAYER_STYLE[l].name}</button>)}</div>
+              <label className="oct-toggle"><input type="checkbox" checked={s.octOnly} onChange={(e) => setS((p) => ({ ...p, octOnly: e.target.checked }))} /> October-change records only</label>
+              <span className="exports">
+                <button onClick={() => download(`acn-${stamp}.csv`, exportCSVFor(release, rows, scope), 'text/csv')}>Export CSV</button>
+                <button onClick={() => download(`acn-${stamp}.json`, exportJSONFor(release, rows, { selection: s.selected, show_all: s.showAll, layers: s.layers, october_change_only: s.octOnly }), 'application/json')}>Export JSON</button>
+              </span>
+            </div>
+            {rows.length > 0 && <div className="table-scroll"><table>
+              <thead><tr><th>ID</th><th>Layer</th><th>From</th><th>To</th><th>Amount</th><th>Status</th><th>Label (raw)</th><th>Source</th></tr></thead>
+              <tbody>{rows.map((e) => (
+                <tr key={e.id} className={`${s.edge === e.id ? 'on' : ''}${vis.between.includes(e.id) ? ' between' : ''}`} tabIndex={0} onClick={() => setS((p) => ({ ...p, edge: e.id }))} onKeyDown={(ev) => { if (ev.key === 'Enter') setS((p) => ({ ...p, edge: e.id })); }}>
+                  <td>{e.id}{e.october_change && <span className="badge oct">Oct</span>}</td>
+                  <td><Dot l={e.layer} />{e.layer}</td><td>{name(e.from)}</td><td>{name(e.to)}</td>
+                  <td className={e.amount === null ? 'unk' : ''}>{e.amount === null ? 'not disclosed' : amountOf(e)}</td>
+                  <td>{humanStatus(e.status)}</td><td className="lbl">{e.label}</td><td>{e.source}</td>
+                </tr>))}</tbody>
+            </table></div>}
+          </details>
+          <details className="fold" id="method"><summary>Method &amp; sources<span>research cut-off 28 Oct 2026 · DTCC, SEC, US Treasury</span></summary>
+            <div className="method">
+              <p className="cutoff" data-testid="cutoff">Intra-month October preview — research cutoff <b>2026-10-28 17:04:34 UTC</b> (2026-10-29 01:04 Asia/Taipei). Not a month-end release. Release <code>{m.release_id}</code>{release.hashVerified ? ' · hashes verified' : ' · hashes not verified (no WebCrypto)'}. {m.counts.nodes} entities, {m.counts.relationships} relationship records; the overview shows the {overviewIds.length} companies at the centre.</p>
+              <p><b>Reading the map.</b> Arrows follow the labelled economic role, not always cash: purchases point from buyer to supplier, deliveries from provider to recipient. Line colour groups the seven record layers into money (equity, debt), compute (purchase, delivery) and guarantees &amp; options (credit support, warrants). Null amounts mean “not disclosed”, never zero. “Up to” amounts are maxima; contract values are not cash paid. Do not sum amounts across rows — one contract can generate several records. No line between two companies means no recorded contractual link in this dataset, not that one is immune to the other.</p>
+              <p><b>Credit.</b> CDS levels are derived from public DTCC trade reports with the ISDA standard model and the US Treasury curve; they are not dealer quotes. Share prices from Yahoo Finance; financials from SEC filings.</p>
+              <p className="small">{release.graph.data_quality_notice} {m.coverage_note}</p>
+            </div>
+          </details>
+        </section>
+        <footer className="foot small">Research illustration, not investment advice. Not affiliated with any publication.</footer>
+      </div>
     </div>
   );
 }
@@ -193,21 +238,21 @@ function EdgeDetail({ e, release, name, onClose, nodesMap }: { e: GraphEdge; rel
   const parallels = release.graph.edges.filter((x) => x.id !== e.id && ((x.from === e.from && x.to === e.to) || (x.from === e.to && x.to === e.from)));
   return (
     <div className="edge-detail" data-testid="edge-detail">
-      <div className="eyebrow"><LayerSwatch l={e.layer} /> {LAYER_STYLE[e.layer].name} · record {e.id}{e.deal_id ? ` · deal ${e.deal_id}` : ' · no deal ID linked'}</div>
-      <h2>{name(e.from)} → {name(e.to)}</h2>
-      <p className="dir"><b>Direction:</b> {directionWords(e, nodesMap)}.</p>
+      <button className="close" onClick={onClose} aria-label="Close record">×</button>
+      <div className="eyebrow"><Dot l={e.layer} /> {LAYER_STYLE[e.layer].name} · record {e.id}{e.deal_id ? ` · deal ${e.deal_id}` : ''}</div>
+      <h3>{name(e.from)} → {name(e.to)}</h3>
+      <p className="dir">{directionWords(e, nodesMap)}.</p>
       <dl>
         <dt>Amount</dt><dd className={e.amount === null ? 'unk' : 'amt'}>{formatAmount(e)}</dd>
-        <dt>Status (raw)</dt><dd><code>{e.status}</code></dd>
+        <dt>Status</dt><dd>{humanStatus(e.status)}</dd>
         <dt>Label (raw)</dt><dd>{e.label || '—'}</dd>
         <dt>Note (raw)</dt><dd>{e.note || '—'}</dd>
-        <dt>October change</dt><dd>{e.october_change ? 'Flagged as changed in this preview (reason not classified: may be new event, backfill or correction)' : 'No'}</dd>
-        <dt>Source</dt><dd><code>{e.source}</code>{src && <> · access: {src.access} · published: {src.published_at || 'unknown'}{src.date_precision ? ` (${src.date_precision})` : ''}</>}</dd>
-        {src?.quote && <><dt>Source excerpt (not necessarily verbatim)</dt><dd className="excerpt">{src.quote}</dd></>}
+        {e.october_change && <><dt>October change</dt><dd>Flagged as changed in this preview (new event, backfill or correction)</dd></>}
+        <dt>Source</dt><dd><code>{e.source}</code>{src && <> · {src.access} · published {src.published_at || 'unknown'}{src.date_precision ? ` (${src.date_precision})` : ''}</>}</dd>
+        {src?.quote && <><dt>Source excerpt</dt><dd className="excerpt">{src.quote}</dd></>}
         <dt>Source URLs</dt><dd>{safeUrls(src?.urls).length ? <ul className="urls">{safeUrls(src?.urls).map((u) => <li key={u}><a href={u} target="_blank" rel="noopener noreferrer">{u}</a></li>)}</ul> : 'No public URL in registry'}</dd>
       </dl>
-      {parallels.length > 0 && <p className="small">Parallel records between these entities: {parallels.map((p) => p.id).join(', ')}</p>}
-      <button className="link" onClick={onClose}>Close record</button>
+      {parallels.length > 0 && <p className="small">Other records between these two: {parallels.map((p) => p.id).join(', ')}</p>}
     </div>
   );
 }

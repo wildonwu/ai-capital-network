@@ -1,6 +1,6 @@
 # AI Capital Network — Phase 1 (read-only interactive site)
 
-Static Vite + React + TypeScript + Cytoscape.js site built from the handoff starter package
+Static Vite + React + TypeScript site (network drawn as plain SVG) built from the handoff starter package
 (`AI_CAPITAL_NETWORK_WEBSITE_HANDOFF.md`, 2026-10-29). Data is an **intra-month October preview**,
 research cutoff **2026-10-28 17:04:34 UTC** (2026-10-29 01:04:34 Asia/Taipei). It is not a month-end
 release and not independently re-verified.
@@ -45,26 +45,30 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
 - ≤760 px: List/Graph tabs, list+detail first.
 - CSV/JSON export of the filtered table, carrying release id, cutoff, scope and raw status/amount fields; null amounts export empty/null.
 
-## Network v2: company list and selection
+## Network page (redesign, 2026-11-08)
 
-- Left: every entity grouped into seven categories (`src/lib/categories.ts`): AI model companies, hyperscalers,
-  chipmakers, neoclouds, data-centre developers & landlords, SPVs & projects, investors/private credit/banks.
-- Right: with nothing selected, **Show all** draws the company-level overview (36 entities / 89 records) and
-  **Blank** draws nothing. Selecting companies draws the union of their direct relationships, including
-  project-level counterparties; edges among counterparties are not added (select a counterparty to bring its
-  own relationships in). Counterparties linked to two or more selected companies are highlighted, edges
-  between selected companies are emphasised, and pairs with neither are flagged as having no recorded
-  contractual link (coverage is partial; market contagion is not modelled).
-- Four layouts for a selection, to compare (`src/lib/layouts.ts`): **Bands by category** (default; one row per
-  category, top to bottom in risk-transmission order), **Layered around selection** (selected and shared in the
-  centre, counterparties pointing in on the left, pointed to on the right), **Bubbles** (force layout, ellipses)
-  and **Fixed positions** (editorial coordinates). The overview with nothing selected always uses the editorial
-  positions. Project-level nodes of one parent merge into a box (`src/lib/display.ts`) until clicked; parallel
-  edges merge with a count; amounts are printed on the lines. Listed companies are shown by ticker
-  (`src/lib/tickers.ts`).
-- One predicate (`visibleGraph` in `src/lib/selection.ts`) drives the graph, table, layer counts and exports.
-  URL state: `sel=A|B`, `all=0`, `layout=fixed`; old `node=` links still work.
-- The CDS chart now sits in a **Credit monitor** section above the network for every company with CDS data.
+- Layout logic is one pure function, `flowLayout` in `src/lib/flow.ts` (tested in `tests/flow.test.ts`); the SVG
+  component is `src/FlowGraph.tsx`.
+- Nothing selected: the 36-company overview in six columns in the order money and compute move — capital, AI
+  labs, hyperscalers, neoclouds, developers & SPVs, chips — with each column ordered to cut line crossings
+  (barycentre sweeps). Hovering a company or picking a category chip lights up its lines.
+- Lines come in three colours only: money (equity, debt), compute (purchase, delivery), guarantees & options
+  (credit support, warrants); project affiliation is a faint dotted grey. Width follows the disclosed US$ amount;
+  undisclosed amounts are thin. The overview prints no amounts, so a label can never sit on the wrong line.
+- One company selected: it alone in the middle, whoever pays, funds or backs it on the left, whom it pays on the
+  right (a delivery record runs provider → recipient, so its recipient counts as the payer). The largest lines carry
+  their amounts; a drawer lists its links.
+- Two or three selected (the cap; a fourth pick is refused with a note): stacked in the middle with the links
+  between them drawn there, a link that skips a box bowing round it. Counterparties are grouped by exactly which
+  selected companies they link to — all, each pair, then "only X" — and a panel below lists direct links and a
+  table of shared counterparties.
+- Clicking any line or amount opens its record with sources. Phones scroll the drawing sideways at full size,
+  opening a selection centred on the selected companies.
+- Amounts are never summed across records: one contract can produce several records.
+- One predicate (`visibleGraph` in `src/lib/selection.ts`) drives the graph, table, counts and exports.
+  URL state: `sel=A|B|C` (at most three), `all=0`; old `node=` links still work.
+- Credit stress: one card per company with CDS (5Y CDS against share price, one-month changes); a card opens the
+  full tenor chart. Mechanisms, the record table and the method notes are collapsible sections.
 
 ## Company data panel (market, credit, balance sheet)
 
