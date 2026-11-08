@@ -53,7 +53,7 @@ seven categories; detailed data backfill deferred.
 - [x] Credit monitor section with the CDS chart above the network
 - [x] Tests (`tests/selection.test.ts`), 62/62 passing
 - [x] Four layouts built for comparison; "Bands by category" kept as default for now (owner still deciding)
-- [ ] Merge to main
+- [x] Merged to main 2026-11-08 (layout choice still open; Bands by category is the default)
 
 ### Phase 3b — 5Y CDS for every bond issuer in the network (2026-11-08)
 Decision: track the 5Y CDS of every network company with bonds and DTCC single-name trades, not only CoreWeave.
@@ -64,7 +64,8 @@ Decision: track the 5Y CDS of every network company with bonds and DTCC single-n
 - [x] Spread quotes reported ×100 too small rescaled; zero upfronts and pre-window lifecycle trades ignored
 - [x] Day-level spike filter; outlier guard anchored on the chosen readings, not on sparse "certain" ones
 - [x] Credit monitor: sortable 5Y table (1W/1M/3M change, curve status), log-scale comparison, per-company detail
-- [x] 74/74 tests passing
+- [x] Share price and 1-month price change beside each company's CDS; detail chart for every company
+- [x] 74/74 tests passing; merged to main and live 2026-11-08
 Excluded: SoftBank (JPY contracts, needs a JPY curve); NBIS, IREN, WULF, CIFR, APLD, HUT and private firms (no trades).
 
 ### Backlog
