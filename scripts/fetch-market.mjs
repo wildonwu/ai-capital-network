@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MARKET_SCHEMA, buildCompany, contentKey, financialsFromCompanyFacts, priceFromYahoo, validateMarket } from './market-core.mjs';
+import { refreshCds } from './fetch-cds.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manualDir = path.join(root, 'data/companies');
@@ -25,7 +26,7 @@ const problems = [];
 
 for (const file of fs.readdirSync(manualDir).filter((f) => f.endsWith('.json')).sort()) {
   const manual = JSON.parse(fs.readFileSync(path.join(manualDir, file), 'utf8'));
-  let financials = null, price = null;
+  let financials = null, price = null, cds = null;
   if (manual.sec_cik) {
     if (!SEC_UA) problems.push(`${manual.node_id}: SEC_USER_AGENT not set, financials kept from previous snapshot`);
     else {
@@ -37,7 +38,11 @@ for (const file of fs.readdirSync(manualDir).filter((f) => f.endsWith('.json')).
     try { price = priceFromYahoo(await getJSON(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(manual.yahoo_symbol)}?range=1y&interval=1d`, { 'User-Agent': 'Mozilla/5.0' }), now); }
     catch (e) { problems.push(`${manual.node_id}: price ${e.message}`); }
   }
-  companies[manual.node_id] = buildCompany(manual, { financials, price }, previous?.companies?.[manual.node_id]);
+  if (manual.cds?.source === 'dtcc-sec') {
+    try { const r = await refreshCds({ nodeId: manual.node_id, cds: manual.cds }, root, now); cds = r.block; for (const l of r.log) console.log(`${manual.node_id} cds ${l}`); }
+    catch (e) { problems.push(`${manual.node_id}: CDS ${e.message}`); }
+  }
+  companies[manual.node_id] = buildCompany(manual, { financials, price, cds }, previous?.companies?.[manual.node_id]);
 }
 
 const next = { schema: MARKET_SCHEMA, generated_at: now, companies };

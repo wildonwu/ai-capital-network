@@ -27,9 +27,16 @@ quantify.
 - [x] Feature pushed to `main` and verified on the live site (Vercel success; manual workflow run fetched both sources)
 - [ ] Phase retrospective presented to the user
 
+### Phase 2b — CDS from DTCC trade reports (2026-11-08)
+- [x] ISDA standard model (`scripts/cds-core.mjs`), DTCC fetch with lifecycle handling (`scripts/fetch-cds.mjs`)
+- [x] Upfront convention resolved (cash amount + accrued); one-year backfill: 144 priced days since 2025-10-02
+- [x] Calibration vs Markit (news): −0.5% on 2026-10-27; panel row with trade counts and on-date checks
+- [ ] Pushed and verified live
+- Note: FINRA's free API has only market-wide TRACE aggregates; per-bond yields stay hand-recorded
+
 ### Backlog
 - [ ] Fuse timeline (dated covenant tests, maturities, drawdown deadlines) — mockup approved in principle
-- [ ] Find a scrapeable public source for bond quotes; until then update `manual_series` by hand
+- [ ] Optional: FINRA 144A market breadth as a high-yield market stress indicator (credential stored)
 - [ ] Data-centre delivery tracking from Epoch AI CSVs (`data_center_timelines.csv`), per-site slip alerts
 - [ ] DDTL ↔ customer ↔ site mapping with confidence levels (confirmed / inferred / unknown)
 - [ ] Fix inherited record errors found during research: F06 convertible closed at $4.2bn (2.875%, due 2033), not

@@ -7,10 +7,13 @@ export const MARKET_PATH = 'market/companies.json';
 export type BlockStatus = 'ok' | 'stale' | 'missing';
 export interface QPoint { end: string; value: number; derived?: boolean }
 export interface PricePoint { date: string; close: number }
-export interface ManualPoint { date: string; precision: string; value: number; note?: string; source: string }
+export interface ManualPoint { date: string; precision: string; value: number; note?: string; source: string; intraday?: boolean }
 export interface ManualSeries { label: string; unit: string; note?: string; points: ManualPoint[] }
 export interface ReferencePrice { label: string; value: number; source: string }
 export interface MaturityBucket { year: string; value: number; derived: boolean }
+
+export interface CdsPoint { date: string; spread_bp: number; points_pct: number; priced: number; trades: number; capped: number }
+export interface CdsBlock { status: BlockStatus; fetched_at?: string; source?: string; method?: string; reference_entity?: string; latest_file?: string | null; series?: CdsPoint[] }
 
 export interface CompanyMarket {
   node_id: string; name: string; ticker: string; curated_at: string;
@@ -21,6 +24,7 @@ export interface CompanyMarket {
     series?: Record<'revenue' | 'net_income' | 'operating_cash_flow' | 'capex' | 'free_cash_flow' | 'interest_expense' | 'cash' | 'debt_principal' | 'rpo', QPoint[]>;
     maturities?: { as_of: string; total: number | null; buckets: MaturityBucket[] } | null;
   };
+  cds?: CdsBlock;
   reference_prices: ReferencePrice[];
   manual_series: Record<string, ManualSeries>;
   events: { date: string; label: string; source: string }[];

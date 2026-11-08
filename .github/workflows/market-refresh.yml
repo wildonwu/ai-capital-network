@@ -23,7 +23,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Fetch SEC filings and daily closes
+      - name: Fetch SEC filings, daily closes and DTCC CDS trades
         env:
           # SEC asks for a descriptive User-Agent with a contact address. Set it as a repository secret.
           SEC_USER_AGENT: ${{ secrets.SEC_USER_AGENT }}
@@ -32,12 +32,12 @@ jobs:
         run: npx vitest run && npx tsc -b
       - name: Commit snapshot if it changed
         run: |
-          if git diff --quiet -- public/data/market; then
+          if git diff --quiet -- public/data/market data/derived && [ -z "$(git ls-files --others --exclude-standard data/derived)" ]; then
             echo "No change in market data."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/market
+          git add public/data/market data/derived
           git commit -m "Refresh company market data ($(date -u +%Y-%m-%d))"
           git push origin HEAD:main

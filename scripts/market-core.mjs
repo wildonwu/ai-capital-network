@@ -129,11 +129,12 @@ export function keepOrStale(fresh, previous) {
   return { status: 'missing' };
 }
 
-export function buildCompany(manual, { financials, price }, previous) {
+export function buildCompany(manual, { financials, price, cds = null }, previous) {
   return {
     node_id: manual.node_id, name: manual.name, ticker: manual.ticker, curated_at: manual.curated_at,
     price: keepOrStale(price, previous?.price),
     financials: keepOrStale(financials, previous?.financials),
+    ...(manual.cds ? { cds: keepOrStale(cds, previous?.cds) } : {}),
     reference_prices: manual.reference_prices ?? [],
     manual_series: manual.manual_series ?? {},
     events: manual.events ?? [],
@@ -147,6 +148,10 @@ export function validateMarket(m) {
   for (const [id, c] of Object.entries(m?.companies ?? {})) {
     if (c.node_id !== id) errs.push(`${id}: node_id mismatch`);
     for (const k of ['price', 'financials']) if (!['ok', 'stale', 'missing'].includes(c[k]?.status)) errs.push(`${id}: ${k} status`);
+    if (c.cds) {
+      if (!['ok', 'stale', 'missing'].includes(c.cds.status)) errs.push(`${id}: cds status`);
+      for (const p of c.cds.series ?? []) if (!/^\d{4}-\d{2}-\d{2}$/.test(p.date) || !(p.spread_bp > 0 && p.spread_bp < 20000) || !(p.priced >= 1)) errs.push(`${id}: cds point ${p.date}`);
+    }
     for (const [k, ser] of Object.entries(c.manual_series ?? {})) {
       if (!ser.unit || !Array.isArray(ser.points)) errs.push(`${id}: manual ${k} malformed`);
       for (const p of ser.points ?? []) {

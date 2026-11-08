@@ -54,7 +54,8 @@ It is deliberately **outside** the hashed release: market data changes daily, th
 |---|---|---|
 | Equity price, 1-year history, distance to reference prices | Yahoo Finance chart endpoint (unofficial) | daily, automatic |
 | Cash, debt principal, RPO, revenue, OCF, capex, FCF, interest, maturities | SEC XBRL `companyfacts` | daily check, changes after each 10-Q/10-K |
-| CDS, bond yields, active/contracted power, undrawn facilities, events | hand-recorded in `data/companies/<company>.json`, each point dated with an https source | manual |
+| 5Y CDS conventional spread, daily | DTCC SEC public dissemination files (trade reports), ISDA standard model | daily, automatic |
+| News-reported CDS, bond yields, active/contracted power, undrawn facilities, events | hand-recorded in `data/companies/<company>.json`, each point dated with an https source | manual |
 
 - `scripts/fetch-market.mjs` writes `public/data/market/companies.json`; pure logic lives in `scripts/market-core.mjs`.
   A source that fails keeps its last values, marked `stale`; nothing is zeroed. Unchanged data is not rewritten.
@@ -64,6 +65,15 @@ It is deliberately **outside** the hashed release: market data changes daily, th
   snapshot to `main` only when it changed. It needs a repository secret `SEC_USER_AGENT` (SEC requires a
   descriptive User-Agent with a contact address); without it the financial block stays at its last values, marked stale.
 - Local refresh: `SEC_USER_AGENT="<name> <contact>" node scripts/fetch-market.mjs`.
+- CDS: `scripts/fetch-cds.mjs` downloads new `SEC_CUMULATIVE_CREDITS_*.zip` end-of-day files (one-year backfill),
+  applies DTCC corrections/cancellations, and keeps trade state in `data/derived/cds/<node>.json`. Only on-the-run
+  5Y senior trades with a disclosed notional (≤ $5m) are priced. DTCC's upfront amount is the cash settlement amount,
+  so accrued premium is added back to recover quoted points (73% of CoreWeave trades then sit on the 1/8-point grid,
+  versus 7% without). Points convert to a conventional spread with the ISDA standard model: flat hazard, 40% recovery,
+  ACT/360 quarterly IMM premiums with accrual on default, discounting on the US Treasury par curve of the trade date
+  (the ISDA curve uses SOFR swaps; the difference is small for this purpose). Checked against a news-reported Markit
+  level: 1,036 vs 1,041.4 bp on 2026-10-27 (−0.5%). Weekend-only business-day adjustment; days with no priced trade
+  are omitted rather than filled.
 - To add a company: create `data/companies/<name>.json` with the release `node_id`, `sec_cik` and `yahoo_symbol`.
 
 ## Known data gaps / limitations

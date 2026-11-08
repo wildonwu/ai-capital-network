@@ -1,4 +1,4 @@
-import type { CompanyMarket, ManualSeries, QPoint } from './lib/market';
+import type { CdsBlock, CompanyMarket, ManualSeries, QPoint } from './lib/market';
 import { daysBetween, latest, manualValue, quarterLabel, usdShort } from './lib/market';
 
 /** Manual (hand-recorded) values older than this are flagged so a stale number is never read as current. */
@@ -47,6 +47,30 @@ function ManualRow({ s, today, threshold }: { s: ManualSeries; today: string; th
   );
 }
 
+/** CDS series derived from DTCC trades; compared against any news-reported value on the same date. */
+function CdsRow({ cds, today, reported }: { cds: CdsBlock; today: string; reported?: ManualSeries }) {
+  const s = cds.series ?? [];
+  const l = latest(s);
+  const age = l ? daysBetween(l.date, today) : null;
+  // Intraday highs are not comparable with a day's traded level.
+  const checks = (reported?.points ?? []).filter((p) => !p.intraday).map((p) => ({ p, d: s.find((x) => x.date === p.date) })).filter((x) => x.d);
+  return (
+    <>
+      <div className="cp-row">
+        <span className="cp-l">5-year CDS spread <small>DTCC trades</small></span>
+        <span className={`cp-v${l && l.spread_bp >= 1000 ? ' alert' : ''}`}>{l ? `${l.spread_bp.toLocaleString('en-US', { maximumFractionDigits: 0 })} bp` : '—'}</span>
+        <Spark values={s.map((x) => x.spread_bp)} refs={[{ v: 1000, label: '1,000 bp stress threshold' }]} />
+        <span className="cp-asof">{l ? <a href="https://pddata.dtcc.com/ppd/secdashboard" target="_blank" rel="noopener noreferrer" title={cds.method}>{l.date}</a> : '—'}{age !== null && age > 7 && <span className="badge stale">{age}d old</span>}</span>
+      </div>
+      {l && <p className="cp-note">
+        {cds.status !== 'ok' && <b>{cds.status}. </b>}
+        Upfront {l.points_pct.toFixed(2)} points on a 5% coupon; {l.priced} priced trade{l.priced === 1 ? '' : 's'} of {l.trades}{l.capped ? ` (${l.capped} above the $5m disclosure cap)` : ''}. Converted with the ISDA standard model (40% recovery, Treasury curve).
+        {checks.map(({ p, d }) => <> Check {p.date}: {d!.spread_bp.toFixed(0)} vs {p.value.toLocaleString('en-US')} bp reported ({((d!.spread_bp / p.value - 1) * 100).toFixed(1)}%).</>)}
+      </p>}
+    </>
+  );
+}
+
 export default function CompanyPanel({ c, today }: { c: CompanyMarket; today: string }) {
   const p = c.price, f = c.financials, ser = f.series;
   const px = p.last?.close;
@@ -79,13 +103,14 @@ export default function CompanyPanel({ c, today }: { c: CompanyMarket; today: st
         </div>
 
         <div className="cp-col">
-          <h3>Credit &amp; capacity <small>hand-recorded</small></h3>
+          <h3>Credit &amp; capacity <small>CDS daily · rest hand-recorded</small></h3>
+          {c.cds && <CdsRow cds={c.cds} today={today} reported={ms.cds_5y_bp} />}
           {ms.cds_5y_bp && <ManualRow s={ms.cds_5y_bp} today={today} threshold={{ v: 1000, label: '1,000 bp stress threshold' }} />}
           {ms.bond_2032_9625_yield_pct && <ManualRow s={ms.bond_2032_9625_yield_pct} today={today} />}
           {ms.undrawn_facilities_usd_bn && <ManualRow s={ms.undrawn_facilities_usd_bn} today={today} />}
           {ms.active_power_mw && <ManualRow s={ms.active_power_mw} today={today} />}
           {ms.contracted_power_mw && <ManualRow s={ms.contracted_power_mw} today={today} />}
-          <p className="cp-note">No free CDS or TRACE feed: credit values come from dated news reports citing Markit/ICE (secondary). Undrawn DDTL capacity only funds its financed contracts. Click a date for the source.</p>
+          <p className="cp-note">CDS is derived daily from public DTCC trade reports, not a dealer quote. Bond yields have no free per-bond feed, so they and the news-reported CDS values are hand-recorded from dated reports. Undrawn DDTL capacity only funds its financed contracts. Click a date for the source.</p>
         </div>
 
         <div className="cp-col">
