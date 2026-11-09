@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { GraphEdge, Release } from './lib/types';
-import { DIR_LABEL, FLOWS, OVERLAPS, exposure, type Dir, type ExpRow, type ExpSide } from './lib/exposure';
+import { DIR_LABEL, FLOWS, OVERLAPS, exposure, netOf, type Dir, type ExpRow, type ExpSide } from './lib/exposure';
 import { FLOW_COLOR, fmtBn } from './lib/flow';
 import { humanStatus, shortAmount } from './lib/model';
 
@@ -58,6 +58,17 @@ export default function ExposureBlocks({ release, companies, edges, name, active
           {FLOWS.map((f) => (
             <div key={f} className="ex-col" style={{ ['--c' as string]: FLOW_COLOR[f] }}>
               <div className="ex-col-h"><i />{FLOW_TITLE[f]}<small>{FLOW_SUB[f]}</small></div>
+              {(() => {
+                const n = netOf(x.sides[f]);
+                if (!n.rows) return <div className="ex-net"><span className="ex-net-l">Net</span><span className="ex-none">No records</span></div>;
+                const word = (v: number) => (v > 0 ? 'Net inflow' : v < 0 ? 'Net outflow' : 'Net');
+                return <div className="ex-net">
+                  <span className="ex-net-l">{n.hasFirm ? word(n.firm) : 'Net'} <small>firm</small></span>
+                  {n.hasFirm ? <b style={{ color: FLOW_COLOR[f] }}>{money(Math.abs(n.firm))}</b> : <span className="ex-none ex-net-empty">No firm US$ amount</span>}
+                  <small className="ex-net-s">{n.hasConditional && <>{word(n.all).toLowerCase()} incl. conditional <b>{money(Math.abs(n.all))}</b></>}
+                    {n.uncounted > 0 && <>{n.hasConditional ? ' · ' : ''}{n.uncounted} record{n.uncounted > 1 ? 's' : ''} without a $ amount not included</>}</small>
+                </div>;
+              })()}
               {(['in', 'out'] as Dir[]).map((d) => <Side key={d} side={x.sides[f][d]} label={DIR_LABEL[f][d]} color={FLOW_COLOR[f]} name={name} active={active} onRecord={onRecord} />)}
             </div>
           ))}

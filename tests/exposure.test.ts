@@ -45,3 +45,17 @@ describe('company exposure', () => {
     for (const [k, v] of Object.entries(OVERLAPS)) { expect(ids.has(k)).toBe(true); expect(ids.has(v.within)).toBe(true); }
   });
 });
+
+describe('net per line type', () => {
+  it('nets inflow against outflow, firm and with conditional amounts', async () => {
+    const { netOf } = await import('../src/lib/exposure');
+    const x = exposure(r, 'CoreWeave');
+    const money = netOf(x.sides.money), goods = netOf(x.sides.goods);
+    expect(money.firm).toBeCloseTo(41.118, 3); // nothing invested or lent out
+    expect(goods.firm).toBeCloseTo(57.6, 3); // purchases have no disclosed $ amount
+    expect(goods.all).toBeCloseTo(63.9, 3);
+    expect(goods.uncounted).toBeGreaterThan(0);
+    const nv = netOf(exposure(r, 'NVIDIA').sides.money);
+    expect(nv.firm).toBeLessThan(0); // NVIDIA invests more than it raises in these records
+  });
+});

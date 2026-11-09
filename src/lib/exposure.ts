@@ -66,3 +66,10 @@ export function exposure(r: Release, company: string, edges: GraphEdge[] = r.gra
   for (const f of FLOWS) for (const d of ['in', 'out'] as Dir[]) sides[f][d].rows.sort(order);
   return { company, projects, sides };
 }
+
+/** Net of one line type: inflow minus outflow, firm only and with conditional amounts; records without a $ amount are counted, not netted. */
+export function netOf(s: Record<Dir, ExpSide>) {
+  const firm = s.in.firm - s.out.firm;
+  const all = s.in.firm + s.in.conditional - s.out.firm - s.out.conditional;
+  return { firm, all, uncounted: s.in.uncounted + s.out.uncounted, rows: s.in.rows.length + s.out.rows.length, hasFirm: s.in.firm + s.out.firm > 0, hasConditional: s.in.conditional + s.out.conditional > 0 };
+}

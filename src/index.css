@@ -386,3 +386,9 @@ td.lbl { max-width: 340px; }
 .ex-via { font-size: 12px; font-weight: 600; color: var(--ink2); margin: 10px 0 2px; } .ex-via small { font-weight: 400; color: var(--muted); margin-left: 4px; }
 .ex-none { font-size: 12.5px; color: #B9AFA4; margin: 4px 0; }
 @media (max-width: 1000px) { .ex-grid { grid-template-columns: 1fr; gap: 14px; } .ex-block { padding: 14px 16px; } }
+
+.ex-net { background: #FBF6EF; border-radius: 10px; padding: 10px 12px; margin: 6px 0 4px; display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 2px 12px; }
+.ex-net-l { font-size: 12px; font-weight: 600; color: var(--ink2); } .ex-net-l small { font-weight: 400; color: var(--muted); }
+.ex-net > b { font: 700 26px/1.1 var(--serif); font-variant-numeric: tabular-nums; text-align: right; }
+.ex-net-s { grid-column: 1 / -1; font-size: 11.5px; color: var(--muted); } .ex-net-s b { color: var(--ink2); font-weight: 600; }
+.ex-net .ex-none { text-align: right; }
