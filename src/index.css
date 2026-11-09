@@ -73,6 +73,13 @@ h1 { font: 600 38px/1.12 var(--serif); margin: 0 0 10px; letter-spacing: -.01em;
 .drawer h3, .edge-detail h3 { font: 600 24px/1.15 var(--serif); margin: 0; padding-right: 24px; }
 .drawer .sub { color: var(--muted); font-size: 13px; margin: 4px 0 8px; }
 .close { position: absolute; top: 14px; right: 14px; border: 0; background: none; color: var(--muted); font-size: 20px; line-height: 1; padding: 4px; }
+.drawer .collapse { position: absolute; top: 14px; right: 44px; border: 0; background: none; color: var(--muted); font-size: 22px; line-height: 1; padding: 2px 6px; border-radius: 6px; }
+.drawer .collapse:hover, .close:hover { color: var(--ink); }
+.drawer h3 { padding-right: 56px; }
+.drawer-tab { position: absolute; top: 0; right: 0; bottom: 0; z-index: 2; width: 34px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 0; border-left: 1px solid var(--rule); background: #fff; color: var(--ink2); font-size: 12px; font-weight: 600; letter-spacing: .04em; padding: 0; cursor: pointer; }
+.drawer-tab span { font-size: 18px; line-height: 1; }
+.drawer-tab em { font-style: normal; writing-mode: vertical-rl; }
+.drawer-tab:hover { background: var(--card); color: var(--ink); }
 .sect { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 18px 0 6px; }
 .rel { display: flex; gap: 12px; align-items: baseline; width: 100%; text-align: left; border: 0; border-bottom: 1px solid var(--rule2); background: none; padding: 8px 2px; font-size: 13px; }
 .rel:hover, .rel.on { background: #FBF4EA; }

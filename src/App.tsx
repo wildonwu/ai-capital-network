@@ -60,6 +60,10 @@ export default function App() {
   const [notice, setNotice] = useState<string | null>(null);
   const [tab, setTab] = useState<string>('between');
   const [stageRef, stageW] = useWidth<HTMLDivElement>();
+  // The company drawer beside the graph can be folded away to give the graph the full width;
+  // the choice is remembered in this browser only.
+  const [drawerOpen, setDrawerOpen] = useState(() => { try { return localStorage.getItem('acn.drawer') !== 'collapsed'; } catch { return true; } });
+  useEffect(() => { try { localStorage.setItem('acn.drawer', drawerOpen ? 'open' : 'collapsed'); } catch { /* storage unavailable */ } }, [drawerOpen]);
   // On a narrow screen a selection opens scrolled to the selected companies in the middle.
   const selKey = s.selected.join('|');
   const centre = useCallback((el: HTMLDivElement | null) => { if (el && selKey) requestAnimationFrame(() => { el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2; }); }, [selKey]);
@@ -84,8 +88,9 @@ export default function App() {
   const phone = useMedia('(max-width: 900px)');
   const narrow = phone || stageW < 700;
   const single = s.selected.length === 1;
+  const showDrawer = single && !narrow && drawerOpen;
   // Phones keep the drawing at full size and scroll sideways rather than shrinking text below legibility.
-  const graphW = s.selected.length ? Math.max(narrow ? 780 : 640, stageW - (single && !narrow ? 320 : 0)) : Math.max(narrow ? 1180 : 980, stageW);
+  const graphW = s.selected.length ? Math.max(narrow ? 780 : 640, stageW - (showDrawer ? 320 : single && !narrow ? 34 : 0)) : Math.max(narrow ? 1180 : 980, stageW);
   const flow = useMemo(() => (release && vis ? flowLayout(release, vis, s.selected, graphW) : null), [release, vis, s.selected, graphW]);
 
   if (error) return <div className="fatal"><h1>Release could not be loaded</h1><pre>{error}</pre><p>No partial or unvalidated data is displayed.</p></div>;
@@ -156,13 +161,15 @@ export default function App() {
         <div className="netgrid">
         {phone ? <details className="cl-fold"><summary>Companies by category{s.selected.length ? ` · ${s.selected.length} selected` : ''}</summary><CompanyList release={release} selected={s.selected} shared={vis.shared} max={MAX_SELECTED} onToggle={toggleNode} onClear={clearSel} /></details>
           : <CompanyList release={release} selected={s.selected} shared={vis.shared} max={MAX_SELECTED} onToggle={toggleNode} onClear={clearSel} />}
-        <div className={`stage${single && !narrow ? ' with-drawer' : ''}`} ref={stageRef}>
+        <div className={`stage${showDrawer ? ' with-drawer' : ''}`} ref={stageRef}>
           {!s.selected.length && !s.showAll ? <p className="empty">Pick a company above, or click All to see the whole network.</p>
             : <div className="stage-scroll" ref={centre}>{narrow && <p className="swipe">{s.selected.length ? 'Swipe sideways for both sides' : 'Swipe sideways to see the whole network · tap a company to focus on it'}</p>}<FlowGraph f={flow} focusCat={s.selected.length ? null : focusCat} activeEdge={s.edge} onNode={toggleNode} onEdge={(id) => setS((p) => ({ ...p, edge: id }))} /></div>}
-          {(selEdge || (single && !narrow)) && <aside className={`drawer${selEdge ? ' record' : ''}`} aria-live="polite">
+          {single && !narrow && !drawerOpen && !selEdge && <button className="drawer-tab" onClick={() => setDrawerOpen(true)} aria-label="Show company details" title="Show details"><span aria-hidden="true">‹</span><em>Details</em></button>}
+          {(selEdge || showDrawer) && <aside className={`drawer${selEdge ? ' record' : ''}`} aria-live="polite">
             {selEdge ? <EdgeDetail e={selEdge} release={release} name={name} onClose={clearEdge} nodesMap={nodes} />
               : (() => { const id = s.selected[0], n = nodes.get(id)!, rels = relsOf(id); return <>
                 <button className="close" onClick={clearSel} aria-label="Clear selection">×</button>
+                <button className="collapse" onClick={() => setDrawerOpen(false)} aria-label="Collapse company details" title="Collapse — show the full graph">›</button>
                 <h3>{name(id)}</h3><p className="sub">{n.label_en.replace(/\n.*/s, '') !== name(id) ? n.label_en.replace(/\n.*/s, '') + ' · ' : ''}{CAT_SHORT[categoryOf(n)]} · {rels.length} relationships</p>
                 <div className="sect">Largest links</div>
                 {rels.slice(0, 10).map((e) => <RelRow key={e.id} e={e} me={id} />)}
