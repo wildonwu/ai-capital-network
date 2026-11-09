@@ -84,6 +84,13 @@ are never summed across records (one contract can create several records).
 - [x] Phone layout (graph scrolls sideways in overview; selection fits the width)
 - [x] Remove Cytoscape, old layouts, company list; tests, lint, build, screenshots; push to main
 
+### Phase 4b — Per-company money / compute / guarantees blocks (2026-11-09)
+Decisions: totals leave out records already inside another counted record (curated from record notes); project-level
+financing is listed in its own sub-section; each type is split by direction and by firm vs conditional.
+- [x] `exposure()` with overlap list, direction and status rules; tests (`tests/exposure.test.ts`)
+- [x] One block per selected company under the network; rows open their record
+- [x] Arrowheads sized to line width; company list beside the network; full-screen credit chart with date pickers
+
 ### Backlog
 - [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor
       and end-obligor exposure totals, then risk tiers by impact size

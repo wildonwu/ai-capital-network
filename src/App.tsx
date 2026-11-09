@@ -4,6 +4,7 @@ import Mechanisms from './Mechanisms';
 import CompanyPanel from './CompanyPanel';
 import CreditCards from './CreditCards';
 import CompanyList from './CompanyList';
+import ExposureBlocks from './ExposureBlocks';
 import { loadRelease } from './lib/data';
 import { loadMarket, type MarketSnapshot } from './lib/market';
 import type { GraphEdge, Layer, Release } from './lib/types';
@@ -207,6 +208,8 @@ export default function App() {
           })() : (() => { const id = single ? s.selected[0] : tab; const rels = relsOf(id); return <div className="plist">{rels.map((e) => <RelRow key={e.id} e={e} me={id} />)}</div>; })()}
         </section>}
 
+        {s.selected.length > 0 && <ExposureBlocks release={release} companies={s.selected} name={name} active={s.edge} onRecord={(id) => setS((p) => ({ ...p, edge: id }))}
+          edges={release.graph.edges.filter((e) => s.layers.includes(e.layer) && (!s.octOnly || e.october_change))} />}
         {panels.map((c) => <CompanyPanel key={c.node_id} c={c} today={today} />)}
 
         {cdsCompanies.length > 0 && <section id="credit" className="sec" aria-label="Credit stress"><CreditCards companies={cdsCompanies} tickerOf={name} /></section>}

@@ -67,6 +67,13 @@ The single-file build embeds the same files in `window.__ACN_EMBED__` and goes t
 - Amounts are never summed across records: one contract can produce several records.
 - One predicate (`visibleGraph` in `src/lib/selection.ts`) drives the graph, table, counts and exports.
   URL state: `sel=A|B|C` (at most three), `all=0`; old `node=` links still work.
+- Under the network, each selected company gets a block (`src/ExposureBlocks.tsx`, logic in `src/lib/exposure.ts`):
+  money, compute and guarantees, each split into what comes in (raised; sold to customers; backing received) and
+  what goes out (invested or lent; bought from suppliers; backing given), with firm and conditional US$ subtotals.
+  Project-level vehicles linked by an affiliation record (e.g. CoreWeave's DDTL facilities) are listed in their own
+  sub-sections. A record whose amount is already inside another counted record (`OVERLAPS`, taken from the records'
+  notes — e.g. the DDTLs inside CoreWeave's book debt) is shown in grey and not added. Undisclosed and non-dollar
+  amounts are listed and counted separately.
 - Credit stress: one card per company with CDS (5Y CDS against share price, one-month changes); a card opens the
   full tenor chart. Mechanisms, the record table and the method notes are collapsible sections.
 
