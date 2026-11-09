@@ -258,7 +258,6 @@ td.lbl { max-width: 340px; }
 .cc-axis { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .cc-axis-title { fill: var(--muted); font-size: 11px; font-weight: 600; }
 .cc-line { fill: none; stroke: var(--c); stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
-.cc-line.carried { stroke-dasharray: 3 3; stroke-width: 1.4; opacity: .8; }
 .cc-inferred { fill: var(--paper); stroke: var(--c); stroke-width: 1.4; }
 .cc-price { fill: none; stroke: #8f8278; stroke-width: 1.3; opacity: .9; }
 .cc-ref { stroke: #A23B2A; stroke-width: 1; stroke-dasharray: 5 4; opacity: .7; }

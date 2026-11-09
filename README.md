@@ -104,7 +104,7 @@ It is deliberately **outside** the hashed release: market data changes daily, th
 - CDS curve: trades are bucketed 1Y–4Y by remaining years and 5Y = the on-the-run contract. A trade above the $5m
   disclosure cap gets a notional only when exactly one $5m–$100m ($1m step) candidate puts its quoted points on the
   1/8 grid and within ±5 points of that tenor's last level; otherwise it is left out. Days without a priced trade
-  carry the previous value (`status: carried`, drawn dashed). Inversion = any of 1Y–3Y above 5Y on medians of
+  carry the previous value (`status: carried`; the chart line skips them and joins traded sessions). Inversion = any of 1Y–3Y above 5Y on medians of
   observed values over the last 5 sessions, with the short tenor observed on at least 2 of them (single prints on
   thin tenors produced four false alarms in 2026). An active inversion shows a banner at the top of the site.
 - Chart (`src/CdsChart.tsx`): D/W, YTD/6M/1Y/2Y/All, tenor and share-price chips, events from

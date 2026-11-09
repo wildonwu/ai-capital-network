@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import type { CdsBlock, CdsPoint, PricePoint } from './lib/market';
+import type { CdsBlock, PricePoint } from './lib/market';
 import { CDS_TENORS, weekly, windowFor, windowForDates, type Range } from './lib/cdsChart';
 
 const W = 1000, L = 58, R = 942, T = 30, NAV_H = 54;
@@ -46,16 +46,18 @@ export default function CdsChart({ cds, price, alertPeriods, ticker, large = fal
   const yp = (v: number) => B - ((v - plo) / (phi - plo || 1)) * (B - T);
   const idxOf = (d: string) => { let best = -1; for (let i = 0; i < n; i++) if (dates[i] <= d) best = i; return best; };
 
+  // The line joins traded sessions only: a session with no trade (value carried) is
+  // skipped, so the line runs straight from one trade to the next. Missing history
+  // (no point at all) still breaks it.
   const linePaths = (k: string) => {
-    let solid = '', dashed = '', prev: { i: number; p: CdsPoint } | null = null; const dots: { cx: number; cy: number }[] = [];
+    let solid = '', penDown = false; const dots: { cx: number; cy: number }[] = [];
     dates.forEach((d, i) => {
-      const p = byTenor[k].get(d); if (!p) { prev = null; return; }
-      const X = x(i).toFixed(1), Y = y(p.spread_bp).toFixed(1);
-      if (prev) { const seg = `M${x(prev.i).toFixed(1)},${y(prev.p.spread_bp).toFixed(1)}L${X},${Y}`; if (p.status === 'carried') dashed += seg; else solid += seg; }
+      const p = byTenor[k].get(d); if (!p) { penDown = false; return; }
+      if (p.status === 'carried') return;
+      solid += `${penDown ? 'L' : 'M'}${x(i).toFixed(1)},${y(p.spread_bp).toFixed(1)}`; penDown = true;
       if (p.status === 'inferred') dots.push({ cx: x(i), cy: y(p.spread_bp) });
-      prev = { i, p };
     });
-    return { solid, dashed, dots };
+    return { solid, dots };
   };
   // Start a new sub-path after any gap (e.g. sessions before the price history begins).
   let pricePath = '', penDown = false;
@@ -99,7 +101,7 @@ export default function CdsChart({ cds, price, alertPeriods, ticker, large = fal
       <div className="cc-head">
         <div>
           <h3>CDS spread by tenor vs price</h3>
-          <small>{dates[0]} → {dates[n - 1]} · {n} {gran === 'W' ? 'weeks' : 'sessions'} · lines = conventional spread (bp, left scale) from DTCC trades, ISDA model · solid = traded, dashed = no trade that day (previous value carried), hollow dot = includes a trade above the $5m cap with an inferred notional · red shading = curve inverted (1–3Y above 5Y) · grey line = share price (right scale) · {large ? 'pick dates above, or drag on the strip below to choose any period' : 'drag on the strip below to pick any period'}</small>
+          <small>{dates[0]} → {dates[n - 1]} · {n} {gran === 'W' ? 'weeks' : 'sessions'} · lines = conventional spread (bp, left scale) from DTCC trades, ISDA model · the line joins traded sessions; days without a trade are skipped (the readout shows the value carried from the last trade), hollow dot = includes a trade above the $5m cap with an inferred notional · red shading = curve inverted (1–3Y above 5Y) · grey line = share price (right scale) · {large ? 'pick dates above, or drag on the strip below to choose any period' : 'drag on the strip below to pick any period'}</small>
         </div>
         <div className="cc-tools">
           <div className="seg cc-seg" role="group" aria-label="Interval">{(['D', 'W'] as const).map((g) => <button key={g} className={gran === g ? 'on' : ''} onClick={() => setGran(g)}>{g}</button>)}</div>
@@ -126,8 +128,8 @@ export default function CdsChart({ cds, price, alertPeriods, ticker, large = fal
           {show.price && <text className="cc-axis-title" x={R} y={14} textAnchor="end">{ticker} $</text>}
           {alertPeriods.filter((p) => p.to >= dates[0] && p.from <= dates[n - 1]).map((p) => <rect key={p.from} className="cc-inv" x={xd(p.from) - 3} y={T} width={Math.max(6, xd(p.to) - xd(p.from) + 6)} height={B - T} />)}
           {pricePath && <path className="cc-price" d={pricePath} />}
-          {vis.map((k) => { const { solid, dashed, dots } = linePaths(k); return <g key={k} style={{ ['--c' as string]: COLORS[k] }}>
-            <path className="cc-line" d={solid} /><path className="cc-line carried" d={dashed} />
+          {vis.map((k) => { const { solid, dots } = linePaths(k); return <g key={k} style={{ ['--c' as string]: COLORS[k] }}>
+            <path className="cc-line" d={solid} />
             {dots.map((d, i) => <circle key={i} className="cc-inferred" cx={d.cx} cy={d.cy} r={2.6} />)}
           </g>; })}
           {[0, Math.floor(n / 4), Math.floor(n / 2), Math.floor((3 * n) / 4), n - 1].filter((i, j, arr) => n && arr.indexOf(i) === j).map((i) => <text key={i} className="cc-axis" x={x(i)} y={B + 18} textAnchor="middle">{dates[i]?.slice(0, 7)}</text>)}
