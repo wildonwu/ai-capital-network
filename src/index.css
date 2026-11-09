@@ -333,3 +333,27 @@ td.lbl { max-width: 340px; }
 .cl-fold > summary { padding: 10px 14px; font-weight: 600; font-size: 14px; cursor: pointer; }
 .cl-fold .company-list { position: static; border: 0; border-top: 1px solid var(--rule); border-radius: 0 0 12px 12px; max-height: 60vh; }
 @media (max-width: 900px) { .netgrid { grid-template-columns: 1fr; } }
+
+/* full-screen chart */
+.modal-back { position: fixed; inset: 0; z-index: 50; background: rgba(30, 27, 24, .45); display: flex; align-items: center; justify-content: center; padding: 24px; }
+.modal { position: relative; width: min(1240px, 100%); max-height: calc(100vh - 48px); overflow: auto; background: var(--card); border-radius: 16px; padding: 22px 28px 20px; box-shadow: 0 24px 60px rgba(30, 20, 10, .25); outline: none; }
+.modal-h { display: flex; justify-content: space-between; gap: 16px; }
+.modal-h h3 { font: 600 28px/1.1 var(--serif); margin: 0; } .modal-h h3 span { font: 400 15px var(--sans); color: var(--muted); margin-left: 8px; }
+.modal-nums { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: baseline; margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+.modal-nums b { font: 600 20px var(--serif); color: var(--ink); margin-right: 4px; font-variant-numeric: tabular-nums; }
+.modal-nums em { font-style: normal; font-weight: 600; margin-left: 8px; } .modal-nums em.up { color: var(--hot); } .modal-nums em.dn { color: var(--good); }
+.modal .close { position: static; font-size: 26px; align-self: flex-start; }
+.cds-chart.large { border-top: 0; margin-top: 10px; }
+.cc-dates { display: flex; gap: 10px; align-items: center; font-size: 12px; color: var(--muted); }
+.cc-dates input { font: inherit; font-size: 12.5px; color: var(--ink); padding: 3px 6px; border: 1px solid var(--rule); border-radius: 6px; background: #fff; margin-left: 4px; }
+@media (max-width: 760px) { .modal-back { padding: 0; align-items: stretch; } .modal { border-radius: 0; max-height: 100vh; padding: 16px; } .modal-h h3 { font-size: 22px; } .cc-dates { flex-wrap: wrap; } }
+
+/* chart controls in the page style */
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: var(--card); }
+.seg button { border: 0; background: none; padding: 5px 11px; font-size: 12px; color: var(--ink2); }
+.seg button + button { border-left: 1px solid var(--rule2); }
+.seg button.on { background: var(--ink); color: #fff; }
+.cc-chip { border-radius: 999px; }
+.cds-chart.large .cc-head h3 { display: none; }
+.cds-chart.large .cc-head small { max-width: none; }
+.cds-chart.large .cc-tools { width: 100%; margin-top: 6px; }

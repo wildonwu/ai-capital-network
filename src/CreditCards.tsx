@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CdsPoint, CompanyMarket, PricePoint } from './lib/market';
 import CdsChart from './CdsChart';
 
@@ -54,9 +54,41 @@ export default function CreditCards({ companies, tickerOf }: { companies: Compan
         <div className="pill-seg" role="group" aria-label="Range">{RANGES.map(([k, v]) => <button key={k} className={days === v ? 'on' : ''} onClick={() => setDays(v)}>{k}</button>)}</div>
       </div>
       <div className="cc-grid">{rows.map((c) => <Card key={c.node_id} c={c} from={from} on={open === c.node_id} tick={tickerOf(c.node_id)} onOpen={() => setOpen((o) => (o === c.node_id ? null : c.node_id))} />)}</div>
-      <p className="keyrow"><span><i style={{ background: '#B5532F' }} />5Y CDS, derived from public DTCC trade reports with the ISDA standard model (not dealer quotes)</span><span><i style={{ background: '#A39A90' }} />Share price</span><span>Click a card for every tenor and the full chart</span></p>
-      {det && <div className="cc-detail"><div className="cc-detail-h"><h3>{tickerOf(det.node_id)} · {det.name}</h3><button className="link" onClick={() => setOpen(null)}>Close ×</button></div>
-        <CdsChart key={det.node_id} ticker={tickerOf(det.node_id)} cds={det.cds!} price={det.price.history ?? []} alertPeriods={det.cds!.inversion?.periods ?? []} /></div>}
+      <p className="keyrow"><span><i style={{ background: '#B5532F' }} />5Y CDS, derived from public DTCC trade reports with the ISDA standard model (not dealer quotes)</span><span><i style={{ background: '#A39A90' }} />Share price</span><span>Click a card for the full chart with every tenor and any period</span></p>
+      {det && <ChartModal c={det} tick={tickerOf(det.node_id)} onClose={() => setOpen(null)} />}
     </>
+  );
+}
+
+/** Full-screen chart for one company: every tenor against share price, preset or free periods. Esc or the backdrop closes it. */
+function ChartModal({ c, tick, onClose }: { c: CompanyMarket; tick: string; onClose: () => void }) {
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null;
+    box.current?.focus();
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { e.stopPropagation(); onClose(); } };
+    window.addEventListener('keydown', key, true);
+    const overflow = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', key, true); document.body.style.overflow = overflow; prev?.focus?.(); };
+  }, [onClose]);
+  const s = c.cds!.series!, last = s[s.length - 1], m1 = s.length > 21 ? last.spread_bp - s[s.length - 22].spread_bp : null;
+  const px = c.price.history ?? [], pl = px.at(-1)?.close, p1 = pl !== undefined && px.length > 21 ? (pl / px[px.length - 22].close - 1) * 100 : null;
+  const inv = c.cds?.inversion?.alert;
+  return (
+    <div className="modal-back" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="modal" role="dialog" aria-modal="true" aria-label={`${tick} credit chart`} tabIndex={-1} ref={box}>
+        <div className="modal-h">
+          <div><h3>{tick} <span>{c.name}</span></h3>
+            <p className="modal-nums">
+              <span><b>{Math.round(last.spread_bp).toLocaleString('en-US')}</b> bp 5Y CDS{m1 !== null && <em className={m1 > 0 ? 'up' : 'dn'}>{m1 > 0 ? '+' : ''}{Math.round(m1)} 1M</em>}</span>
+              {pl !== undefined && <span><b>${pl.toLocaleString('en-US', { maximumFractionDigits: 2 })}</b> share price{p1 !== null && <em className={p1 < 0 ? 'up' : 'dn'}>{p1 > 0 ? '+' : ''}{p1.toFixed(1)}% 1M</em>}</span>}
+              {inv?.active && <span className="ccd-tag">curve inverted since {inv.since}</span>}
+            </p>
+          </div>
+          <button className="close" onClick={onClose} aria-label="Close chart">×</button>
+        </div>
+        <CdsChart large ticker={tick} cds={c.cds!} price={px} alertPeriods={c.cds!.inversion?.periods ?? []} />
+      </div>
+    </div>
   );
 }

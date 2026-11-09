@@ -1,10 +1,10 @@
 import { useMemo, useRef, useState } from 'react';
 import type { CdsBlock, CdsPoint, PricePoint } from './lib/market';
-import { CDS_TENORS, weekly, windowFor, type Range } from './lib/cdsChart';
+import { CDS_TENORS, weekly, windowFor, windowForDates, type Range } from './lib/cdsChart';
 
-const W = 1000, H = 330, L = 58, R = 942, T = 30, B = 296, NAV_H = 54;
+const W = 1000, L = 58, R = 942, T = 30, NAV_H = 54;
 const COLORS: Record<string, string> = { '5Y': 'var(--cap)', '4Y': '#8A97AD', '3Y': '#6B5BA8', '2Y': '#D8912B', '1Y': '#A23B2A' };
-const RANGES: Range[] = ['YTD', '6M', '1Y', '2Y', 'All'];
+const RANGES: Range[] = ['1M', '3M', 'YTD', '6M', '1Y', '2Y', 'All'];
 
 function ticks(lo: number, hi: number, n = 5) {
   const step0 = (hi - lo) / n, mag = 10 ** Math.floor(Math.log10(step0 || 1));
@@ -13,7 +13,10 @@ function ticks(lo: number, hi: number, n = 5) {
   return out;
 }
 
-export default function CdsChart({ cds, price, alertPeriods, ticker }: { cds: CdsBlock; price: PricePoint[]; alertPeriods: { from: string; to: string }[]; ticker: string }) {
+/** `large`: the taller plot used in the full-screen view (the drawing keeps its 1000-unit width and scales to fit). */
+export default function CdsChart({ cds, price, alertPeriods, ticker, large = false }: { cds: CdsBlock; price: PricePoint[]; alertPeriods: { from: string; to: string }[]; ticker: string; large?: boolean }) {
+  // Large view: fits a laptop screen with the navigator visible; on a phone the plot is taller than wide.
+  const H = large ? (typeof window !== 'undefined' && window.innerWidth < 700 ? 760 : 380) : 330, B = H - 34;
   const [gran, setGran] = useState<'D' | 'W'>('D');
   const [show, setShow] = useState<Record<string, boolean>>({ '5Y': true, '4Y': false, '3Y': false, '2Y': false, '1Y': false, price: true });
   const allDates = useMemo(() => (cds.tenors?.['5Y'] ?? cds.series ?? []).map((p) => p.date), [cds]);
@@ -92,15 +95,19 @@ export default function CdsChart({ cds, price, alertPeriods, ticker }: { cds: Cd
   const lastObs = latest5?.observed_on;
 
   return (
-    <section className="cds-chart" data-testid="cds-chart" aria-label="5-year CDS spread history">
+    <section className={`cds-chart${large ? ' large' : ''}`} data-testid="cds-chart" aria-label="5-year CDS spread history">
       <div className="cc-head">
         <div>
           <h3>CDS spread by tenor vs price</h3>
-          <small>{dates[0]} → {dates[n - 1]} · {n} {gran === 'W' ? 'weeks' : 'sessions'} · lines = conventional spread (bp, left scale) from DTCC trades, ISDA model · solid = traded, dashed = no trade that day (previous value carried), hollow dot = includes a trade above the $5m cap with an inferred notional · red shading = curve inverted (1–3Y above 5Y) · grey line = share price (right scale) · drag on the strip below to pick any period</small>
+          <small>{dates[0]} → {dates[n - 1]} · {n} {gran === 'W' ? 'weeks' : 'sessions'} · lines = conventional spread (bp, left scale) from DTCC trades, ISDA model · solid = traded, dashed = no trade that day (previous value carried), hollow dot = includes a trade above the $5m cap with an inferred notional · red shading = curve inverted (1–3Y above 5Y) · grey line = share price (right scale) · {large ? 'pick dates above, or drag on the strip below to choose any period' : 'drag on the strip below to pick any period'}</small>
         </div>
         <div className="cc-tools">
           <div className="seg cc-seg" role="group" aria-label="Interval">{(['D', 'W'] as const).map((g) => <button key={g} className={gran === g ? 'on' : ''} onClick={() => setGran(g)}>{g}</button>)}</div>
-          <div className="seg cc-seg" role="group" aria-label="Range">{RANGES.map((r) => <button key={r} className={range === r ? 'on' : ''} onClick={() => { setWin(windowFor(r, allDates)); setRange(r); }}>{r}</button>)}</div>
+          <div className="seg cc-seg" role="group" aria-label="Range">{RANGES.filter((r) => large || !['1M', '3M'].includes(r)).map((r) => <button key={r} className={range === r ? 'on' : ''} onClick={() => { setWin(windowFor(r, allDates)); setRange(r); }}>{r}</button>)}</div>
+          {large && allDates.length > 0 && <div className="cc-dates" role="group" aria-label="Custom period">
+            <label>From <input type="date" min={allDates[0]} max={allDates[lastIdx]} value={allDates[a]} onChange={(e) => { if (e.target.value) { setWin(windowForDates(e.target.value, allDates[b], allDates)); setRange(null); } }} /></label>
+            <label>To <input type="date" min={allDates[0]} max={allDates[lastIdx]} value={allDates[b]} onChange={(e) => { if (e.target.value) { setWin(windowForDates(allDates[a], e.target.value, allDates)); setRange(null); } }} /></label>
+          </div>}
         </div>
       </div>
       <div className="cc-chips" role="group" aria-label="Series">

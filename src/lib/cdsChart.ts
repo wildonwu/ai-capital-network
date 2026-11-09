@@ -1,6 +1,6 @@
 /** Pure helpers for the CDS chart (kept apart from the component so they can be tested). */
 export const CDS_TENORS = ['1Y', '2Y', '3Y', '4Y', '5Y'] as const;
-export type Range = 'YTD' | '6M' | '1Y' | '2Y' | 'All';
+export type Range = '1M' | '3M' | 'YTD' | '6M' | '1Y' | '2Y' | 'All';
 
 /** Session-index window [start, end] for a range button, ending at the latest session. */
 export function windowFor(r: Range, dates: string[]): [number, number] {
@@ -12,7 +12,7 @@ export function windowFor(r: Range, dates: string[]): [number, number] {
   if (r === 'YTD') from = `${end.slice(0, 4)}-01-01`;
   else {
     const d = new Date(`${end}T00:00:00Z`);
-    d.setUTCMonth(d.getUTCMonth() - (r === '6M' ? 6 : r === '1Y' ? 12 : 24));
+    d.setUTCMonth(d.getUTCMonth() - ({ '1M': 1, '3M': 3, '6M': 6, '1Y': 12, '2Y': 24 } as Record<string, number>)[r]);
     from = d.toISOString().slice(0, 10);
   }
   const i = dates.findIndex((x) => x >= from);
@@ -30,4 +30,19 @@ export function weekly(dates: string[], starts = false): string[] {
   const m = new Map<string, string>();
   for (const d of dates) m.set(weekStart(d), d);
   return starts ? [...m.keys()] : [...m.values()];
+}
+
+/**
+ * Window for a free date range: first session on or after `from`, last session on or before `to`. The range is
+ * swapped if given backwards and widened to at least two sessions so the chart always has a line.
+ */
+export function windowForDates(from: string, to: string, dates: string[]): [number, number] {
+  const last = dates.length - 1;
+  if (last < 0) return [0, 0];
+  if (from > to) [from, to] = [to, from];
+  let a = dates.findIndex((x) => x >= from); if (a < 0) a = last;
+  let b = last; while (b > 0 && dates[b] > to) b--;
+  if (b < a) b = a;
+  if (b - a < 1) { if (b < last) b++; else if (a > 0) a--; }
+  return [a, b];
 }
