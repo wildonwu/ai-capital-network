@@ -1,6 +1,6 @@
 {
  "schema": "acn-market-1",
- "generated_at": "2026-11-12T00:40:19.484Z",
+ "generated_at": "2026-11-13T00:40:15.802Z",
  "companies": {
   "Google": {
    "node_id": "Google",
@@ -9,22 +9,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 293.45
+     "date": "2026-11-12",
+     "close": 298.7
     },
-    "prev_close": 287.38,
-    "change_pct": 2.11,
+    "prev_close": 293.45,
+    "change_pct": 1.79,
     "high_52w": 402.62,
     "low_52w": 273.5,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 286.71
-     },
      {
       "date": "2025-11-13",
       "close": 278.57
@@ -1024,6 +1020,10 @@
      {
       "date": "2026-11-11",
       "close": 293.45
+     },
+     {
+      "date": "2026-11-12",
+      "close": 298.7
      }
     ]
    },
@@ -1032,13 +1032,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Alphabet Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 425,
+    "capped_unresolved": 427,
     "ambiguous_skipped": 0,
     "outliers_dropped": 3,
     "package_legs_dropped": 49,
@@ -2824,6 +2824,15 @@
       "priced": 0,
       "inferred": 0,
       "observed_on": "2026-11-09"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 88,
+      "points_pct": null,
+      "status": "carried",
+      "priced": 0,
+      "inferred": 0,
+      "observed_on": "2026-11-09"
      }
     ],
     "tenors": {
@@ -2888,6 +2897,15 @@
        "points_pct": null,
        "status": "observed",
        "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 31.5,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-10"
       }
@@ -3052,6 +3070,15 @@
        "points_pct": 1.27,
        "status": "observed",
        "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 182.9,
+       "points_pct": 1.27,
+       "status": "carried",
+       "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-10"
       }
@@ -5144,6 +5171,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 61,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
       }
      ],
      "4Y": [
@@ -7234,6 +7270,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-03"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 68.8,
+       "points_pct": -1.02,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "5Y": [
@@ -9018,6 +9063,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 88,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-09"
       }
      ]
     },
@@ -9025,7 +9079,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -9042,22 +9096,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 266.17
+     "date": "2026-11-12",
+     "close": 267.44
     },
-    "prev_close": 270.87,
-    "change_pct": -1.74,
+    "prev_close": 266.17,
+    "change_pct": 0.48,
     "high_52w": 284.02,
     "low_52w": 198.79,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 244.2
-     },
      {
       "date": "2025-11-13",
       "close": 237.58
@@ -10057,6 +10107,10 @@
      {
       "date": "2026-11-11",
       "close": 266.17
+     },
+     {
+      "date": "2026-11-12",
+      "close": 267.44
      }
     ]
    },
@@ -10065,13 +10119,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Amazon.com, Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 418,
+    "capped_unresolved": 420,
     "ambiguous_skipped": 0,
     "outliers_dropped": 0,
     "package_legs_dropped": 57,
@@ -12307,6 +12361,15 @@
       "priced": 1,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 94,
+      "points_pct": -0.22,
+      "status": "observed",
+      "priced": 3,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -12880,6 +12943,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 40,
+       "points_pct": -0.66,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 40,
        "points_pct": -0.66,
        "status": "carried",
@@ -13507,6 +13579,15 @@
        "points_pct": -0.7,
        "status": "observed",
        "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 64.9,
+       "points_pct": -0.7,
+       "status": "carried",
+       "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-10"
       }
@@ -15516,6 +15597,15 @@
        "points_pct": -0.55,
        "status": "observed",
        "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 80.9,
+       "points_pct": -0.55,
+       "status": "carried",
+       "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-10"
       }
@@ -17602,6 +17692,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 72,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-23"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 72,
        "points_pct": null,
        "status": "carried",
@@ -19842,6 +19941,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 94,
+       "points_pct": -0.22,
+       "status": "observed",
+       "priced": 3,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -19849,7 +19957,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -19866,22 +19974,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 552.9
+     "date": "2026-11-12",
+     "close": 585.3
     },
-    "prev_close": 515.21,
-    "change_pct": 7.32,
+    "prev_close": 552.9,
+    "change_pct": 5.86,
     "high_52w": 649.42,
     "low_52w": 190.95,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 258.89
-     },
      {
       "date": "2025-11-13",
       "close": 247.96
@@ -20881,6 +20985,10 @@
      {
       "date": "2026-11-11",
       "close": 552.9
+     },
+     {
+      "date": "2026-11-12",
+      "close": 585.3
      }
     ]
    },
@@ -20889,13 +20997,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Advanced Micro Devices, Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 1,
-    "capped_unresolved": 340,
+    "capped_unresolved": 345,
     "ambiguous_skipped": 0,
     "outliers_dropped": 2,
     "package_legs_dropped": 57,
@@ -23140,6 +23248,15 @@
       "priced": 1,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 132.8,
+      "points_pct": -15.87,
+      "status": "observed",
+      "priced": 2,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -24343,6 +24460,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 29.7,
+       "points_pct": -0.5,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-02"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 29.7,
        "points_pct": -0.5,
        "status": "carried",
@@ -25587,6 +25713,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 47,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-06"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 47,
        "points_pct": null,
        "status": "carried",
@@ -26891,6 +27026,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-28"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 82,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-28"
       }
      ],
      "4Y": [
@@ -28129,6 +28273,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 51.5,
+       "points_pct": -1.82,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-22"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 51.5,
        "points_pct": -1.82,
        "status": "carried",
@@ -30378,6 +30531,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 132.8,
+       "points_pct": -15.87,
+       "status": "observed",
+       "priced": 2,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -30385,7 +30547,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -30402,22 +30564,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 50.67
+     "date": "2026-11-12",
+     "close": 50.51
     },
-    "prev_close": 50.68,
-    "change_pct": -0.02,
+    "prev_close": 50.67,
+    "change_pct": -0.32,
     "high_52w": 64.81,
     "low_52w": 46.72,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 54.11
-     },
      {
       "date": "2025-11-13",
       "close": 52.87
@@ -31417,6 +31575,10 @@
      {
       "date": "2026-11-11",
       "close": 50.67
+     },
+     {
+      "date": "2026-11-12",
+      "close": 50.51
      }
     ]
    },
@@ -31425,13 +31587,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Bank of America Corporation (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 245,
+    "capped_unresolved": 248,
     "ambiguous_skipped": 0,
     "outliers_dropped": 4,
     "package_legs_dropped": 6,
@@ -33676,6 +33838,15 @@
       "priced": 1,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 64.5,
+      "points_pct": null,
+      "status": "carried",
+      "priced": 0,
+      "inferred": 0,
+      "observed_on": "2026-11-10"
      }
     ],
     "tenors": {
@@ -35425,6 +35596,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-05"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 29,
+       "points_pct": -0.77,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "2Y": [
@@ -37560,6 +37740,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-26"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 43.5,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-26"
       }
      ],
      "3Y": [
@@ -39122,6 +39311,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 45,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 45,
        "points_pct": null,
        "status": "carried",
@@ -41221,6 +41419,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 53,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 53,
        "points_pct": null,
        "status": "carried",
@@ -43470,6 +43677,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 64.5,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
       }
      ]
     },
@@ -43477,7 +43693,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -43494,22 +43710,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 345.22
+     "date": "2026-11-12",
+     "close": 364.36
     },
-    "prev_close": 331.98,
-    "change_pct": 3.99,
+    "prev_close": 345.22,
+    "change_pct": 5.54,
     "high_52w": 481.57,
     "low_52w": 291.53,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 355.22
-     },
      {
       "date": "2025-11-13",
       "close": 339.98
@@ -44509,6 +44721,10 @@
      {
       "date": "2026-11-11",
       "close": 345.22
+     },
+     {
+      "date": "2026-11-12",
+      "close": 364.36
      }
     ]
    },
@@ -44517,13 +44733,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Broadcom Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 581,
+    "capped_unresolved": 585,
     "ambiguous_skipped": 0,
     "outliers_dropped": 2,
     "package_legs_dropped": 62,
@@ -46657,9 +46873,18 @@
       "spread_bp": 189.8,
       "points_pct": 3.81,
       "status": "observed",
-      "priced": 4,
+      "priced": 7,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 184.7,
+      "points_pct": 3.59,
+      "status": "observed",
+      "priced": 2,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -46936,6 +47161,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 79.4,
+       "points_pct": -0.23,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-03"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 79.4,
        "points_pct": -0.23,
        "status": "carried",
@@ -47496,6 +47730,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 112.6,
+       "points_pct": 0.25,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-04"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 112.6,
        "points_pct": 0.25,
        "status": "carried",
@@ -49322,6 +49565,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-06"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 152.2,
+       "points_pct": 1.48,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-06"
       }
      ],
      "4Y": [
@@ -51136,6 +51388,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 168,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-02"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 168,
        "points_pct": null,
        "status": "carried",
@@ -53274,9 +53535,18 @@
        "spread_bp": 189.8,
        "points_pct": 3.81,
        "status": "observed",
-       "priced": 4,
+       "priced": 7,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 184.7,
+       "points_pct": 3.59,
+       "status": "observed",
+       "priced": 2,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -53284,7 +53554,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -53301,22 +53571,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 124.21
+     "date": "2026-11-12",
+     "close": 124.06
     },
-    "prev_close": 122.27,
-    "change_pct": 1.59,
+    "prev_close": 124.21,
+    "change_pct": -0.12,
     "high_52w": 145.67,
     "low_52w": 97.63,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 102.87
-     },
      {
       "date": "2025-11-13",
       "close": 100.67
@@ -54316,6 +54582,10 @@
      {
       "date": "2026-11-11",
       "close": 124.21
+     },
+     {
+      "date": "2026-11-12",
+      "close": 124.06
      }
     ]
    },
@@ -54324,13 +54594,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Citigroup Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 286,
+    "capped_unresolved": 288,
     "ambiguous_skipped": 0,
     "outliers_dropped": 0,
     "package_legs_dropped": 7,
@@ -56512,6 +56782,15 @@
       "priced": 0,
       "inferred": 0,
       "observed_on": "2026-11-05"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 66,
+      "points_pct": null,
+      "status": "carried",
+      "priced": 0,
+      "inferred": 0,
+      "observed_on": "2026-11-05"
      }
     ],
     "tenors": {
@@ -58639,6 +58918,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-16"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 32,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-16"
       }
      ],
      "2Y": [
@@ -60756,6 +61044,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-22"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 42,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-22"
       }
      ],
      "3Y": [
@@ -62525,6 +62822,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 47,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 47,
        "points_pct": null,
        "status": "carried",
@@ -64615,6 +64921,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 55,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-04"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 55,
        "points_pct": null,
        "status": "carried",
@@ -66801,6 +67116,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-05"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 66,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-05"
       }
      ]
     },
@@ -66808,7 +67132,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -66825,22 +67149,18 @@
    "curated_at": "2026-11-05",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 60.77
+     "date": "2026-11-12",
+     "close": 56.6
     },
-    "prev_close": 48.73,
-    "change_pct": 24.71,
+    "prev_close": 60.77,
+    "change_pct": -6.86,
     "high_52w": 137.98,
     "low_52w": 43.66,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 85.43
-     },
      {
       "date": "2025-11-13",
       "close": 78.34
@@ -67840,25 +68160,24 @@
      {
       "date": "2026-11-11",
       "close": 60.77
+     },
+     {
+      "date": "2026-11-12",
+      "close": 56.6
      }
     ]
    },
    "financials": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "SEC XBRL companyfacts (data.sec.gov)",
     "latest_filing": {
      "form": "10-Q",
-     "filed": "2026-08-12",
-     "period_end": "2026-06-30"
+     "filed": "2026-11-12",
+     "period_end": "2026-09-30"
     },
     "series": {
      "revenue": [
-      {
-       "end": "2024-09-30",
-       "value": 583941000,
-       "derived": false
-      },
       {
        "end": "2024-12-31",
        "value": 747004000,
@@ -67876,12 +68195,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": 1364676000,
+       "value": 1365000000,
        "derived": false
       },
       {
        "end": "2025-12-31",
-       "value": 1571904000,
+       "value": 1572000000,
        "derived": true
       },
       {
@@ -67893,14 +68212,14 @@
        "end": "2026-06-30",
        "value": 2575000000,
        "derived": false
+      },
+      {
+       "end": "2026-09-30",
+       "value": 3661000000,
+       "derived": false
       }
      ],
      "net_income": [
-      {
-       "end": "2024-09-30",
-       "value": -359807000,
-       "derived": false
-      },
       {
        "end": "2024-12-31",
        "value": -50924000,
@@ -67918,12 +68237,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": -110124000,
+       "value": -110000000,
        "derived": false
       },
       {
        "end": "2025-12-31",
-       "value": -452726000,
+       "value": -453000000,
        "derived": true
       },
       {
@@ -67935,14 +68254,14 @@
        "end": "2026-06-30",
        "value": -626000000,
        "derived": false
+      },
+      {
+       "end": "2026-09-30",
+       "value": -709000000,
+       "derived": false
       }
      ],
      "operating_cash_flow": [
-      {
-       "end": "2024-09-30",
-       "value": 641222000,
-       "derived": true
-      },
       {
        "end": "2024-12-31",
        "value": 186564000,
@@ -67960,12 +68279,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": 1689051000,
+       "value": 1689000000,
        "derived": true
       },
       {
        "end": "2025-12-31",
-       "value": 1558949000,
+       "value": 1559000000,
        "derived": true
       },
       {
@@ -67977,14 +68296,14 @@
        "end": "2026-06-30",
        "value": 679000000,
        "derived": true
+      },
+      {
+       "end": "2026-09-30",
+       "value": 1975000000,
+       "derived": true
       }
      ],
      "capex": [
-      {
-       "end": "2024-09-30",
-       "value": 1215155000,
-       "derived": true
-      },
       {
        "end": "2024-12-31",
        "value": 3497749000,
@@ -68002,12 +68321,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": 2389239000,
+       "value": 2389000000,
        "derived": true
       },
       {
        "end": "2025-12-31",
-       "value": 4059761000,
+       "value": 4060000000,
        "derived": true
       },
       {
@@ -68019,14 +68338,14 @@
        "end": "2026-06-30",
        "value": 6422000000,
        "derived": true
+      },
+      {
+       "end": "2026-09-30",
+       "value": 9441000000,
+       "derived": true
       }
      ],
      "interest_expense": [
-      {
-       "end": "2024-09-30",
-       "value": 102328000,
-       "derived": false
-      },
       {
        "end": "2024-12-31",
        "value": 139072000,
@@ -68044,12 +68363,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": 283416000,
+       "value": 283000000,
        "derived": false
       },
       {
        "end": "2025-12-31",
-       "value": 351051000,
+       "value": 351000000,
        "derived": true
       },
       {
@@ -68061,13 +68380,14 @@
        "end": "2026-06-30",
        "value": 558000000,
        "derived": false
+      },
+      {
+       "end": "2026-09-30",
+       "value": 769000000,
+       "derived": false
       }
      ],
      "cash": [
-      {
-       "end": "2024-09-30",
-       "value": 1355216000
-      },
       {
        "end": "2024-12-31",
        "value": 1361000000
@@ -68082,7 +68402,7 @@
       },
       {
        "end": "2025-09-30",
-       "value": 1894399000
+       "value": 1894000000
       },
       {
        "end": "2025-12-31",
@@ -68095,6 +68415,10 @@
       {
        "end": "2026-06-30",
        "value": 5524000000
+      },
+      {
+       "end": "2026-09-30",
+       "value": 4122000000
       }
      ],
      "debt_principal": [
@@ -68125,6 +68449,10 @@
       {
        "end": "2026-06-30",
        "value": 35551000000
+      },
+      {
+       "end": "2026-09-30",
+       "value": 47505000000
       }
      ],
      "rpo": [
@@ -68151,14 +68479,13 @@
       {
        "end": "2026-06-30",
        "value": 103700000000
+      },
+      {
+       "end": "2026-09-30",
+       "value": 132300000000
       }
      ],
      "free_cash_flow": [
-      {
-       "end": "2024-09-30",
-       "value": -573933000,
-       "derived": true
-      },
       {
        "end": "2024-12-31",
        "value": -3311185000,
@@ -68176,12 +68503,12 @@
       },
       {
        "end": "2025-09-30",
-       "value": -700188000,
+       "value": -700000000,
        "derived": true
       },
       {
        "end": "2025-12-31",
-       "value": -2500812000,
+       "value": -2501000000,
        "derived": true
       },
       {
@@ -68193,41 +68520,46 @@
        "end": "2026-06-30",
        "value": -5743000000,
        "derived": true
+      },
+      {
+       "end": "2026-09-30",
+       "value": -7466000000,
+       "derived": true
       }
      ]
     },
     "maturities": {
-     "as_of": "2026-06-30",
-     "total": 35551000000,
+     "as_of": "2026-09-30",
+     "total": 47505000000,
      "buckets": [
       {
        "year": "2026",
-       "value": 4413000000,
+       "value": 2433000000,
        "derived": false
       },
       {
        "year": "2027",
-       "value": 6184000000,
+       "value": 10974000000,
        "derived": false
       },
       {
        "year": "2028",
-       "value": 4416000000,
+       "value": 5479000000,
        "derived": false
       },
       {
        "year": "2029",
-       "value": 2421000000,
+       "value": 4727000000,
        "derived": false
       },
       {
        "year": "2030",
-       "value": 3221000000,
+       "value": 4247000000,
        "derived": false
       },
       {
        "year": "after 2030",
-       "value": 14896000000,
+       "value": 19645000000,
        "derived": true
       }
      ]
@@ -68235,13 +68567,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "CoreWeave, Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 89,
-    "capped_unresolved": 120,
+    "capped_unresolved": 122,
     "ambiguous_skipped": 0,
     "outliers_dropped": 4,
     "package_legs_dropped": 0,
@@ -70495,6 +70827,15 @@
       "priced": 6,
       "inferred": 1,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 1076.6,
+      "points_pct": 17.5,
+      "status": "observed",
+      "priced": 1,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -71290,6 +71631,15 @@
        "priced": 2,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 354.7,
+       "points_pct": -1.53,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "2Y": [
@@ -73317,6 +73667,15 @@
        "priced": 2,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 875,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
       }
      ],
      "3Y": [
@@ -74534,6 +74893,15 @@
        "priced": 0,
        "inferred": 1,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 931.1,
+       "points_pct": 10,
+       "status": "observed",
+       "priced": 2,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "4Y": [
@@ -75994,6 +76362,15 @@
        "priced": 2,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 985.1,
+       "points_pct": 13.37,
+       "status": "observed",
+       "priced": 5,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "5Y": [
@@ -78246,6 +78623,15 @@
        "priced": 6,
        "inferred": 1,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 1076.6,
+       "points_pct": 17.5,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -78253,7 +78639,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": [
       {
@@ -78525,22 +78911,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 628.77
+     "date": "2026-11-12",
+     "close": 623.61
     },
-    "prev_close": 641.39,
-    "change_pct": -1.97,
+    "prev_close": 628.77,
+    "change_pct": -0.82,
     "high_52w": 777.59,
     "low_52w": 525.72,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 609.01
-     },
      {
       "date": "2025-11-13",
       "close": 609.89
@@ -79540,6 +79922,10 @@
      {
       "date": "2026-11-11",
       "close": 628.77
+     },
+     {
+      "date": "2026-11-12",
+      "close": 623.61
      }
     ]
    },
@@ -79548,13 +79934,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Meta Platforms, Inc. (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 483,
+    "capped_unresolved": 489,
     "ambiguous_skipped": 0,
     "outliers_dropped": 0,
     "package_legs_dropped": 41,
@@ -81790,6 +82176,15 @@
       "priced": 1,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 107.1,
+      "points_pct": 0.31,
+      "status": "observed",
+      "priced": 3,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -82621,6 +83016,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-02"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 206.3,
+       "points_pct": 0.23,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-02"
       }
      ],
      "2Y": [],
@@ -83158,6 +83562,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 72.5,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-04"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 72.5,
        "points_pct": null,
        "status": "carried",
@@ -84852,6 +85265,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 94,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-03"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 94,
        "points_pct": null,
        "status": "carried",
@@ -87092,6 +87514,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 107.1,
+       "points_pct": 0.31,
+       "status": "observed",
+       "priced": 3,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -87099,7 +87530,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -87116,22 +87547,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 521.13
+     "date": "2026-11-12",
+     "close": 523
     },
-    "prev_close": 533.16,
-    "change_pct": -2.26,
+    "prev_close": 521.13,
+    "change_pct": 0.36,
     "high_52w": 555.8,
     "low_52w": 352.83,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 511.14
-     },
      {
       "date": "2025-11-13",
       "close": 503.29
@@ -88131,6 +88558,10 @@
      {
       "date": "2026-11-11",
       "close": 521.13
+     },
+     {
+      "date": "2026-11-12",
+      "close": 523
      }
     ]
    },
@@ -88139,13 +88570,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Microsoft Corporation (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 295,
+    "capped_unresolved": 297,
     "ambiguous_skipped": 0,
     "outliers_dropped": 1,
     "package_legs_dropped": 41,
@@ -90381,6 +90812,15 @@
       "priced": 2,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 50.6,
+      "points_pct": -2.22,
+      "status": "carried",
+      "priced": 0,
+      "inferred": 0,
+      "observed_on": "2026-11-10"
      }
     ],
     "tenors": {
@@ -91644,6 +92084,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-02"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 206.3,
+       "points_pct": 0.46,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-02"
       }
      ],
      "2Y": [],
@@ -91875,6 +92324,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 168.2,
+       "points_pct": 1.96,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-05"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 168.2,
        "points_pct": 1.96,
        "status": "carried",
@@ -93668,6 +94126,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 45,
+       "points_pct": -2.34,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-06"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 45,
        "points_pct": -2.34,
        "status": "carried",
@@ -95908,6 +96375,15 @@
        "priced": 2,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 50.6,
+       "points_pct": -2.22,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
       }
      ]
     },
@@ -95915,7 +96391,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -95932,22 +96408,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 190.61
+     "date": "2026-11-12",
+     "close": 189.17
     },
-    "prev_close": 187.56,
-    "change_pct": 1.63,
+    "prev_close": 190.61,
+    "change_pct": -0.76,
     "high_52w": 228.55,
     "low_52w": 154.37,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 169.92
-     },
      {
       "date": "2025-11-13",
       "close": 165.61
@@ -96947,6 +97419,10 @@
      {
       "date": "2026-11-11",
       "close": 190.61
+     },
+     {
+      "date": "2026-11-12",
+      "close": 189.17
      }
     ]
    },
@@ -96955,11 +97431,11 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Morgan Stanley (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
     "capped_unresolved": 290,
     "ambiguous_skipped": 0,
@@ -99141,6 +99617,15 @@
       "points_pct": null,
       "status": "observed",
       "priced": 1,
+      "inferred": 0,
+      "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 69,
+      "points_pct": null,
+      "status": "carried",
+      "priced": 0,
       "inferred": 0,
       "observed_on": "2026-11-10"
      }
@@ -101396,6 +101881,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-16"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 33,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-16"
       }
      ],
      "2Y": [
@@ -103129,6 +103623,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 39,
+       "points_pct": -1.34,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-09-03"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 39,
        "points_pct": -1.34,
        "status": "carried",
@@ -105228,6 +105731,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 53,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-06"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 53,
        "points_pct": null,
        "status": "carried",
@@ -107345,6 +107857,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 63.5,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-04"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 63.5,
        "points_pct": null,
        "status": "carried",
@@ -109531,6 +110052,15 @@
        "priced": 1,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 69,
+       "points_pct": null,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-10"
       }
      ]
     },
@@ -109538,7 +110068,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": []
     }
@@ -109555,22 +110085,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 173.73
+     "date": "2026-11-12",
+     "close": 166.19
     },
-    "prev_close": 168.89,
-    "change_pct": 2.87,
+    "prev_close": 173.73,
+    "change_pct": -4.34,
     "high_52w": 239.24,
     "low_52w": 165.17,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 193.8
-     },
      {
       "date": "2025-11-13",
       "close": 186.86
@@ -110570,6 +111096,10 @@
      {
       "date": "2026-11-11",
       "close": 173.73
+     },
+     {
+      "date": "2026-11-12",
+      "close": 166.19
      }
     ]
    },
@@ -110578,13 +111108,13 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "NVIDIA Corporation (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 632,
+    "capped_unresolved": 649,
     "ambiguous_skipped": 0,
     "outliers_dropped": 1,
     "package_legs_dropped": 15,
@@ -111605,6 +112135,15 @@
       "priced": 5,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 140.3,
+      "points_pct": 1.74,
+      "status": "observed",
+      "priced": 1,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -112257,6 +112796,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-28"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 150.1,
+       "points_pct": 1.01,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-10-28"
       }
      ],
      "3Y": [
@@ -112901,6 +113449,15 @@
       },
       {
        "date": "2026-11-10",
+       "spread_bp": 96.5,
+       "points_pct": -0.1,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-06"
+      },
+      {
+       "date": "2026-11-12",
        "spread_bp": 96.5,
        "points_pct": -0.1,
        "status": "carried",
@@ -114367,6 +114924,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-06"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 125.2,
+       "points_pct": 1,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "5Y": [
@@ -115386,6 +115952,15 @@
        "priced": 5,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 140.3,
+       "points_pct": 1.74,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -115393,7 +115968,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": [
       {
@@ -115415,22 +115990,18 @@
    "curated_at": "2026-11-08",
    "price": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "Yahoo Finance chart endpoint (unofficial, daily close)",
     "currency": "USD",
     "last": {
-     "date": "2026-11-11",
-     "close": 128.38
+     "date": "2026-11-12",
+     "close": 127.11
     },
-    "prev_close": 117.98,
-    "change_pct": 8.82,
+    "prev_close": 128.38,
+    "change_pct": -0.99,
     "high_52w": 248.15,
     "low_52w": 114.99,
     "history": [
-     {
-      "date": "2025-11-12",
-      "close": 226.99
-     },
      {
       "date": "2025-11-13",
       "close": 217.57
@@ -116430,6 +117001,10 @@
      {
       "date": "2026-11-11",
       "close": 128.38
+     },
+     {
+      "date": "2026-11-12",
+      "close": 127.11
      }
     ]
    },
@@ -116438,15 +117013,15 @@
    },
    "cds": {
     "status": "ok",
-    "fetched_at": "2026-11-12T00:40:19.484Z",
+    "fetched_at": "2026-11-13T00:40:15.802Z",
     "source": "DTCC SEC public dissemination, end-of-day cumulative credit files",
     "method": "Senior single-name USD trades bucketed by tenor (5Y = on-the-run contract). Spread-quoted trades are used as is. For upfront trades DTCC gives the amount without direction, so points are +(cash + accrued) or −(cash − accrued): the reading on the 1/8-point grid wins, else the one nearer the tenor's last level. Trades above the $5m cap get a notional only for 5% coupons when exactly one $5m–$100m ($1m step) candidate fits the grid within ±5 points. ISDA standard model, flat hazard, 40% recovery, Treasury par curve of the trade date. Daily median; days without a priced trade carry the previous value.",
     "reference_entity": "Oracle Corporation (senior)",
-    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_11.zip",
+    "latest_file": "SEC_CUMULATIVE_CREDITS_2026_11_12.zip",
     "inferred_trades": 0,
-    "capped_unresolved": 1395,
+    "capped_unresolved": 1402,
     "ambiguous_skipped": 0,
-    "outliers_dropped": 12,
+    "outliers_dropped": 11,
     "package_legs_dropped": 54,
     "series": [
      {
@@ -118680,6 +119255,15 @@
       "priced": 2,
       "inferred": 0,
       "observed_on": "2026-11-10"
+     },
+     {
+      "date": "2026-11-12",
+      "spread_bp": 295.7,
+      "points_pct": 7.93,
+      "status": "observed",
+      "priced": 1,
+      "inferred": 0,
+      "observed_on": "2026-11-12"
      }
     ],
     "tenors": {
@@ -120798,6 +121382,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-02"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 117.7,
+       "points_pct": 0.19,
+       "status": "carried",
+       "priced": 0,
+       "inferred": 0,
+       "observed_on": "2026-11-02"
       }
      ],
      "2Y": [
@@ -122837,30 +123430,39 @@
       },
       {
        "date": "2026-11-06",
-       "spread_bp": 11630.5,
-       "points_pct": 8.06,
-       "status": "carried",
-       "priced": 0,
+       "spread_bp": 145.1,
+       "points_pct": 0.7,
+       "status": "observed",
+       "priced": 1,
        "inferred": 0,
-       "observed_on": "2026-10-26"
+       "observed_on": "2026-11-06"
       },
       {
        "date": "2026-11-09",
-       "spread_bp": 11630.5,
-       "points_pct": 8.06,
+       "spread_bp": 145.1,
+       "points_pct": 0.7,
        "status": "carried",
        "priced": 0,
        "inferred": 0,
-       "observed_on": "2026-10-26"
+       "observed_on": "2026-11-06"
       },
       {
        "date": "2026-11-10",
-       "spread_bp": 11630.5,
-       "points_pct": 8.06,
+       "spread_bp": 145.1,
+       "points_pct": 0.7,
        "status": "carried",
        "priced": 0,
        "inferred": 0,
-       "observed_on": "2026-10-26"
+       "observed_on": "2026-11-06"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 175,
+       "points_pct": null,
+       "status": "observed",
+       "priced": 2,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "3Y": [
@@ -124681,6 +125283,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-10-29"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 222,
+       "points_pct": null,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "4Y": [
@@ -126924,6 +127535,15 @@
        "priced": 0,
        "inferred": 0,
        "observed_on": "2026-11-09"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 278.7,
+       "points_pct": 6.64,
+       "status": "observed",
+       "priced": 2,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ],
      "5Y": [
@@ -129158,6 +129778,15 @@
        "priced": 2,
        "inferred": 0,
        "observed_on": "2026-11-10"
+      },
+      {
+       "date": "2026-11-12",
+       "spread_bp": 295.7,
+       "points_pct": 7.93,
+       "status": "observed",
+       "priced": 1,
+       "inferred": 0,
+       "observed_on": "2026-11-12"
       }
      ]
     },
@@ -129165,7 +129794,7 @@
      "rule": "Any of 1Y–3Y above 5Y: medians of observed (not carried) values over the last 5 business days, short tenor observed on at least 2 of those days",
      "alert": {
       "active": false,
-      "as_of": "2026-11-10"
+      "as_of": "2026-11-12"
      },
      "periods": [
       {
