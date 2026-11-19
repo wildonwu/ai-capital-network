@@ -91,13 +91,25 @@ financing is listed in its own sub-section; each type is split by direction and 
 - [x] One block per selected company under the network; rows open their record
 - [x] Arrowheads sized to line width; company list beside the network; full-screen credit chart with date pickers
 
+### Phase 5 — CoreWeave delivery timelines (2026-11-19)
+Decisions: two blocks under the selected company when curated delivery data exists — company-level checkpoints
+(what to check, when, reference, what counts as a delay) and per-site timelines (announced vs inferred dates);
+data hand-curated from the Nov 2026 CoreWeave delivery study (Notion), cut-off 2026-11-12, in
+`data/delivery/coreweave.json` and bundled at build time (no runtime fetch). Panel strings in English.
+- [x] Data file: 16 company checkpoints, 12 campuses with events, inference rules, coverage gap
+- [x] `src/lib/delivery.ts` (validation, quarter axis, scale, key event) and `src/DeliveryTimelines.tsx`
+- [x] Tests (`tests/delivery.test.ts`), 94/94 passing; tsc, oxlint, build pass; no horizontal scroll at 390 px
+- [ ] Owner review, then push to main
+- [ ] Refresh after the CoreWeave Q3 10-Q (DDTL 3.0/5.0 final draws, lease tranche years) and the Niagara Falls
+      merger vote (17 Nov) / outside date (30 Nov)
+
 ### Backlog
 - [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor
       and end-obligor exposure totals, then risk tiers by impact size
 - [ ] Market-contagion indicator (CDS / equity co-movement) kept separate from contractual links
 - [ ] Fuse timeline (dated covenant tests, maturities, drawdown deadlines) — mockup approved in principle
 - [ ] Optional: FINRA 144A market breadth as a high-yield market stress indicator (credential stored)
-- [ ] Data-centre delivery tracking from Epoch AI CSVs (`data_center_timelines.csv`), per-site slip alerts
+- [ ] Data-centre delivery tracking: automate the signals (landlord releases, regions, TDLR, jobs) and slip alerts (Phase 5 shows hand-curated timelines)
 - [ ] DDTL ↔ customer ↔ site mapping with confidence levels (confirmed / inferred / unknown)
 - [ ] Fix inherited record errors found during research: F06 convertible closed at $4.2bn (2.875%, due 2033), not
       $3.7bn; R075 links DDTL 3.0 to Oracle although its source says OpenAI; R213 "67% of 2025 revenue" needs a source

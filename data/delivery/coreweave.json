@@ -1,0 +1,192 @@
+{
+  "schema": "acn-delivery-1",
+  "node_id": "CoreWeave",
+  "as_of": "2026-11-12",
+  "source_note": "Hand-curated from the CoreWeave delivery study (landlord filings, SEC 10-Q/8-K, Texas TDLR, FAA, state permits, job boards, CoreWeave region lists). Dates tagged 'inferred' come from backtested lead times, not from any announcement.",
+  "rules": [
+    "Jobs: a site with no CoreWeave ops posting yet should show one about 3.5 months before go-live (range 2–4).",
+    "Cloud region: a CoreWeave region for the site should appear within 3 months of the landlord's handover. Later phases of a site that already has a region often add no new code, so this signal is weaker.",
+    "Earnings: about 55 days after the quarter of handover, CoreWeave's active power should rise by roughly the tranche's MW."
+  ],
+  "company": [
+    { "start": "2026-11-20", "end": "2026-11-30", "when": "Late Nov 2026", "kind": "public", "item": "CoreWeave Q3 10-Q", "watch": "Final draws on DDTL 3.0 and 5.0; lease tranche years; construction in progress", "reference": "Figures in the Q2 10-Q", "slip": "Undrawn amounts lapse at the deadline, or tranche years move later" },
+    { "start": "2026-12-01", "end": "2026-12-31", "when": "Dec 2026", "kind": "public", "item": "DDTL 5.5 draw deadline", "watch": "Remaining commitment", "reference": "$2.6bn facility; $1.2bn drawn on 2026-08-12", "slip": "Commitment still undrawn at the deadline" },
+    { "start": "2026-12-31", "when": "31 Dec 2026", "kind": "public", "item": "Core Scientific billable MW", "watch": "Billable MW at year end", "reference": "About 500 MW; 485 MW on 2026-11-05", "slip": "The 10-K in early Mar 2027 shows less than about 500 MW" },
+    { "start": "2026-12-31", "when": "31 Dec 2026", "kind": "public", "item": "CoreWeave year-end active power", "watch": "Active power", "reference": "Above 1.85 GW; Q4 needs about +150 MW, of which Applied Digital has disclosed 75 MW", "slip": "Q4 results in late Feb 2027 show less than 1.85 GW" },
+    { "start": "2027-02-08", "when": "8 Feb 2027", "kind": "public", "site": "Helios", "item": "Helios building 2", "watch": "Texas TDLR declared completion date", "reference": "Galaxy: phase 2 starts in Q2 2027", "slip": "Galaxy has not announced delivery by the end of Q2 2027" },
+    { "start": "2027-01-01", "end": "2027-03-31", "when": "Early 2027", "kind": "public", "site": "Dalton", "item": "Dalton 4 and all ~590 MW at Core Scientific", "watch": "Completion and billable MW", "reference": "\"Early 2027\"; about 100 MW not yet billing on 2026-11-05", "slip": "Timeline pushed again, or the Q1 2027 10-Q shows less than about 590 MW" },
+    { "start": "2027-01-01", "end": "2027-03-31", "when": "Early 2027", "kind": "public", "site": "Kenilworth", "item": "Kenilworth phase 1 (~40 MW)", "watch": "Operating statement or cloud region", "reference": "\"Early 2027\" (originally 2026)", "slip": "No operating statement or region by mid-2027" },
+    { "start": "2027-01-01", "end": "2027-03-31", "when": "Q1 2027", "kind": "public", "site": "Chester", "item": "Chester CTP-03 (~31–70 MW)", "watch": "New region code or operating statement", "reference": "Third-party estimate: end of Q1 2027", "slip": "Nothing by mid-2027" },
+    { "start": "2027-05-31", "when": "31 May 2027", "kind": "public", "site": "Denton", "item": "Denton building 8 (~20 MW)", "watch": "Texas TDLR declared completion date", "reference": "31 May 2027; tenant field says \"not yet assigned\", may not be CoreWeave", "slip": "Completion date moved later, or billable MW does not rise" },
+    { "start": "2027-04-01", "end": "2027-06-30", "when": "Q2 2027", "kind": "public", "site": "Helios", "item": "Helios phase 2 (260 MW) first halls", "watch": "First data halls handed over", "reference": "Galaxy: Q2 2027", "slip": "Galaxy's Q2 2027 results (about Aug) still announce no delivery" },
+    { "start": "2027-06-30", "when": "Jun 2027", "kind": "public", "item": "DDTL 4.0 draw deadline", "watch": "Remaining commitment", "reference": "$8.5bn facility; about $2.8bn drawn by Q2 2026", "slip": "Commitment still undrawn at the deadline" },
+    { "start": "2027-08-29", "when": "29 Aug 2027", "kind": "public", "site": "Helios", "item": "Helios building 3", "watch": "Texas TDLR declared completion date", "reference": "29 Aug 2027", "slip": "Completion date moved later" },
+    { "start": "2027-07-01", "end": "2027-09-30", "when": "Summer 2027", "kind": "public", "site": "Lancaster", "item": "Lancaster building 1 (100 MW)", "watch": "Operating statement or cloud region", "reference": "Summer 2027 (third party)", "slip": "Nothing by the end of 2027" },
+    { "start": "2027-11-29", "when": "29 Nov 2027", "kind": "public", "site": "Helios", "item": "Helios building 4", "watch": "Texas TDLR declared completion date", "reference": "29 Nov 2027", "slip": "Completion date moved later" },
+    { "start": "2027-12-31", "when": "By end 2027", "kind": "public", "site": "Ellendale", "item": "Ellendale building 3 (150 MW)", "watch": "Applied Digital delivery press release", "reference": "Was \"mid-2027\"; the Oct 2026 10-Q says \"fully delivered during 2027\"", "slip": "No delivery release by the end of 2027" },
+    { "start": "2028-01-01", "end": "2028-12-31", "when": "2028", "kind": "public", "site": "Helios", "item": "Helios phase 3 (133 MW)", "watch": "Delivery", "reference": "2028; project financing not yet arranged", "slip": "Timeline pushed again" }
+  ],
+  "recurring": [
+    "CoreWeave results (Feb, May, Aug, Nov): active power and contracted power.",
+    "10-Q and 10-K: undrawn DDTL balances and the lease commencement table.",
+    "Core Scientific (early Mar, May, Aug, Nov): billable MW by site.",
+    "Galaxy and Applied Digital: quarterly results plus ad-hoc delivery press releases."
+  ],
+  "sites": [
+    {
+      "id": "cheyenne", "name": "Cheyenne", "state": "WY", "landlord": "Related Digital", "capacity": "88 MW (building 1)", "delivered": "0", "next": "Building 1, 88 MW", "next_when": "End 2026", "risk": "watch", "status": "In progress; delivery not yet confirmed",
+      "note": "The ops job appeared on 16 Oct, about 2.5 months before the target, in line with the 2–4 month rule. A good sign.",
+      "events": [
+        { "date": "2026-06-15", "when": "Jun 2026", "kind": "public", "event": "Building 1 \"nearing completion\"" },
+        { "date": "2026-10-16", "when": "16 Oct 2026", "kind": "public", "event": "CoreWeave posts a Cheyenne data center manager job" },
+        { "date": "2026-12-31", "when": "31 Dec 2026", "kind": "public", "event": "Building 1, 88 MW complete (\"end of 2026\")", "slip": "No completion or delivery news by the end of Q1 2027", "key": true },
+        { "date": "2027-02-25", "when": "Late Feb 2027", "kind": "inferred", "event": "CoreWeave Q4 active power should include these 88 MW", "slip": "Q4 increase clearly short" },
+        { "date": "2027-03-31", "when": "31 Mar 2027", "kind": "inferred", "event": "A Cheyenne CoreWeave cloud region should appear", "slip": "Still no new region" }
+      ]
+    },
+    {
+      "id": "dalton", "name": "Dalton (incl. Dalton 4)", "state": "GA", "landlord": "Core Scientific", "capacity": "~175 MW", "delivered": "~75 MW billing", "next": "Remaining ~105 MW", "next_when": "Early 2027", "risk": "risk", "status": "At risk: Core Scientific's overall timeline has slipped several times",
+      "note": "Core Scientific pushed its overall timeline back 3 times, with some tranches 3–9 months late. \"Early 2027\" and \"H1 2027\" are both on record; on the later reading, completion is due by end of June.",
+      "events": [
+        { "date": "2026-02-15", "when": "Feb 2026", "kind": "public", "event": "Georgia EPD receives the Dalton 4 generator application (80 units)" },
+        { "date": "2026-04-21", "when": "21 Apr 2026", "kind": "public", "event": "Core Scientific debt offering: Dalton 4 delivery starts H2 2026, substantially complete H1 2027" },
+        { "date": "2026-05-06", "when": "6 May 2026", "kind": "public", "event": "Dalton 1 (30 MW) delivered" },
+        { "date": "2026-07-24", "when": "24 Jul 2026", "kind": "public", "event": "CoreWeave posts a Dalton technician job" },
+        { "date": "2026-11-05", "when": "5 Nov 2026", "kind": "public", "event": "About 75 MW billing, about 100 MW not yet; still \"early 2027\"" },
+        { "date": "2026-11-11", "when": "11 Nov 2026", "kind": "public", "event": "Five Core Scientific \"DNN 4\" ops jobs" },
+        { "date": "2027-03-31", "when": "31 Mar 2027", "kind": "public", "event": "Remaining ~105 MW complete (\"early 2027\"; April offering said \"H1 2027\")", "slip": "The Q1 2027 10-Q (about May) still shows billable MW below ~590", "key": true },
+        { "date": "2027-05-25", "when": "Late May 2027", "kind": "inferred", "event": "CoreWeave Q1 active power should include the ~105 MW", "slip": "Q1 increase clearly short" },
+        { "date": "2027-06-29", "when": "29 Jun 2027", "kind": "inferred", "event": "Region US-EAST-12A adds capacity, or a new code appears (12B seen on the status page, location unconfirmed)", "slip": "Weak signal; pair with landlord news" }
+      ]
+    },
+    {
+      "id": "kenilworth", "name": "Kenilworth", "state": "NJ", "landlord": "CoreWeave-owned (bought Aug 2025)", "capacity": "~40 MW phase 1, 250 MW final", "delivered": "0", "next": "Phase 1, ~40 MW", "next_when": "Early 2027", "risk": "watch", "status": "Pushed back once (originally 2026)",
+      "note": "Risks: the new PSE&G 69 kV substation has no public energisation date; neighbouring Roselle Park is pushing a data centre ban (no lawsuit found). Phase 1 is only 40 MW, so the overall impact is limited.",
+      "events": [
+        { "date": "2025-08-15", "when": "Aug 2025", "kind": "public", "event": "CoreWeave says phase 1 delivers in 2026" },
+        { "date": "2025-09-15", "when": "Sep 2025", "kind": "public", "event": "Construction starts" },
+        { "date": "2025-11-15", "when": "Nov 2025", "kind": "public", "event": "State tax credit; reports now say \"early 2027\"", "slip": "Already pushed back once" },
+        { "date": "2026-04-28", "when": "28 Apr 2026", "kind": "public", "event": "Subdivision for the expansion approved" },
+        { "date": "2027-01-01", "end": "2027-01-31", "when": "Mid Dec 2026 – end Jan 2027", "kind": "inferred", "event": "A Kenilworth CoreWeave ops job should appear", "slip": "None by end of Jan 2027" },
+        { "date": "2027-03-31", "when": "31 Mar 2027", "kind": "public", "event": "Phase 1 (~40 MW) operating (\"early 2027\")", "slip": "No operating news by mid-2027", "key": true },
+        { "date": "2027-05-25", "when": "Late May 2027", "kind": "inferred", "event": "CoreWeave Q1 active power should include the ~40 MW" },
+        { "date": "2027-06-29", "when": "29 Jun 2027", "kind": "inferred", "event": "A new New Jersey cloud region should appear", "slip": "Still none" },
+        { "date": "2029-06-30", "when": "2029", "kind": "public", "event": "Expanded to about 250 MW (low confidence)" }
+      ]
+    },
+    {
+      "id": "chester", "name": "Chester", "state": "VA", "landlord": "Chirisa / PowerHouse / Blue Owl JV", "capacity": "~113 MW", "delivered": "~82 MW", "next": "CTP-03, ~31–70 MW", "next_when": "End Q1 2027 (third party)", "risk": "watch", "status": "The previous building, CTP-02, ran about 140 days late",
+      "note": "No developer publishes a first-hand timeline; all dates are third-party estimates (low confidence). County data from Jul 2026 lists CTP-02/03/04 as two existing and one under construction.",
+      "events": [
+        { "date": "2026-03-01", "end": "2026-05-31", "when": "Mar–May 2026", "kind": "public", "event": "CTP-03 crane work" },
+        { "date": "2026-05-15", "when": "May 2026", "kind": "public", "event": "Region US-EAST-04B appears (probably CTP-02)" },
+        { "date": "2026-10-21", "when": "21 Oct 2026", "kind": "public", "event": "CoreWeave posts a Chester technician job" },
+        { "date": "2026-12-31", "when": "31 Dec 2026", "kind": "public", "event": "The JV's 120 MW plan (CTP-02 + CTP-03) was due to be fully delivered", "slip": "No CTP-03 news by year end" },
+        { "date": "2027-03-31", "when": "31 Mar 2027", "kind": "public", "event": "CTP-03 complete (third-party estimate; size quoted from ~31 to 70 MW)", "slip": "No new region or operating statement by mid-2027", "key": true },
+        { "date": "2027-05-25", "when": "Late May 2027", "kind": "inferred", "event": "CoreWeave Q1 active power" },
+        { "date": "2027-06-29", "when": "29 Jun 2027", "kind": "inferred", "event": "New region code, or capacity added to an existing one", "slip": "Weak signal" },
+        { "date": "2027-12-31", "when": "End 2027", "kind": "public", "event": "Digital Drive building 1, 100 MW (tenant not confirmed as CoreWeave)" },
+        { "date": "2028-06-30", "when": "Mid-2028", "kind": "public", "event": "Digital Drive building 2, 100 MW (tenant not confirmed as CoreWeave)" }
+      ]
+    },
+    {
+      "id": "helios", "name": "Helios", "state": "TX", "landlord": "Galaxy", "capacity": "526 MW", "delivered": "133 MW", "next": "Phase 2, 260 MW", "next_when": "From Q2 2027", "risk": "watch", "status": "Landlord says on time; CoreWeave's own lease note says 2028",
+      "note": "Contradiction to watch: a 525 MW single site in CoreWeave's 10-Q, matching Helios, moved its later tranches from 2026, to 2026 and 2027, to 2026 and 2028. The landlord says Q2 2027; CoreWeave says 2028. Texas also ordered an audit of the ERCOT interconnection queue in Aug 2026, which could slow later grid approvals.",
+      "events": [
+        { "date": "2026-06-30", "when": "30 Jun 2026", "kind": "public", "event": "Phase 1, 133 MW delivered" },
+        { "date": "2026-09-23", "when": "23 Sep 2026", "kind": "public", "event": "Generator permit applications for phases 2–4" },
+        { "date": "2026-10-27", "when": "27 Oct 2026", "kind": "public", "event": "Galaxy: phase 2 buildings and substation \"on schedule and on budget\"" },
+        { "date": "2027-02-08", "when": "8 Feb 2027", "kind": "public", "event": "TDLR: Helios II building declared completion", "slip": "Completion date moved later" },
+        { "date": "2027-06-30", "when": "30 Jun 2027", "kind": "public", "event": "Phase 2 first halls handed over (\"Q2 2027\"; in 2025 it was \"during 2027\")", "slip": "Galaxy's Q2 2027 results (about Aug) still announce no delivery", "key": true },
+        { "date": "2027-08-25", "when": "Late Aug 2027", "kind": "inferred", "event": "CoreWeave Q2 active power should reflect phase 2's first halls" },
+        { "date": "2027-08-29", "when": "29 Aug 2027", "kind": "public", "event": "TDLR: Helios III building declared completion", "slip": "Completion date moved later" },
+        { "date": "2027-09-28", "when": "28 Sep 2027", "kind": "inferred", "event": "Region US-CENTRAL-09A adds capacity, or a new code appears", "slip": "Weak signal" },
+        { "date": "2027-11-29", "when": "29 Nov 2027", "kind": "public", "event": "TDLR: Helios IV building declared completion", "slip": "Completion date moved later" },
+        { "date": "2028-06-30", "when": "2028", "kind": "public", "event": "Phase 3, 133 MW (financing not arranged; no newer date)" }
+      ]
+    },
+    {
+      "id": "lancaster", "name": "Lancaster", "state": "PA", "landlord": "Chirisa / Machine Investment", "capacity": "100 MW (up to 300)", "delivered": "0", "next": "Building 1, 100 MW", "next_when": "Summer 2027 (third party)", "risk": "risk", "status": "At risk: financing and local litigation",
+      "note": "Risks: financing rumours, local appeals, and an unclear status for the new PPL substation. No official timeline, so jobs and cloud regions will be the earliest confirmation.",
+      "events": [
+        { "date": "2025-11-01", "end": "2026-05-31", "when": "Nov 2025 – May 2026", "kind": "public", "event": "Main structure crane work" },
+        { "date": "2026-01-17", "when": "17 Jan 2026", "kind": "public", "event": "Pennsylvania approves phase 1 generators (176 units in the filing; one report says 72)" },
+        { "date": "2026-02-15", "when": "Feb 2026", "kind": "public", "event": "Reports say banks balked at construction financing; CoreWeave says funding is in place", "slip": "Risk signal" },
+        { "date": "2026-04-01", "end": "2026-07-31", "when": "Apr–Jul 2026", "kind": "public", "event": "Mechanical contractor crane work (fit-out stage)" },
+        { "date": "2026-09-21", "when": "21 Sep 2026", "kind": "public", "event": "Residents' appeal on building 2: zoning hearing paused; developer reportedly won later (unverified)" },
+        { "date": "2026-10-26", "when": "26 Oct 2026", "kind": "public", "event": "Public comment closes on the phase 2 generator permit (84 units)", "slip": "Formal approval keeps not arriving" },
+        { "date": "2027-05-15", "end": "2027-07-05", "when": "Mid May – early Jul 2027", "kind": "inferred", "event": "A Lancaster CoreWeave ops job should appear", "slip": "None by early Jul 2027" },
+        { "date": "2027-07-01", "end": "2027-09-30", "when": "Jul–Sep 2027", "kind": "public", "event": "Building 1 (100 MW) opens (\"summer 2027\", third party)", "slip": "No operating news or region by end 2027", "key": true },
+        { "date": "2027-11-25", "when": "Late Nov 2027", "kind": "inferred", "event": "CoreWeave Q3 active power" },
+        { "date": "2027-11-29", "when": "29 Nov 2027", "kind": "inferred", "event": "A new Pennsylvania CoreWeave region should appear", "slip": "Still none" }
+      ]
+    },
+    {
+      "id": "ellendale", "name": "Ellendale", "state": "ND", "landlord": "Applied Digital", "capacity": "400 MW", "delivered": "250 MW", "next": "Building 3, 150 MW", "next_when": "During 2027", "risk": "watch", "status": "Mild slip signal: \"mid-2027\" became \"during 2027\"",
+      "note": "Applied Digital issues a press release on each delivery day, and both earlier buildings were delivered within the original window. Building 3 moving from \"H1 2027\" to \"during 2027\" is the clearest soft slip across all sites.",
+      "events": [
+        { "date": "2025-10-27", "when": "27 Oct 2025", "kind": "public", "event": "Building 1 first 50 MW delivered" },
+        { "date": "2025-11-24", "when": "24 Nov 2025", "kind": "public", "event": "Building 1 at 100 MW cumulative" },
+        { "date": "2026-07-01", "when": "1 Jul 2026", "kind": "public", "event": "Building 2 first 75 MW" },
+        { "date": "2026-10-01", "when": "1 Oct 2026", "kind": "public", "event": "Building 2 second 75 MW; campus at 250 MW" },
+        { "date": "2026-10-07", "when": "7 Oct 2026", "kind": "public", "event": "10-Q: building 3 now \"fully delivered during 2027\" (was \"mid-2027\", \"H1 2027\")", "slip": "Soft delay already" },
+        { "date": "2027-06-30", "when": "30 Jun 2027", "kind": "public", "event": "Building 3 was due \"mid-2027\" (old wording)", "slip": "A partial delivery by end of June means the old timeline still holds" },
+        { "date": "2027-12-31", "when": "31 Dec 2027", "kind": "public", "event": "Building 3, 150 MW fully delivered (new wording)", "slip": "No delivery release by end 2027", "key": true },
+        { "date": "2028-02-25", "when": "Late Feb 2028", "kind": "inferred", "event": "CoreWeave Q4 active power should include the 150 MW" },
+        { "date": "2028-03-30", "when": "30 Mar 2028", "kind": "inferred", "event": "Region US-CENTRAL-08 adds capacity, or a new code appears", "slip": "Weak signal" }
+      ]
+    },
+    {
+      "id": "niagara", "name": "Niagara Falls", "state": "NY", "landlord": "Blockfusion", "capacity": "35 MW firm (+50 MW conditional)", "delivered": "0", "next": "Phase 1, 25 MW", "next_when": "Feb 2028", "risk": "watch", "status": "Landlord's SPAC merger not yet closed (as of 12 Nov)",
+      "note": "Per the 23 Oct 2026 final prospectus: phase 1 25 MW targets Feb 2028, phase 2 10 MW Aug 2028. If either phase is more than 180 days late CoreWeave may terminate. Another 50 MW depends on firm power; CoreWeave also holds a right of first offer on up to 215 MW through 2030.",
+      "events": [
+        { "date": "2026-10-23", "when": "23 Oct 2026", "kind": "public", "event": "Merger registration effective; final prospectus" },
+        { "date": "2026-11-17", "when": "17 Nov 2026", "kind": "public", "event": "Blockfusion and the SPAC (Blue Acquisition Corp) shareholder votes", "slip": "Vote fails or is postponed — check the outcome" },
+        { "date": "2026-11-30", "when": "30 Nov 2026", "kind": "public", "event": "Merger outside date", "slip": "Merger not closed by the deadline" },
+        { "date": "2027-11-15", "when": "Mid Nov 2027", "kind": "inferred", "event": "A Niagara Falls CoreWeave ops job should appear", "slip": "None by end 2027" },
+        { "date": "2028-02-15", "when": "15 Feb 2028", "kind": "public", "event": "Phase 1 (25 MW) target lease start", "slip": "Pushed back", "key": true },
+        { "date": "2028-05-25", "when": "Late May 2028", "kind": "inferred", "event": "A new CoreWeave region should appear", "slip": "Still none" },
+        { "date": "2028-08-15", "when": "15 Aug 2028", "kind": "public", "event": "Phase 2 (10 MW) target; also the point where a 180-day phase 1 delay lets CoreWeave terminate", "slip": "Phase 1 still not delivered" }
+      ]
+    },
+    {
+      "id": "denton", "name": "Denton", "state": "TX", "landlord": "Core Scientific", "capacity": "~262 MW", "delivered": "~262 MW", "next": "Building 8 (tenant not assigned)", "next_when": "31 May 2027", "risk": "done", "status": "Fully delivered",
+      "note": "All ~262 MW billing by mid-Jul 2026 (promised \"mid-2026\", roughly on time). The TDLR tenant field for building 8 says \"not yet assigned\", so it may not be CoreWeave's.",
+      "events": [
+        { "date": "2025-05-31", "when": "31 May 2025", "kind": "public", "event": "First 8 MW online" },
+        { "date": "2025-12-29", "when": "29 Dec 2025", "kind": "public", "event": "TDLR declared completion (actual \"half the campus energised\" on 31 Dec 2025)" },
+        { "date": "2026-07-15", "when": "~15 Jul 2026", "kind": "public", "event": "All ~262 MW billing (promise \"mid-2026\")" },
+        { "date": "2026-09-01", "end": "2027-05-31", "when": "Sep 2026 – May 2027", "kind": "public", "event": "TDLR: Building A data hall fit-out, $110m" },
+        { "date": "2027-05-31", "when": "31 May 2027", "kind": "public", "event": "Building 8 due (Epoch estimates +20 MW); tenant not assigned", "key": true }
+      ]
+    },
+    {
+      "id": "muskogee", "name": "Muskogee", "state": "OK", "landlord": "Core Scientific", "capacity": "70 MW", "delivered": "~70 MW billing", "next": "None (building 2 is leased to AMD)", "next_when": "—", "risk": "done", "status": "Delivered",
+      "note": "Core Scientific's 5 Nov 2026 deck shows the 70 MW CoreWeave building billing (Epoch still shows 0 MW). The second building, about 82 MW for H2 2027, is leased to AMD, not CoreWeave. No pending CoreWeave capacity.",
+      "events": [
+        { "date": "2025-10-15", "when": "Oct 2025", "kind": "public", "event": "Oklahoma generator permit (102 units)" },
+        { "date": "2026-05-15", "end": "2026-06-30", "when": "May–Jun 2026", "kind": "public", "event": "Region US-CENTRAL-10A on the status page" },
+        { "date": "2026-06-15", "when": "15 Jun 2026", "kind": "public", "event": "FAA records building 1 structure complete" },
+        { "date": "2026-07-15", "when": "~15 Jul 2026", "kind": "public", "event": "70 MW starts billing (promise H1 2026, about 15 days late)", "key": true },
+        { "date": "2026-11-05", "when": "5 Nov 2026", "kind": "public", "event": "About 70 MW confirmed billing" }
+      ]
+    },
+    {
+      "id": "marble", "name": "Marble", "state": "NC", "landlord": "Core Scientific", "capacity": "65 MW", "delivered": "65 MW", "next": "None", "next_when": "—", "risk": "done", "status": "Delivered",
+      "note": "65 MW delivered before 6 May 2026, ahead of the \"H1 2026\" promise. No pending capacity.",
+      "events": [
+        { "date": "2026-05-06", "when": "By 6 May 2026", "kind": "public", "event": "65 MW delivered (ahead of the H1 2026 promise)", "key": true }
+      ]
+    },
+    {
+      "id": "hammond", "name": "Hammond", "state": "IN", "landlord": "Decennial Group", "capacity": "180 MW expansion", "delivered": "—", "next": "—", "next_when": "—", "risk": "cancelled", "status": "Expansion cancelled (development agreement expired 30 Jun 2026)",
+      "note": "After two extensions the development agreement expired on 30 Jun 2026; the city said on 1 Jul it would not extend again, and the mayor said on 23 Jun he had no confidence in the project. CoreWeave's lease in the existing facility is unaffected.",
+      "events": [
+        { "date": "2026-06-23", "when": "23 Jun 2026", "kind": "public", "event": "Mayor says he has \"no confidence\" in the project" },
+        { "date": "2026-06-30", "when": "30 Jun 2026", "kind": "public", "event": "Development agreement expires after two extensions", "key": true },
+        { "date": "2026-07-01", "when": "1 Jul 2026", "kind": "public", "event": "City says it will not extend again" }
+      ]
+    }
+  ],
+  "gap": "These 12 campuses are the ones with enough records to time. Pending deliveries across them total about 1.0–1.2 GW, against about 2.9 GW of contracted-but-not-active power. About 0.8 GW of contracted power maps to no known site."
+}

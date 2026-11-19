@@ -5,6 +5,8 @@ import CompanyPanel from './CompanyPanel';
 import CreditCards from './CreditCards';
 import CompanyList from './CompanyList';
 import ExposureBlocks from './ExposureBlocks';
+import DeliveryTimelines from './DeliveryTimelines';
+import { deliveryFor } from './lib/delivery';
 import { loadRelease } from './lib/data';
 import { loadMarket, type MarketSnapshot } from './lib/market';
 import type { GraphEdge, Layer, Release } from './lib/types';
@@ -211,6 +213,7 @@ export default function App() {
         {s.selected.length > 0 && <ExposureBlocks release={release} companies={s.selected} name={name} active={s.edge} onRecord={(id) => setS((p) => ({ ...p, edge: id }))}
           edges={release.graph.edges.filter((e) => s.layers.includes(e.layer) && (!s.octOnly || e.october_change))} />}
         {panels.map((c) => <CompanyPanel key={c.node_id} c={c} today={today} />)}
+        {s.selected.map((id) => { const d = deliveryFor(id); return d && <DeliveryTimelines key={`dl-${id}`} d={d} name={name(id)} />; })}
 
         {cdsCompanies.length > 0 && <section id="credit" className="sec" aria-label="Credit stress"><CreditCards companies={cdsCompanies} tickerOf={name} /></section>}
 

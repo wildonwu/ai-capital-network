@@ -392,3 +392,47 @@ td.lbl { max-width: 340px; }
 .ex-net > b { font: 700 26px/1.1 var(--serif); font-variant-numeric: tabular-nums; text-align: right; }
 .ex-net-s { grid-column: 1 / -1; font-size: 11.5px; color: var(--muted); } .ex-net-s b { color: var(--ink2); font-weight: 600; }
 .ex-net .ex-none { text-align: right; }
+/* Data-centre delivery timelines (company checkpoints + per-site) */
+.dt-legend, .dt-key { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 12px; color: var(--ink2); margin: 0 0 6px; align-items: center; }
+.dt-legend span, .dt-key span { display: inline-flex; align-items: center; gap: 6px; }
+.dt-key { margin: 6px 0 12px; color: var(--muted); }
+.dt-key i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dt-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.dt-svg { display: block; width: 100%; min-width: 760px; height: auto; }
+.dt-grid { stroke: var(--rule2); stroke-width: 1; } .dt-grid.yr { stroke: var(--rule); }
+.dt-tick { font: 500 10.5px var(--sans); fill: var(--muted); } .dt-tick.yr { font-weight: 650; fill: var(--ink2); }
+.dt-now { stroke: var(--hot); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.dt-now-l { font: 500 10.5px var(--sans); fill: var(--hot); }
+.dt-hit { fill: transparent; }
+.dt-row { cursor: pointer; outline: none; }
+.dt-row:hover .dt-hit, .dt-row:focus-visible .dt-hit { fill: rgba(30, 27, 24, .04); }
+.dt-row.on .dt-hit { fill: rgba(160, 113, 42, .12); }
+.dt-lbl { font: 600 12.5px var(--sans); fill: var(--ink); }
+.dt-row.past .dt-lbl { fill: var(--muted); }
+.dt-st { font-weight: 400; fill: var(--muted); }
+.dt-sub { font: 400 10.5px var(--sans); fill: var(--muted); }
+.dt-when { font: 500 11px var(--sans); fill: var(--ink2); }
+.dt-span { stroke: var(--rule); stroke-width: 2; }
+.dt-table { margin-top: 4px; }
+.dt-table table { font-size: 12.5px; }
+.dt-table td { vertical-align: top; }
+.dt-table tr { cursor: default; }
+.dt-table tr.on td { background: rgba(160, 113, 42, .12); }
+.dt-table tr.past td { color: var(--muted); }
+.dt-table tr.key td { font-weight: 600; }
+.dt-nowrap { white-space: nowrap; }
+.dt-kind { font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--ink2); white-space: nowrap; }
+.dt-kind.inferred { border-style: dashed; color: var(--muted); border-color: var(--muted); }
+.dt-site { border-top: 1px solid var(--ink); padding-top: 10px; }
+.dt-site-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.dt-site-h h4 { font: 600 18px var(--serif); margin: 0; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.dt-site-h h4 i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; align-self: center; }
+.dt-site-h h4 small { font: 400 12.5px var(--sans); color: var(--muted); }
+.dt-site-h select { font: inherit; font-size: 13px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--rule); background: var(--card); color: var(--ink); }
+.dt-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 18px; margin: 10px 0 8px; }
+.dt-facts dt { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.dt-facts dd { margin: 2px 0 0; font-size: 13px; }
+.dt-note { font-size: 12.5px; color: var(--ink2); margin: 8px 0 0; max-width: 980px; }
+.dt-foot { font-size: 12px; color: var(--ink2); margin: 12px 0 0; max-width: 980px; }
+.dt-foot p { margin: 4px 0; } .dt-foot ol { margin: 2px 0 6px; padding-left: 20px; }
+@media (max-width: 760px) { .dt-facts { grid-template-columns: 1fr 1fr; } .ex-block.dt { padding: 14px 14px 12px; } .dt-table table { min-width: 640px; } .dt-scroll::before { content: "Swipe sideways for the full timeline"; display: block; font-size: 11.5px; color: var(--muted); margin-bottom: 4px; position: sticky; left: 0; } }
