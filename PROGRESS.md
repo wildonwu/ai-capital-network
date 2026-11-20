@@ -99,9 +99,18 @@ data hand-curated from the Nov 2026 CoreWeave delivery study (Notion), cut-off 2
 - [x] Data file: 16 company checkpoints, 12 campuses with events, inference rules, coverage gap
 - [x] `src/lib/delivery.ts` (validation, quarter axis, scale, key event) and `src/DeliveryTimelines.tsx`
 - [x] Tests (`tests/delivery.test.ts`), 94/94 passing; tsc, oxlint, build pass; no horizontal scroll at 390 px
-- [ ] Owner review, then push to main
+- [x] Pushed to main 2026-11-19 (commit 093c7e1), Vercel success
 - [ ] Refresh after the CoreWeave Q3 10-Q (DDTL 3.0/5.0 final draws, lease tranche years) and the Niagara Falls
       merger vote (17 Nov) / outside date (30 Nov)
+
+### Phase 5b — Oracle delivery timelines (2026-11-20)
+Decisions: same two blocks for Oracle from the audited Nov 2026 ORCL study (Notion), cut-off 2026-11-19, in
+`data/delivery/oracle.json`. New date kind `check` (a date by which something should be confirmed), shown hollow
+with its own legend entry; the legend lists only the kinds a file uses.
+- [x] Data file: 15 company checkpoints, 7 campuses, reading rules, coverage gap
+- [x] `check` kind, kind validation, generic copy; first axis tick shortened ("Q3 '24")
+- [x] Tests 96/96; tsc, oxlint, build pass; no horizontal scroll at 390 px
+- [ ] Audit the CoreWeave file with the same six gates (user deferred, 2026-11-20)
 
 ### Backlog
 - [ ] Obligation fields per record (type, contingent, max amount, trigger, end obligor, loss rank) → guarantor

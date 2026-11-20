@@ -423,6 +423,7 @@ td.lbl { max-width: 340px; }
 .dt-nowrap { white-space: nowrap; }
 .dt-kind { font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--ink2); white-space: nowrap; }
 .dt-kind.inferred { border-style: dashed; color: var(--muted); border-color: var(--muted); }
+.dt-kind.check { border-color: var(--gold); color: var(--gold); }
 .dt-site { border-top: 1px solid var(--ink); padding-top: 10px; }
 .dt-site-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .dt-site-h h4 { font: 600 18px var(--serif); margin: 0; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }

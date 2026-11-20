@@ -1,0 +1,133 @@
+{
+  "schema": "acn-delivery-1",
+  "node_id": "Oracle",
+  "as_of": "2026-11-19",
+  "source_note": "Hand-curated from the Oracle delivery study (SEC 10-Q/10-K/8-K, earnings calls, oracle.com, state permits, utility filings, county documents) and its 2026-11-19 audit, which checked every checkpoint against primary sources and dropped those that did not hold. 'Checkpoint' marks a date by which something should be confirmed; it is not a forecast.",
+  "rules": [
+    "Oracle's own results (about two weeks after each quarter end) are the only source of MW delivered and of site-by-site confirmation. 'Delivered' is not formally defined and looks like IT load; quarterly MW is lumpy, so judge two-quarter averages, not one quarter.",
+    "At site level, power decides the date: air permits, gas supply and transmission approvals are the most useful early warnings.",
+    "oracle.com wording is a weak signal: the US page dropped every date in a 2026-11-12 revision (65 locale copies still show them), which may be legal clean-up. It counts only if the December call does not restate the timelines.",
+    "Confirmation only: a new Oracle IP block or region certificate confirms a campus is live (public regions: median 2 months ahead, n=11; dedicated OpenAI capacity: one case). Its absence is not evidence of delay.",
+    "Background only: Texas building-registration dates are owner estimates and inspection status may lag completion by up to a year; job-posting lead times rest on one site (Abilene)."
+  ],
+  "company": [
+    { "start": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "site": "Abilene", "item": "Abilene last 2 buildings (~206 MW)", "watch": "Whether Abilene is at 100%", "reference": "Sept: 6 of 8 buildings, 618 MW, 75%. June call said the rest 'the subsequent quarter'; Oracle's written version says 'subsequent quarters'", "slip": "100% = on time; 7 of 8 = mild slip; still short of 100% at the March 2027 call = delay" },
+    { "start": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "item": "First NVIDIA Vera systems delivered", "watch": "Whether the first Vera systems reached customers in FQ2", "reference": "Sept call: 'We will deliver our first Vera systems to customers in Q2' (no site named)", "slip": "Not delivered, or moved to Q3" },
+    { "start": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "item": "Site timelines restated?", "watch": "Does management restate 1H27 for Shackelford and Doña Ana, 2H27 for Wisconsin and Michigan", "reference": "US oracle.com dropped all dates on 2026-11-12; 65 locale copies still show them", "slip": "No timelines given, or vaguer wording: the website warning stands" },
+    { "start": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "item": "MW delivered and cloud revenue", "watch": "MW delivered in FQ2, cloud revenue growth, FY27 guide", "reference": "FQ1: 850 MW. FQ2 guide: total cloud +65–71% (USD); FY27 revenue at least $90bn", "slip": "Two-quarter average MW clearly lower and cloud growth below 65%, or FY27 revenue guide cut" },
+    { "start": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "item": "Net capex vs the $70bn cap", "watch": "Oracle's 'net cash outlay for capital expenditures'", "reference": "FY27 cap ~$70bn (call only; includes ~$20–25bn of customer prepayments and timing); FQ1 used $18.0bn", "slip": "Cap raised without matching growth in delivered MW" },
+    { "start": "2027-01-19", "when": "19 Jan 2027", "kind": "check", "site": "Shackelford", "item": "Shackelford full-campus air permit (182467)", "watch": "Draft permit published?", "reference": "Filed 2025-12-12; ~289 days in review after a 53-day state pause; a comparable Abilene case took 271 days (n=1). New governor takes office 1/19 (pledged to halt new permits; secondary)", "slip": "No draft by 1/19 → risk to later Frontier buildings. Does not gate first delivery, which runs on standard permit 180842" },
+    { "start": "2027-03-08", "end": "2027-03-20", "when": "Mid Mar 2027", "kind": "check", "item": "FY27 Q3 results", "watch": "Revenue guide, Abilene 100%, any Shackelford delivery", "reference": "FY27 revenue at least $90bn; EPS $8.10", "slip": "Revenue guide cut; Abilene still short of 100%; no Shackelford progress" },
+    { "start": "2027-03-31", "when": "31 Mar 2027", "kind": "check", "site": "Doña Ana", "item": "Doña Ana power in place for 1H27?", "watch": "NMED air permit; FERC order and a lawful route for the Green Chile gas lateral", "reference": "Air-permit hearing vacated 11/5 with no new date; lateral not yet authorised; state land crossing denied twice", "slip": "Neither the air permit nor an authorised lateral by 3/31 → 1H27 delivery not possible" },
+    { "start": "2027-06-08", "end": "2027-06-20", "when": "Mid Jun 2027", "kind": "check", "item": "FY27 Q4 results and first FY28 capex guide", "watch": "Have Shackelford and Doña Ana started delivery; FY28 guide", "reference": "Shackelford first three halls owner-estimated 2027-02-15, 04-19, 05-18; FY27–28 are peak capex years", "slip": "No Shackelford delivery (whether '1H27' is fiscal or calendar is unclear); FY28 guide makes positive FCF in 2H FY28 impossible" },
+    { "start": "2027-07-01", "end": "2027-12-31", "when": "2H 2027", "kind": "public", "site": "Saline", "item": "Michigan first delivery", "watch": "DTE and Oracle statements", "reference": "DTE (Nov 2026): Oracle online 'end of 27'; construction as scheduled", "slip": "DTE changes its wording, or no delivery by year end" },
+    { "start": "2027-12-31", "when": "31 Dec 2027", "kind": "check", "site": "Port Washington", "item": "Wisconsin first delivery", "watch": "Delivery, and the PSC written order on ATC case 137-CE-229", "reference": "ATC: construction 31 days after the order, in service 17 months later; WEC CEO: 'right back on schedule'", "slip": "Order date + ~18 months later than end-2027 with no interim supply plan, or no delivery by year end" },
+    { "start": "2027-06-01", "end": "2028-05-31", "when": "FY28", "kind": "public", "item": "Large contract (reported OpenAI) ramps", "watch": "Revenue run-rate of >$30bn/yr", "reference": "8-K 2025-06-30, customer not named", "slip": "Ramp pushed to FY29; share of RPO recognised within 12 months does not rise" },
+    { "start": "2027-06-01", "end": "2028-05-31", "when": "FY28", "kind": "public", "item": "OCI revenue path", "watch": "OCI revenue", "reference": "Sep-2025 release: FY27 $32bn, FY28 $73bn, FY29 $114bn, FY30 $144bn (not restated at the 2026 Investor Day)", "slip": "FY28 clearly below $73bn" },
+    { "start": "2027-12-01", "end": "2028-05-31", "when": "2H FY28", "kind": "public", "item": "Free cash flow turns positive", "watch": "Quarterly FCF", "reference": "Investor Day 2026-10-28; trailing 12-month FCF about −$28.7bn at Aug 2026 (derived)", "slip": "Positive FCF pushed to FY29 or later" },
+    { "start": "2028-06-01", "end": "2029-05-31", "when": "FY29", "kind": "public", "item": "FCF ≥ $30bn, self-funded", "watch": "Any raise beyond the $20bn cap (fully used on 2026-11-04)", "reference": "Investor Day: net debt / adj. EBITDA below 3.5x", "slip": "New raise beyond the cap; downgrade to high yield" }
+  ],
+  "recurring": [
+    "Oracle results (mid Mar, Jun, Sep, Dec): MW delivered, named sites, OCI revenue, RPO, net capex.",
+    "oracle.com/data-centers: weekly wording diff.",
+    "Power and permits: NMED air permit and the Green Chile lateral (New Mexico), PSC case 137-CE-229 (Wisconsin), DTE and WEC earnings calls.",
+    "Background only, not delay triggers: 10-Q lease footnote (the window end moves at each 10-K as a routine roll), ERCOT large-load pause (mainly Microsoft's Abilene expansion), Doña Ana county breach notices (30-day cure; cannot stop construction), Stargate UAE, Taiwan ODM monthly revenue."
+  ],
+  "sites": [
+    {
+      "id": "abilene", "name": "Abilene", "state": "TX", "landlord": "Crusoe / Lancium; JV with Blue Owl and Primary Digital", "capacity": "~1.2 GW power (~824 MW IT), 8 buildings", "delivered": "6 buildings, 618 MW (75%)", "next": "Buildings 7–8, ~206 MW", "next_when": "Dec 2026 call", "risk": "watch", "status": "Past the original 'mid-2026'; on track against the June revision",
+      "note": "Every Oracle revision so far has been met, while the developer's original dates ran 2–5 months late. Texas registration status is not a delay test here: inspection may lag completion by up to a year (B1 and B3 kept 'Review Complete' for months after delivery), and the 12/21 shell dates are placeholders (B5/B6 carry the same date yet were delivered by 9/10). Buildings 9–11 are Crusoe's Microsoft expansion, not Oracle.",
+      "events": [
+        { "date": "2024-07-18", "when": "18 Jul 2024", "kind": "public", "event": "Crusoe: first 200 MW energised in 2025" },
+        { "date": "2025-03-13", "when": "13 Mar 2025", "kind": "public", "event": "Dedicated region us-abilene-1: IP block first routed; first certificate 3/19" },
+        { "date": "2025-03-18", "when": "18 Mar 2025", "kind": "public", "event": "Crusoe: phase 1 tightened to 1H 2025; phase 2 (6 buildings) by mid-2026" },
+        { "date": "2025-09-30", "when": "30 Sep 2025", "kind": "public", "event": "Crusoe: phase 1 live (2 buildings, 200+ MW) — on time against '2025', ~6 months late against 1H 2025" },
+        { "date": "2026-03-27", "when": "27 Mar 2026", "kind": "public", "event": "600 MW expansion cancelled; Microsoft takes the adjacent Crusoe site; Crusoe now says the rest 'during 2026'", "slip": "Soft slip" },
+        { "date": "2026-06-10", "when": "10 Jun 2026", "kind": "public", "event": "Oracle: 42% delivered, +35% in ~90 days; rest 'the subsequent quarter' (call) / 'subsequent quarters' (written)" },
+        { "date": "2026-09-10", "when": "10 Sep 2026", "kind": "public", "event": "Oracle: 6 of 8 buildings, 618 MW, 75% delivered (+33 points vs +35 promised)" },
+        { "date": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "event": "FY27 Q2 call: is Abilene at 100%?", "slip": "7 of 8 = mild slip", "key": true },
+        { "date": "2027-03-08", "end": "2027-03-20", "when": "Mid Mar 2027", "kind": "check", "event": "FY27 Q3 call", "slip": "Still short of 100% = delay against the June revision too" }
+      ]
+    },
+    {
+      "id": "shackelford", "name": "Shackelford (Frontier)", "state": "TX", "landlord": "Vantage (SoftBank-controlled via DigitalBridge)", "capacity": "1.4 GW, 10 data-hall buildings", "delivered": "0", "next": "First buildings", "next_when": "1H27 (last stated)", "risk": "watch", "status": "Later than Vantage's original 2H 2026; first-phase power already permitted",
+      "note": "First buildings run on standard air permit 180842 (issued 2025-07-17; ~700 MW per a secondary source). Full-campus permit 182467 gates later buildings, not first delivery. Texas registrations TX301–TX310 are whole-building records (shell plus fit-out), unlike Abilene's split records, so no delivery date is inferred from them; TX311 is an office. Owner-estimated completions of the first three (2027-02-15, 04-19, 05-18) are consistent with 1H27 and were unchanged in archives of 10/1 and 11/7. Vantage's 'delivery' (shell and power to Oracle) and Oracle's 'customer delivery' may be different milestones.",
+      "events": [
+        { "date": "2025-07-17", "when": "17 Jul 2025", "kind": "public", "event": "Standard air permit 180842 issued (first-phase power)" },
+        { "date": "2025-08-19", "when": "19 Aug 2025", "kind": "public", "event": "Vantage: first building delivered 2H 2026" },
+        { "date": "2025-12-12", "when": "12 Dec 2025", "kind": "public", "event": "Full-campus air permit 182467 filed" },
+        { "date": "2026-06-10", "when": "10 Jun 2026", "kind": "public", "event": "Oracle: 'customer delivery begins in 1H27'; page adds '115 MW power available more than a month ahead of schedule'", "slip": "~6 months later than Vantage's first date" },
+        { "date": "2026-09-10", "when": "10 Sep 2026", "kind": "public", "event": "Oracle: Shackelford not delivered in Q1, 'progressing well'" },
+        { "date": "2026-09-11", "when": "11 Sep 2026", "kind": "public", "event": "oracle.com keeps 1H27 but drops the '115 MW ahead of schedule' sentence", "slip": "Weak wording signal" },
+        { "date": "2026-11-12", "when": "12 Nov 2026", "kind": "public", "event": "US oracle.com drops Shackelford's timeline" },
+        { "date": "2026-12-14", "when": "14 Dec 2026", "kind": "check", "event": "FY27 Q2 call: is 1H27 restated?", "slip": "No timeline, or vaguer wording" },
+        { "date": "2027-01-19", "when": "19 Jan 2027", "kind": "check", "event": "Draft permit for 182467 published?", "slip": "None → later buildings at risk (not first delivery)" },
+        { "date": "2027-01-01", "end": "2027-06-30", "when": "1H 2027", "kind": "public", "event": "First customer delivery (last stated window)", "slip": "Not confirmed by the June 2027 call", "key": true },
+        { "date": "2028-12-31", "when": "End 2028", "kind": "public", "event": "Full 1.4 GW campus (financing reports)" }
+      ]
+    },
+    {
+      "id": "dona-ana", "name": "Doña Ana (Project Jupiter)", "state": "NM", "landlord": "BorderPlex / STACK (Blue Owl)", "capacity": "~2.2–2.45 GW, 4 buildings", "delivered": "0", "next": "First capacity", "next_when": "1H27 (last stated)", "risk": "risk", "status": "Highest risk: air permit and gas lateral both unapproved",
+      "note": "The only planned primary power is an on-site Bloom fuel-cell microgrid, which needs the NMED air permit and gas from the Green Chile lateral. The county MOU's 'initial capacity Q4 2026' and 'phase 1 Q3 2028' are expectations, not lease covenants (the lease's completion date is 2055-10-01). The 7/31 county report's '~9%' has no stated basis and covers all four buildings. County breach notices: 10/27 (5–0) potential breach over the power plan, 30-day cure; 11/10 (4–0) missed jobs reports (paperwork). The worst remedy is lease termination and loss of the tax break, not a construction stop.",
+      "events": [
+        { "date": "2025-09-18", "when": "18 Sep 2025", "kind": "public", "event": "County MOU: initial capacity expected Q4 2026, phase 1 Q3 2028 (expectations)" },
+        { "date": "2026-06-10", "when": "10 Jun 2026", "kind": "public", "event": "Oracle: 'customer delivery begins in 1H27'", "slip": "~6 months later than the MOU expectation" },
+        { "date": "2026-07-31", "when": "31 Jul 2026", "kind": "public", "event": "County annual report: data centre ~9%, microgrid ~10% at 6/30; go-live 'several months away'" },
+        { "date": "2026-09-24", "when": "24 Sep 2026", "kind": "public", "event": "Oracle force-majeure notice to the lessor over power (press)", "slip": "Risk signal" },
+        { "date": "2026-10-27", "when": "27 Oct 2026", "kind": "public", "event": "County votes a potential-breach notice over the power plan (30-day cure)" },
+        { "date": "2026-11-05", "when": "5–6 Nov 2026", "kind": "public", "event": "Air-permit hearing (was 12/7) vacated; no new date until NMED files a revised recommendation", "slip": "Delay signal" },
+        { "date": "2026-11-12", "when": "12 Nov 2026", "kind": "public", "event": "US oracle.com drops Doña Ana's timeline" },
+        { "date": "2027-02-01", "when": "1 Feb 2027", "kind": "public", "event": "Green Chile lateral in service (applicant estimate; was 2026-08-15; needs a FERC order and a lawful route first)" },
+        { "date": "2027-03-31", "when": "31 Mar 2027", "kind": "check", "event": "Air permit, or FERC order plus lawful route for the lateral?", "slip": "Neither → 1H27 impossible", "key": true },
+        { "date": "2027-01-01", "end": "2027-06-30", "when": "1H 2027", "kind": "public", "event": "First customer delivery (last stated window)", "slip": "Not confirmed by the June 2027 call" },
+        { "date": "2028-09-30", "when": "Q3 2028", "kind": "public", "event": "Phase 1 complete (MOU expectation; press says 2028 at risk)" }
+      ]
+    },
+    {
+      "id": "port-washington", "name": "Port Washington (Lighthouse)", "state": "WI", "landlord": "Vantage", "capacity": "~0.9–1.3 GW, 4 buildings", "delivered": "0", "next": "First delivery", "next_when": "2H27 (last stated)", "risk": "risk", "status": "At risk: transmission case refiled",
+      "note": "ATC's transmission application was revoked on 2026-08-06 because 564 documents of substantial changes were filed after completeness (not a denial on the merits) and refiled in mid-September as 137-CE-229. ATC: construction 31 days after the PSC written order, in service 17 months after that; the original plan served the campus by December 2027. WEC's CEO says the project is 'right back on schedule'. Whether first buildings can be served before the line is not public.",
+      "events": [
+        { "date": "2025-10-22", "when": "22 Oct 2025", "kind": "public", "event": "Announced: construction soon, complete in 2028" },
+        { "date": "2026-06-10", "when": "10 Jun 2026", "kind": "public", "event": "Oracle: 'customer delivery begins in 2H27'" },
+        { "date": "2026-08-06", "when": "6 Aug 2026", "kind": "public", "event": "PSC revokes ATC's transmission application (procedural)", "slip": "Power risk" },
+        { "date": "2026-09-11", "when": "11 Sep 2026", "kind": "public", "event": "oracle.com changes 'begins' to 'expected' 2H27", "slip": "Weak wording signal" },
+        { "date": "2026-09-15", "end": "2026-09-18", "when": "Mid Sep 2026", "kind": "public", "event": "ATC refiles (137-CE-229)" },
+        { "date": "2026-11-12", "when": "12 Nov 2026", "kind": "public", "event": "US oracle.com drops Wisconsin's timeline" },
+        { "date": "2027-07-01", "end": "2027-12-31", "when": "2H 2027", "kind": "public", "event": "First customer delivery (last stated window)", "slip": "PSC order + ~18 months later than end-2027 with no interim plan, or no delivery by year end", "key": true },
+        { "date": "2028-12-31", "when": "2028", "kind": "public", "event": "Full campus (announcement; WEC still says 2028)" }
+      ]
+    },
+    {
+      "id": "saline", "name": "Saline Township (The Barn)", "state": "MI", "landlord": "Related Digital", "capacity": "~1.4 GW, 3 buildings", "delivered": "0", "next": "First delivery", "next_when": "End 2027 (DTE)", "risk": "watch", "status": "On schedule per DTE",
+      "note": "Blue Owl left the equity talks in Dec 2025; Blackstone and PIMCO closed $16bn on 2026-04-24. DTE's special contracts were approved 2025-12-18 and appealed (no ruling, no stay). Oracle says existing high-voltage lines have enough capacity; DTE's 332 MW of batteries follow the load. DTE's 'end of 27' comes from an auto-generated transcript.",
+      "events": [
+        { "date": "2025-12-18", "when": "18 Dec 2025", "kind": "public", "event": "Oracle: construction to start Q1 2026; DTE contracts approved" },
+        { "date": "2026-04-24", "when": "24 Apr 2026", "kind": "public", "event": "$16bn financing closed (Blackstone, PIMCO)" },
+        { "date": "2026-06-01", "when": "1 Jun 2026", "kind": "public", "event": "Groundbreaking (~2 months after the Q1 target)" },
+        { "date": "2026-06-10", "when": "10 Jun 2026", "kind": "public", "event": "Oracle: 'customer delivery begins in 2H27'" },
+        { "date": "2026-11-05", "when": "5 Nov 2026", "kind": "public", "event": "DTE: construction as scheduled; Oracle online 'end of 27'" },
+        { "date": "2026-11-12", "when": "12 Nov 2026", "kind": "public", "event": "US oracle.com replaces the timeline with a progress note (first building enclosed, 18 towers done)" },
+        { "date": "2027-07-01", "end": "2027-12-31", "when": "2H 2027", "kind": "public", "event": "First customer delivery (last stated window)", "slip": "DTE changes wording, or no delivery by year end", "key": true }
+      ]
+    },
+    {
+      "id": "uae", "name": "Stargate UAE", "state": "Abu Dhabi", "landlord": "Khazna (G42)", "capacity": "First 200 MW of 1 GW", "delivered": "Not confirmed", "next": "First 200 MW", "next_when": "2026", "risk": "watch", "status": "Background: how it counts in Oracle's MW is not disclosed",
+      "note": "G42 (2025-05-22): 'expected to go live in 2026'. An Abu Dhabi official later said Q3 2026, which passed without a go-live announcement; Khazna said 'this year' in Aug 2026.",
+      "events": [
+        { "date": "2025-05-22", "when": "22 May 2025", "kind": "public", "event": "G42: first 200 MW expected to go live in 2026" },
+        { "date": "2025-12-05", "when": "5 Dec 2025", "kind": "public", "event": "Abu Dhabi official: Q3 2026" },
+        { "date": "2026-08-15", "when": "Aug 2026", "kind": "public", "event": "Khazna: 'this year'" },
+        { "date": "2026-12-31", "when": "31 Dec 2026", "kind": "check", "event": "Live by year end?", "slip": "No go-live news", "key": true }
+      ]
+    },
+    {
+      "id": "abilene-x", "name": "Abilene expansion", "state": "TX", "landlord": "Crusoe", "capacity": "600 MW", "delivered": "—", "next": "—", "next_when": "—", "risk": "cancelled", "status": "Cancelled (Mar 2026)",
+      "note": "OpenAI and Oracle dropped the adjacent 600 MW expansion; Microsoft took the Crusoe site (Texas registrations for buildings 9–11).",
+      "events": [
+        { "date": "2025-09-23", "when": "23 Sep 2025", "kind": "public", "event": "Oracle fact sheet: 'potential additional expansion' (no date)" },
+        { "date": "2026-03-27", "when": "27 Mar 2026", "kind": "public", "event": "Expansion dropped; Microsoft takes the site", "key": true }
+      ]
+    }
+  ],
+  "gap": "Oracle discloses no cumulative or contracted MW, and its 'leases not yet commenced' ($288bn) are not split by site. Doña Ana, Wisconsin and federal (FERC) dockets block automated access, so those checks are manual. The ~10 GW by end-FY28 target appears only in secondary summaries with unclear units (IT vs gross power), so it is not used as a threshold."
+}

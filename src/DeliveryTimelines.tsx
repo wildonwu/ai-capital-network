@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { keyEvent, quarterDomain, quarterTicks, span, timeScale, type Delivery, type SiteRisk } from './lib/delivery';
+import { keyEvent, kindsUsed, quarterDomain, quarterTicks, span, timeScale, type DateKind, type Delivery, type SiteRisk } from './lib/delivery';
 
 const W = 1000, LABEL = 270, PAD_R = 18, AXIS_H = 30;
+const KIND_LABEL: Record<DateKind, string> = { public: 'Announced', inferred: 'Inferred', check: 'Checkpoint' };
+const hollow = (k: DateKind) => k !== 'public';
+
 const RISK: Record<SiteRisk, { label: string; color: string }> = {
   risk: { label: 'At risk', color: 'var(--hot)' },
   watch: { label: 'Watch', color: 'var(--gold)' },
@@ -20,7 +23,7 @@ function Axis({ ticks, x, top, bottom, asOf }: { ticks: ReturnType<typeof quarte
   </g>;
 }
 
-/** A point (diamond) or a window (bar); hollow when the date is inferred rather than announced. */
+/** A point (diamond) or a window (bar); hollow when the date is inferred or a checkpoint rather than announced. */
 function Mark({ x, y, start, end, inferred, color, big, past }: { x: (d: string) => number; y: number; start: string; end?: string; inferred: boolean; color: string; big?: boolean; past?: boolean }) {
   const op = past ? 0.4 : 1;
   if (end && end !== start) {
@@ -31,11 +34,12 @@ function Mark({ x, y, start, end, inferred, color, big, past }: { x: (d: string)
   return <path d={`M${cx} ${y - r}L${cx + r} ${y}L${cx} ${y + r}L${cx - r} ${y}Z`} fill={inferred ? 'var(--card)' : color} stroke={color} strokeWidth={1.5} opacity={op} />;
 }
 
-function Legend() {
+function Legend({ kinds }: { kinds: Set<DateKind> }) {
   return <div className="dt-legend">
     <span><svg width="14" height="14" aria-hidden="true"><path d="M7 2L12 7L7 12L2 7Z" fill="var(--ink2)" /></svg>Announced date</span>
-    <span><svg width="14" height="14" aria-hidden="true"><path d="M7 2L12 7L7 12L2 7Z" fill="var(--card)" stroke="var(--ink2)" strokeWidth="1.5" /></svg>Inferred from backtested lead times</span>
-    <span><svg width="22" height="10" aria-hidden="true"><rect x="1" y="1" width="20" height="8" rx="3" fill="var(--ink2)" /></svg>Window (e.g. “early 2027”)</span>
+    {kinds.has('inferred') && <span><svg width="14" height="14" aria-hidden="true"><path d="M7 2L12 7L7 12L2 7Z" fill="var(--card)" stroke="var(--ink2)" strokeWidth="1.5" /></svg>Inferred from backtested lead times</span>}
+    {kinds.has('check') && <span><svg width="14" height="14" aria-hidden="true"><path d="M7 2L12 7L7 12L2 7Z" fill="var(--card)" stroke="var(--ink2)" strokeWidth="1.5" /></svg>Checkpoint: should be confirmed by this date</span>}
+    <span><svg width="22" height="10" aria-hidden="true"><rect x="1" y="1" width="20" height="8" rx="3" fill="var(--ink2)" /></svg>Window (e.g. “1H 2027”)</span>
     <span><svg width="10" height="14" aria-hidden="true"><line x1="5" x2="5" y1="0" y2="14" className="dt-now" /></svg>Research cut-off</span>
   </div>;
 }
@@ -50,9 +54,9 @@ function CompanyTimeline({ d, name }: { d: Delivery; name: string }) {
     <section className="ex-block dt" aria-label={`${name} company-level delivery timeline`} data-testid="delivery-company">
       <div className="ex-h">
         <h3>{name} delivery checkpoints<span>company level · what to check, when, and what counts as a delay</span></h3>
-        <p>Each row is a dated checkpoint: an earnings filing, a debt draw deadline, or a landlord’s promised handover that feeds {name}’s reported capacity. Grey rows have passed the research cut-off and need their outcome checked. Click a row for the reference value and the delay trigger.</p>
+        <p>Each row is a dated checkpoint: an earnings filing, a financing or permit deadline, or a promised site handover that feeds {name}’s reported capacity. Grey rows have passed the research cut-off and need their outcome checked. Click a row for the reference value and the delay trigger.</p>
       </div>
-      <Legend />
+      <Legend kinds={kindsUsed(d)} />
       <div className="dt-scroll"><svg viewBox={`0 0 ${W} ${h}`} className="dt-svg" role="img" aria-label={`${rows.length} checkpoints from ${dom[0]} to ${dom[1]}`}>
         <Axis ticks={quarterTicks(dom)} x={x} top={top} bottom={h - 22} asOf={d.as_of} />
         {rows.map(({ m, i }, r) => {
@@ -61,7 +65,7 @@ function CompanyTimeline({ d, name }: { d: Delivery; name: string }) {
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOn(on === i ? null : i); } }}>
             <rect x={0} y={y - RH / 2} width={W} height={RH} className="dt-hit" />
             <text x={8} y={y + 4} className="dt-lbl">{m.item.length > 40 ? `${m.item.slice(0, 39)}…` : m.item}<title>{m.item}</title></text>
-            <Mark x={x} y={y} start={m.start} end={m.end} inferred={m.kind === 'inferred'} color={m.site ? 'var(--goods)' : 'var(--money)'} past={past} big={on === i} />
+            <Mark x={x} y={y} start={m.start} end={m.end} inferred={hollow(m.kind)} color={m.site ? 'var(--goods)' : 'var(--money)'} past={past} big={on === i} />
             {x(m.end ?? m.start) > W - 140
               ? <text x={x(m.start) - 10} y={y + 4} className="dt-when" textAnchor="end">{m.when}</text>
               : <text x={x(m.end ?? m.start) + 10} y={y + 4} className="dt-when">{m.when}</text>}
@@ -90,10 +94,10 @@ function SiteTimelines({ d, name }: { d: Delivery; name: string }) {
   return (
     <section className="ex-block dt" aria-label={`${name} site timelines`} data-testid="delivery-sites">
       <div className="ex-h">
-        <h3>{name} site timelines<span>{d.sites.length} campuses · announced dates and inferred signal dates</span></h3>
-        <p>One row per campus. The large mark is the next pending handover; small marks are filings, jobs, permits and inferred checks (if a hollow mark’s date passes without the signal, treat it as an early delay warning). Click a campus for its full event list.</p>
+        <h3>{name} site timelines<span>{d.sites.length} campuses · announced dates and {kindsUsed(d).has('check') ? 'checkpoints' : 'inferred signal dates'}</span></h3>
+        <p>One row per campus. The large mark is the next pending handover; small marks are filings, permits, statements and dated checks (if a hollow mark’s date passes without the expected confirmation, treat it as a delay warning). Click a campus for its full event list.</p>
       </div>
-      <Legend />
+      <Legend kinds={kindsUsed(d)} />
       <div className="dt-scroll"><svg viewBox={`0 0 ${W} ${h}`} className="dt-svg" role="img" aria-label={`${d.sites.length} site timelines from ${dom[0]} to ${dom[1]}`}>
         <Axis ticks={quarterTicks(dom)} x={x} top={top} bottom={h - 22} asOf={d.as_of} />
         {d.sites.map((s, r) => {
@@ -106,8 +110,8 @@ function SiteTimelines({ d, name }: { d: Delivery; name: string }) {
             <text x={24} y={y - 1} className="dt-lbl">{s.name} <tspan className="dt-st">{s.state}</tspan></text>
             <text x={24} y={y + 12} className="dt-sub">{s.next_when !== '—' ? `${s.next} · ${s.next_when}` : s.status}</text>
             {first && last && <line x1={x(first)} x2={x(last)} y1={y} y2={y} className="dt-span" />}
-            {s.events.filter((e) => e !== k).map((e, j) => <Mark key={j} x={x} y={y} start={e.date} end={e.end} inferred={e.kind === 'inferred'} color="var(--ink2)" past={(e.end ?? e.date) < d.as_of} />)}
-            {k && <Mark x={x} y={y} start={k.date} end={k.end} inferred={k.kind === 'inferred'} color={c} big />}
+            {s.events.filter((e) => e !== k).map((e, j) => <Mark key={j} x={x} y={y} start={e.date} end={e.end} inferred={hollow(e.kind)} color="var(--ink2)" past={(e.end ?? e.date) < d.as_of} />)}
+            {k && <Mark x={x} y={y} start={k.date} end={k.end} inferred={hollow(k.kind)} color={c} big />}
           </g>;
         })}
       </svg></div>
@@ -128,7 +132,7 @@ function SiteTimelines({ d, name }: { d: Delivery; name: string }) {
           <thead><tr><th>Date</th><th>Type</th><th>Event</th><th>Counts as a delay if</th></tr></thead>
           <tbody>{site.events.map((e, j) => <tr key={j} className={`${e.key ? 'key' : ''}${(e.end ?? e.date) < d.as_of ? ' past' : ''}`}>
             <td className="dt-nowrap">{e.when}</td>
-            <td><span className={`dt-kind ${e.kind}`}>{e.kind === 'inferred' ? 'Inferred' : 'Announced'}</span></td>
+            <td><span className={`dt-kind ${e.kind}`}>{KIND_LABEL[e.kind]}</span></td>
             <td>{e.event}</td><td>{e.slip ?? '—'}</td>
           </tr>)}</tbody>
         </table></div>
@@ -136,7 +140,7 @@ function SiteTimelines({ d, name }: { d: Delivery; name: string }) {
       </div>
       <div className="dt-foot">
         <p><b>Coverage.</b> {d.gap}</p>
-        <p><b>Inference rules.</b></p>
+        <p><b>{kindsUsed(d).has('check') ? 'How to read the signals.' : 'Inference rules.'}</b></p>
         <ol>{d.rules.map((r) => <li key={r}>{r}</li>)}</ol>
         <p className="small">{d.source_note} Research cut-off {d.as_of}.</p>
       </div>
